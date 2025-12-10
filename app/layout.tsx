@@ -13,6 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    // REMOVED "scroll-smooth" class to fix the "hanging" sensation
     <html lang="en">
       <head>
         {/* Load Fonts */}
@@ -22,7 +23,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap" 
           rel="stylesheet" 
         />
-        {/* Manual CSS Variables for Fonts - Essential for consistency */}
+        {/* Manual CSS Variables for Fonts */}
         <style>{`
           :root { 
             --font-geist-sans: 'Geist', sans-serif;

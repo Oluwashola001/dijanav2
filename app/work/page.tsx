@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// --- 1. DATA (Inlined for Preview) ---
+// --- 1. DATA (Inlined to prevent import errors) ---
 export interface Project {
   id: number;
   title: string;
@@ -56,26 +56,23 @@ const projects: Project[] = [
   },
 ];
 
-// --- 2. COMPONENTS (Inlined for Preview) ---
+// --- 2. COMPONENTS (Inlined to guarantee functionality) ---
 
-// Cinematic Background Component
+// Cinematic Background: Uses simple HTML autoPlay which is robust
 function CinematicBackground({ isZoomed = false }: { isZoomed?: boolean }) {
   const [isIntroPlaying, setIsIntroPlaying] = useState(true);
-  const idleRef = useRef<HTMLVideoElement>(null);
-
-  const handleIntroEnded = () => {
-    setIsIntroPlaying(false);
-    if (idleRef.current) idleRef.current.play().catch(() => {});
-  };
 
   return (
     <div className="fixed inset-0 w-full h-dvh overflow-hidden bg-black -z-10">
       <div 
-        className={`relative w-full h-dvh transition-all duration-1500 ease-in-out ${isZoomed ? 'scale-125 blur-sm brightness-50' : 'scale-100 blur-0 brightness-100'}`}
+        className={`
+          relative w-full h-dvh 
+          transition-all duration-1500 ease-in-out
+          ${isZoomed ? 'scale-125 blur-sm brightness-50' : 'scale-100 blur-0 brightness-100'}
+        `}
       >
-        {/* Layer 1: Idle */}
+        {/* Layer 1: Idle Video (Always looping in background) */}
         <video
-          ref={idleRef}
           autoPlay
           muted
           loop
@@ -86,7 +83,7 @@ function CinematicBackground({ isZoomed = false }: { isZoomed?: boolean }) {
           <source src="/videos/hero-tree-idle.mp4" type="video/mp4" />
         </video>
 
-        {/* Layer 2: Intro */}
+        {/* Layer 2: Intro Video (Plays once then vanishes) */}
         <AnimatePresence>
           {isIntroPlaying && (
             <motion.div
@@ -99,7 +96,7 @@ function CinematicBackground({ isZoomed = false }: { isZoomed?: boolean }) {
                 autoPlay
                 muted
                 playsInline
-                onEnded={handleIntroEnded}
+                onEnded={() => setIsIntroPlaying(false)}
                 className="w-full h-dvh object-cover"
               >
                 <source src="/videos/hero-tree-intro.webm" type="video/webm" />
@@ -110,14 +107,13 @@ function CinematicBackground({ isZoomed = false }: { isZoomed?: boolean }) {
         </AnimatePresence>
 
         {/* Gradient Overlay */}
-        {/* Fixed: Tailwind v4 syntax */}
-        <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-black/40 z-20" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/40 z-20" />
       </div>
     </div>
   );
 }
 
-// Perspective Path Component
+// Perspective Path: Handles the clickable text nodes
 function PerspectivePath({ onSelectProject }: { onSelectProject: (project: Project) => void }) {
   const getPositionStyles = (index: number) => {
     switch (index) {
@@ -138,7 +134,7 @@ function PerspectivePath({ onSelectProject }: { onSelectProject: (project: Proje
           onClick={() => onSelectProject(project)}
           initial={{ opacity: 0, scale: 0.8, filter: "blur(5px)" }}
           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          transition={{ duration: 1.5, delay: 3.5 + (index * 0.5) }}
+          transition={{ duration: 1.5, delay: 0.5 + (index * 0.2) }}
           className={`
             absolute pointer-events-auto cursor-pointer flex flex-col items-center justify-center group
             ${getPositionStyles(index)}
@@ -162,7 +158,7 @@ function PerspectivePath({ onSelectProject }: { onSelectProject: (project: Proje
   );
 }
 
-// Project Modal Component
+// Project Modal: Displays details when a node is clicked
 function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8">
@@ -197,8 +193,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
 
         {/* LEFT: Image */}
         <div className="w-full md:w-1/2 h-64 md:h-auto relative bg-gray-900">
-           {/* Fixed: Tailwind v4 gradient syntax */}
-           <div className="absolute inset-0 bg-linear-to-t from-[#0a0a0a] to-transparent opacity-80 md:opacity-0 z-10" />
+           <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] to-transparent opacity-80 md:opacity-0 z-10" />
            <img 
             src={project.image} 
             alt={project.title}
@@ -241,7 +236,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
   );
 }
 
-// --- 3. PAGE LOGIC ---
+// --- 3. MAIN PAGE COMPONENT ---
 
 export default function WorkPage() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);

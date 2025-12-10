@@ -3,31 +3,49 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 
-// --- COMPONENTS INLINED TO PREVENT IMPORT ERRORS ---
+// --- COMPONENTS ---
 
-// 1. STARRY BACKGROUND
+// 1. BACKGROUND WITH FILM GRAIN & SUBTLE NEBULA
 function StarryBackground() {
   const [stars, setStars] = useState<{ id: number; top: string; left: string; size: string; opacity: number; duration: string }[]>([]);
 
   useEffect(() => {
-    const starCount = 70; 
+    const starCount = 40; 
     const newStars = Array.from({ length: starCount }).map((_, i) => ({
       id: i,
       top: `${Math.random() * 100}%`,
       left: `${Math.random() * 100}%`,
-      size: Math.random() > 0.8 ? '3px' : '2px',
-      opacity: Math.random() * 0.5 + 0.1,
-      duration: `${Math.random() * 3 + 3}s`,
+      size: Math.random() > 0.8 ? '2px' : '1px',
+      opacity: Math.random() * 0.5 + 0.2,
+      duration: `${Math.random() * 3 + 4}s`,
     }));
     setStars(newStars);
   }, []);
 
   return (
-    <div className="fixed inset-0 w-full h-full -z-50 bg-[#050B14]">
-      {/* Tailwind v4 syntax */}
-      <div className="absolute inset-0 bg-linear-to-b from-[#0e1c3d] via-[#050B14] to-[#000000]" />
-      <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[80%] h-[50%] bg-amber-500/5 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute inset-0 overflow-hidden">
+    <div className="fixed inset-0 w-full h-full -z-50 bg-[#050B14] overflow-hidden">
+      {/* Base Gradient - Deep Cinematic Blue */}
+      <div className="absolute inset-0 bg-linear-to-b from-[#080f24] via-[#050B14] to-[#02050a]" />
+
+      {/* FILM GRAIN TEXTURE */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay" 
+           style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }} 
+      />
+      
+      {/* ELEGANT AURORA BLOOMS */}
+      <motion.div 
+        animate={{ opacity: [0.2, 0.4, 0.2] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-[-20%] left-[-10%] w-[70vw] h-[70vw] bg-blue-900/20 blur-[150px] rounded-full mix-blend-screen pointer-events-none" 
+      />
+      <motion.div 
+        animate={{ opacity: [0.1, 0.3, 0.1] }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 5 }}
+        className="absolute bottom-[-20%] right-[-10%] w-[80vw] h-[80vw] bg-amber-900/10 blur-[180px] rounded-full mix-blend-screen pointer-events-none" 
+      />
+      
+      {/* Stars */}
+      <div className="absolute inset-0">
         {stars.map((star) => (
           <div
             key={star.id}
@@ -47,12 +65,18 @@ function StarryBackground() {
   );
 }
 
-// 2. HERO SLIDESHOW
-const images = [
-  '/about/1.jpg',
-  '/about/2.jpg',
-  '/about/3.jpg',
-  '/about/4.jpg',
+// 2. HERO SLIDESHOW (Fixed Positioning)
+// We now define position specifically for each slide to prevent heads getting cut off
+const slides = [
+  { src: '/about/1.jpg', position: 'object-top' },    // Top Anchor
+  { src: '/about/2.jpg', position: 'object-center' }, 
+  { src: '/about/3.WEBP', position: 'object-center' },
+  { src: '/about/4.jpg', position: 'object-top' },    // Top Anchor
+  { src: '/about/5.WEBP', position: 'object-center' },
+  { src: '/about/6.WEBP', position: 'object-center' },
+  { src: '/about/7.WEBP', position: 'object-top' },    // FIX: Anchors top of image (Head) to top of screen
+  { src: '/about/8.WEBP', position: 'object-top' },    // FIX: Anchors top of image (Head) to top of screen
+  { src: '/about/9.WEBP', position: 'object-center' },
 ];
 
 function HeroSlideshow() {
@@ -60,8 +84,8 @@ function HeroSlideshow() {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % images.length);
-    }, 6000);
+      setIndex((prev) => (prev + 1) % slides.length);
+    }, 5000); 
     return () => clearInterval(timer);
   }, []);
 
@@ -71,46 +95,51 @@ function HeroSlideshow() {
         <motion.div
           key={index}
           className="absolute inset-0 w-full h-full"
-          initial={{ opacity: 0, scale: 1.1 }}
+          initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 2.5, ease: "easeInOut" }}
+          transition={{ duration: 2, ease: "easeInOut" }}
         >
-          <div className="absolute inset-0 bg-gray-800" /> 
+          <div className="absolute inset-0 bg-gray-900" /> 
+          
+          {/* IMAGE RENDERER with Dynamic Positioning */}
           <img
-            src={images[index]}
+            src={slides[index].src}
             alt="Dijana Bošković"
-            className="w-full h-full object-cover object-center relative z-10"
-            onError={(e) => {
-                e.currentTarget.style.display = 'none';
-            }}
+            // We inject the specific position class (object-top vs object-center) here
+            className={`w-full h-full object-cover relative z-10 ${slides[index].position}`}
+            onError={(e) => { e.currentTarget.style.display = 'none'; }}
           />
+          
+          {/* Very Subtle Pan */}
           <motion.div 
             className="absolute inset-0 z-20"
-            animate={{ scale: [1, 1.05], x: [0, 10] }}
-            transition={{ duration: 8, ease: "linear" }}
+            animate={{ scale: [1, 1.03], x: [0, 15] }}
+            transition={{ duration: 6, ease: "linear" }}
           />
         </motion.div>
       </AnimatePresence>
 
-      <div className="absolute inset-0 bg-linear-to-t from-[#050B14] via-[#050B14]/40 to-transparent z-10" />
-      <div className="absolute inset-0 bg-[#0e1c3d]/20 z-10 mix-blend-overlay" />
+      {/* Cinematic Vignette */}
+      <div className="absolute inset-0 bg-linear-to-t from-[#050B14] via-[#050B14]/20 to-transparent z-10" />
+      <div className="absolute inset-0 bg-linear-to-b from-[#050B14]/60 via-transparent to-transparent z-10" />
 
-      <div className="absolute inset-0 z-20 flex flex-col justify-end pb-24 px-6 md:px-20 max-w-7xl mx-auto">
+      {/* Text Content */}
+      <div className="absolute inset-0 z-20 flex flex-col justify-end pb-20 md:pb-28 px-6 md:px-20 max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 1 }}
-          className="max-w-3xl"
+          transition={{ delay: 0.3, duration: 1 }} 
+          className="max-w-4xl"
         >
-          <h2 className="text-amber-200/80 text-sm md:text-base font-medium tracking-[0.2em] uppercase mb-6">
+          <h2 className="text-amber-200/80 text-xs md:text-sm font-medium tracking-[0.2em] uppercase mb-4 md:mb-6 shadow-black drop-shadow-lg">
             From classical flutist, improviser, and ensemble leader to composer
           </h2>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-white leading-[1.1] mb-8 font-serif">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-white leading-[1.1] mb-6 md:mb-8 font-serif drop-shadow-2xl">
             Dijana Bošković
           </h1>
-          <div className="h-px w-24 bg-amber-500/50 mb-8" />
-          <p className="text-lg md:text-xl text-gray-200 font-light italic max-w-xl leading-relaxed">
+          <div className="h-px w-24 bg-amber-500/50 mb-6 md:mb-8" />
+          <p className="text-lg md:text-2xl text-gray-100 font-light italic max-w-2xl leading-relaxed drop-shadow-lg">
             "A multifaceted musical voice blending classical discipline with jazz improvisation."
           </p>
         </motion.div>
@@ -119,8 +148,8 @@ function HeroSlideshow() {
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, y: [0, 10, 0] }}
-        transition={{ delay: 2, duration: 2, repeat: Infinity }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 text-white/50"
+        transition={{ delay: 1.5, duration: 2, repeat: Infinity }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 text-white/50"
       >
         <span className="text-xs uppercase tracking-widest">Scroll</span>
       </motion.div>
@@ -128,36 +157,82 @@ function HeroSlideshow() {
   );
 }
 
-// 3. BIO BLOCKS
+// 3. FLIP CARD COMPONENT
+function FlipCard({ frontImage, backImage, alt }: { frontImage: string, backImage: string, alt: string }) {
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  return (
+    <div 
+      className="group relative w-full aspect-4/5 md:aspect-[4/3] cursor-pointer perspective-1000"
+      onClick={() => setIsFlipped(!isFlipped)}
+    >
+      <motion.div
+        className="w-full h-full relative preserve-3d transition-all duration-700"
+        animate={{ rotateY: isFlipped ? 180 : 0 }}
+        transition={{ type: "spring", stiffness: 50, damping: 14 }}
+        style={{ transformStyle: "preserve-3d" }}
+      >
+        {/* FRONT */}
+        <div className="absolute inset-0 w-full h-full backface-hidden rounded-sm overflow-hidden shadow-2xl border border-white/10">
+          <img 
+            src={frontImage} 
+            alt={alt} 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-[#050B14]/10 mix-blend-multiply transition-colors group-hover:bg-[#050B14]/0" />
+          <div className="absolute bottom-4 right-4 text-white/70 text-[10px] uppercase tracking-widest border border-white/20 px-3 py-1 bg-black/20 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity">
+            Flip
+          </div>
+        </div>
+
+        {/* BACK */}
+        <div 
+          className="absolute inset-0 w-full h-full backface-hidden rounded-sm overflow-hidden shadow-2xl border border-white/10"
+          style={{ transform: "rotateY(180deg)" }}
+        >
+          <img 
+            src={backImage} 
+            alt={`${alt} Alternate`} 
+            className="w-full h-full object-cover"
+          />
+           <div className="absolute inset-0 bg-amber-900/10 mix-blend-overlay" />
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+
+// 4. BIO BLOCKS
 function BioBlocks() {
   const sectionVariants: Variants = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0, y: 30 },
     visible: { 
       opacity: 1, 
       y: 0, 
       transition: { 
-        duration: 0.8, 
+        duration: 0.6, 
         ease: "easeOut" as const
       } 
     }
   };
 
   return (
-    <div className="relative z-10 w-full max-w-7xl mx-auto px-6 py-24 md:py-32 space-y-32">
+    <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-12 space-y-20 md:space-y-24">
       
       {/* BLOCK 1 */}
       <motion.section 
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, margin: "-10%" }}
         variants={sectionVariants}
-        className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
+        className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center"
       >
-        <div className="order-2 md:order-1 space-y-6 text-right md:text-left">
-           <h3 className="font-serif text-3xl md:text-4xl text-amber-100/90 italic mb-4">
+        <div className="order-2 md:order-1 space-y-4 md:space-y-6 text-right md:text-left">
+           <h3 className="font-serif text-3xl md:text-4xl text-amber-100/90 italic mb-2">
             The Foundation
           </h3>
-          <div className="space-y-4 text-blue-50/80 font-light leading-relaxed text-lg">
+          <div className="space-y-4 text-blue-50/80 font-light leading-relaxed text-base md:text-lg">
             <p>
               <strong className="text-white font-normal">German-Serbian Composer & Flutist.</strong> Born in Belgrade, Dijana Bošković was recognized early for her extraordinary musical talent, receiving the <span className="text-amber-200">October Prize of the City of Belgrade</span> and multiple first prizes at national competitions.
             </p>
@@ -169,12 +244,12 @@ function BioBlocks() {
             </p>
           </div>
         </div>
-        <div className="order-1 md:order-2 relative group">
-           <div className="absolute inset-0 bg-amber-500/10 blur-2xl -z-10 group-hover:bg-amber-500/20 transition-all duration-700" />
-           <div className="relative aspect-4/5 md:aspect-square overflow-hidden rounded-sm border border-white/10 shadow-2xl bg-gray-900">
-             <img src="/about/block1.jpg" alt="Dijana Performing" className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-[1.5s] ease-in-out" />
-             <div className="absolute inset-0 bg-[#050B14]/20 mix-blend-multiply" />
-           </div>
+        <div className="order-1 md:order-2">
+           <FlipCard 
+             frontImage="/about/block1.jpg" 
+             backImage="/about/block1-back.WEBP" 
+             alt="Dijana Performing" 
+           />
         </div>
       </motion.section>
 
@@ -182,22 +257,22 @@ function BioBlocks() {
       <motion.section 
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, margin: "-10%" }}
         variants={sectionVariants}
-        className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
+        className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center"
       >
-        <div className="order-1 relative group">
-           <div className="absolute inset-0 bg-blue-500/10 blur-2xl -z-10 group-hover:bg-blue-500/20 transition-all duration-700" />
-           <div className="relative aspect-4/5 md:aspect-square overflow-hidden rounded-sm border border-white/10 shadow-2xl bg-gray-900">
-             <img src="/about/block2.jpg" alt="Versus Vox Ensemble" className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-[1.5s] ease-in-out" />
-             <div className="absolute inset-0 bg-[#050B14]/20 mix-blend-multiply" />
-           </div>
+        <div className="order-1">
+           <FlipCard 
+             frontImage="/about/block2.WEBP" 
+             backImage="/about/block2-back.WEBP" 
+             alt="Versus Vox Ensemble" 
+           />
         </div>
-        <div className="order-2 space-y-6">
-           <h3 className="font-serif text-3xl md:text-4xl text-amber-100/90 italic mb-4">
+        <div className="order-2 space-y-4 md:space-y-6">
+           <h3 className="font-serif text-3xl md:text-4xl text-amber-100/90 italic mb-2">
             Versus Vox
           </h3>
-          <div className="space-y-4 text-blue-50/80 font-light leading-relaxed text-lg">
+          <div className="space-y-4 text-blue-50/80 font-light leading-relaxed text-base md:text-lg">
             <p>
               Collaborations with the Kammerphilharmonie Bremen and the Bamberger Solisten, along with jazz performances in venues such as the Münchner Unterfahrt, shaped her multifaceted musical voice.
             </p>
@@ -212,15 +287,15 @@ function BioBlocks() {
       <motion.section 
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, margin: "-10%" }}
         variants={sectionVariants}
-        className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
+        className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center"
       >
-        <div className="order-2 md:order-1 space-y-6 text-right md:text-left">
-           <h3 className="font-serif text-3xl md:text-4xl text-amber-100/90 italic mb-4">
+        <div className="order-2 md:order-1 space-y-4 md:space-y-6 text-right md:text-left">
+           <h3 className="font-serif text-3xl md:text-4xl text-amber-100/90 italic mb-2">
             Recognition & Awards
           </h3>
-          <div className="space-y-4 text-blue-50/80 font-light leading-relaxed text-lg">
+          <div className="space-y-4 text-blue-50/80 font-light leading-relaxed text-base md:text-lg">
             <p>
               Her compositions span solo instruments, chamber music, orchestra, choir, voice, and theater. The chamber orchestra work <span className="text-white font-serif italic">“Concerto for Strings”</span> has been broadcast on leading European radio stations.
             </p>
@@ -231,12 +306,12 @@ function BioBlocks() {
             </div>
           </div>
         </div>
-        <div className="order-1 md:order-2 relative group">
-           <div className="absolute inset-0 bg-amber-500/10 blur-2xl -z-10 group-hover:bg-amber-500/20 transition-all duration-700" />
-           <div className="relative aspect-4/5 md:aspect-square overflow-hidden rounded-sm border border-white/10 shadow-2xl bg-gray-900">
-             <img src="/about/block3.jpg" alt="Award Ceremony" className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-[1.5s] ease-in-out" />
-             <div className="absolute inset-0 bg-[#050B14]/20 mix-blend-multiply" />
-           </div>
+        <div className="order-1 md:order-2">
+           <FlipCard 
+             frontImage="/about/block3.WEBP" 
+             backImage="/about/block3-back.WEBP" 
+             alt="Award Ceremony" 
+           />
         </div>
       </motion.section>
     </div>
@@ -257,21 +332,21 @@ export default function HomePage() {
 
       {/* 3. The Zig-Zag Bio Content */}
       <div className="relative z-10 pb-24">
-        {/* Tailwind v4 gradient syntax */}
-        <div className="h-32 bg-linear-to-b from-transparent to-[#050B14]/50 pointer-events-none" />
+        {/* FIX: Reduced Spacer Height */}
+        <div className="h-12 md:h-20 bg-linear-to-b from-transparent to-[#050B14]/80 pointer-events-none" />
         
         <BioBlocks />
         
         {/* 4. Link back to Work (Now at /work) */}
-        <div className="flex justify-center mt-12">
+        <div className="flex justify-center mt-12 md:mt-16">
            <a href="/work">
             <motion.button 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               whileHover={{ scale: 1.05, borderColor: "rgba(251, 191, 36, 0.8)", color: "rgba(251, 191, 36, 1)" }}
               whileTap={{ scale: 0.95 }}
-              className="px-10 py-4 border border-white/20 text-white/70 transition-all duration-300 uppercase tracking-[0.2em] text-xs font-medium bg-[#050B14]/80 backdrop-blur-md"
+              className="px-12 py-4 border border-white/20 text-white/70 transition-all duration-300 uppercase tracking-[0.2em] text-xs font-medium bg-[#050B14]/80 backdrop-blur-md rounded-full hover:shadow-[0_0_20px_rgba(251,191,36,0.3)]"
             >
               View Musical Works
             </motion.button>
