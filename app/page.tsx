@@ -62,7 +62,7 @@ function StarryBackground() {
 // FIXED: Using lowercase .webp extensions to match standard file naming on servers
 const slides = [
   { src: '/about/1.jpg', position: 'object-top' },    
-  { src: '/about/2.jpg', position: 'object-center' }, 
+  { src: '/about/2.webp', position: 'object-center' }, 
   { src: '/about/3.webp', position: 'object-center' }, // Changed to lowercase
   { src: '/about/4.jpg', position: 'object-top' },    
   { src: '/about/5.webp', position: 'object-center' }, // Changed to lowercase
