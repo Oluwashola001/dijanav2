@@ -5,7 +5,7 @@ import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 // --- COMPONENTS ---
 
-// 1. BACKGROUND WITH FILM GRAIN & SUBTLE NEBULA
+// 1. BACKGROUND
 function StarryBackground() {
   const [stars, setStars] = useState<{ id: number; top: string; left: string; size: string; opacity: number; duration: string }[]>([]);
 
@@ -24,15 +24,10 @@ function StarryBackground() {
 
   return (
     <div className="fixed inset-0 w-full h-full -z-50 bg-[#050B14] overflow-hidden">
-      {/* Base Gradient - Deep Cinematic Blue */}
       <div className="absolute inset-0 bg-linear-to-b from-[#080f24] via-[#050B14] to-[#02050a]" />
-
-      {/* FILM GRAIN TEXTURE */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay" 
            style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }} 
       />
-      
-      {/* ELEGANT AURORA BLOOMS */}
       <motion.div 
         animate={{ opacity: [0.2, 0.4, 0.2] }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
@@ -43,8 +38,6 @@ function StarryBackground() {
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 5 }}
         className="absolute bottom-[-20%] right-[-10%] w-[80vw] h-[80vw] bg-amber-900/10 blur-[180px] rounded-full mix-blend-screen pointer-events-none" 
       />
-      
-      {/* Stars */}
       <div className="absolute inset-0">
         {stars.map((star) => (
           <div
@@ -65,18 +58,18 @@ function StarryBackground() {
   );
 }
 
-// 2. HERO SLIDESHOW (Fixed Positioning)
-// We now define position specifically for each slide to prevent heads getting cut off
+// 2. HERO SLIDESHOW
+// FIXED: Using lowercase .webp extensions to match standard file naming on servers
 const slides = [
-  { src: '/about/1.jpg', position: 'object-top' },    // Top Anchor
+  { src: '/about/1.jpg', position: 'object-top' },    
   { src: '/about/2.jpg', position: 'object-center' }, 
-  { src: '/about/3.WEBP', position: 'object-center' },
-  { src: '/about/4.jpg', position: 'object-top' },    // Top Anchor
-  { src: '/about/5.WEBP', position: 'object-center' },
-  { src: '/about/6.WEBP', position: 'object-center' },
-  { src: '/about/7.WEBP', position: 'object-top' },    // FIX: Anchors top of image (Head) to top of screen
-  { src: '/about/8.WEBP', position: 'object-top' },    // FIX: Anchors top of image (Head) to top of screen
-  { src: '/about/9.WEBP', position: 'object-center' },
+  { src: '/about/3.webp', position: 'object-center' }, // Changed to lowercase
+  { src: '/about/4.jpg', position: 'object-top' },    
+  { src: '/about/5.webp', position: 'object-center' }, // Changed to lowercase
+  { src: '/about/6.webp', position: 'object-center' }, // Changed to lowercase
+  { src: '/about/7.webp', position: 'object-top' },    // Changed to lowercase
+  { src: '/about/8.webp', position: 'object-top' },    // Changed to lowercase
+  { src: '/about/9.webp', position: 'object-center' }, // Changed to lowercase
 ];
 
 function HeroSlideshow() {
@@ -101,17 +94,12 @@ function HeroSlideshow() {
           transition={{ duration: 2, ease: "easeInOut" }}
         >
           <div className="absolute inset-0 bg-gray-900" /> 
-          
-          {/* IMAGE RENDERER with Dynamic Positioning */}
           <img
             src={slides[index].src}
             alt="Dijana Bošković"
-            // We inject the specific position class (object-top vs object-center) here
             className={`w-full h-full object-cover relative z-10 ${slides[index].position}`}
             onError={(e) => { e.currentTarget.style.display = 'none'; }}
           />
-          
-          {/* Very Subtle Pan */}
           <motion.div 
             className="absolute inset-0 z-20"
             animate={{ scale: [1, 1.03], x: [0, 15] }}
@@ -120,11 +108,9 @@ function HeroSlideshow() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Cinematic Vignette */}
       <div className="absolute inset-0 bg-linear-to-t from-[#050B14] via-[#050B14]/20 to-transparent z-10" />
       <div className="absolute inset-0 bg-linear-to-b from-[#050B14]/60 via-transparent to-transparent z-10" />
 
-      {/* Text Content */}
       <div className="absolute inset-0 z-20 flex flex-col justify-end pb-20 md:pb-28 px-6 md:px-20 max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -245,9 +231,10 @@ function BioBlocks() {
           </div>
         </div>
         <div className="order-1 md:order-2">
+           {/* Fixed: Lowercase .webp */}
            <FlipCard 
              frontImage="/about/block1.jpg" 
-             backImage="/about/block1-back.WEBP" 
+             backImage="/about/block1-back.webp" 
              alt="Dijana Performing" 
            />
         </div>
@@ -262,9 +249,10 @@ function BioBlocks() {
         className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center"
       >
         <div className="order-1">
+           {/* Fixed: Lowercase .webp */}
            <FlipCard 
-             frontImage="/about/block2.WEBP" 
-             backImage="/about/block2-back.WEBP" 
+             frontImage="/about/block2.webp" 
+             backImage="/about/block2-back.webp" 
              alt="Versus Vox Ensemble" 
            />
         </div>
@@ -307,9 +295,10 @@ function BioBlocks() {
           </div>
         </div>
         <div className="order-1 md:order-2">
+           {/* Fixed: Lowercase .webp */}
            <FlipCard 
-             frontImage="/about/block3.WEBP" 
-             backImage="/about/block3-back.WEBP" 
+             frontImage="/about/block3.webp" 
+             backImage="/about/block3-back.webp" 
              alt="Award Ceremony" 
            />
         </div>
