@@ -363,7 +363,7 @@ function BioBlocks() {
         </div>
 
         {/* Bottom Text with Vertical Line Styling on Desktop */}
-        <div className="max-w-4xl mx-auto md:border-l-[1px] md:border-amber-200/90 md:pl-6">
+        <div className="max-w-4xl mx-auto md:border-l-[1px] md:border-amber-200/90 md:pl-6 text-center md:text-left">
           <CinematicParagraph>
             Collaborations with the Kammerphilharmonie Bremen and the Bamberger Solisten (from the Bamberger Symphoniker), along with jazz performances in venues such as the Münchner Unterfahrt and on recordings with jazz composers, shaped her multifaceted musical voice.
           </CinematicParagraph>
