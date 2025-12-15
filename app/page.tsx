@@ -21,73 +21,70 @@ const overlayBlocks = [
     start: 5,
     end: 30,
     position: "right",
-    lines: [
-      { text: "Born in Belgrade, Dijana Bošković was recognized early for her extraordinary musical talent,", className: "text-white/90 font-body text-base md:text-lg leading-relaxed" },
-      { text: "receiving the October Prize of the City of Belgrade and multiple first prizes at national competitions.", className: "text-white/90 font-body text-base md:text-lg leading-relaxed" },
-      { text: "She studied flute in Belgrade and at the University of Music in Munich with Prof. Paul Meisen,", className: "text-white/90 font-body text-base md:text-lg leading-relaxed" },
-      { text: "earning both the Artistic Diploma and Master Class certification.", className: "text-white/90 font-body text-base md:text-lg leading-relaxed" }
-    ]
+    content: (
+      <>
+        Born in Belgrade, <span className="text-amber-200/90">Dijana Bošković</span> was recognized early for her extraordinary musical talent, receiving the <span className="text-amber-200/90">October Prize of the City of Belgrade</span> and multiple first prizes at national competitions. She studied <span className="text-amber-200/90">flute in Belgrade</span> and at the <span className="text-amber-200/90">University of Music in Munich</span> with <span className="text-amber-200/90">Prof. Paul Meisen</span>, earning both the Artistic Diploma and Master Class certification.
+      </>
+    )
   },
   {
     id: 3,
     start: 31,
     end: 52,
     position: "left",
-    lines: [
-      { text: "Flute & Performances", className: "font-heading text-2xl md:text-3xl text-amber-200/90 italic mb-2" },
-      { text: "As a versatile musician, Dijana performed as a soloist, in orchestras and chamber ensembles,", className: "text-white/90 font-body text-base md:text-lg leading-relaxed" },
-      { text: "and at renowned festivals including the Schleswig-Holstein Music Festival, the BEMUS Festival in Belgrade,", className: "text-white/90 font-body text-base md:text-lg leading-relaxed" },
-      { text: "and the Hohenloher Kultursommer.", className: "text-white/90 font-body text-base md:text-lg leading-relaxed" },
-      { text: "Collaborations with the Kammerphilharmonie Bremen and the Bamberger Solisten,", className: "text-white/90 font-body text-base md:text-lg leading-relaxed" },
-      { text: "along with jazz performances shaped her multifaceted musical voice.", className: "text-white/90 font-body text-base md:text-lg leading-relaxed" }
-    ]
+    title: "Flute & Performances",
+    content: (
+      <>
+        As a versatile musician, Dijana performed as a soloist, in orchestras and chamber ensembles, and at renowned festivals including the <span className="text-amber-200/90">Schleswig-Holstein Music Festival</span>, the <span className="text-amber-200/90">BEMUS Festival</span> in Belgrade, and the <span className="text-amber-200/90">Hohenloher Kultursommer</span>. Collaborations with the <span className="text-amber-200/90">Kammerphilharmonie Bremen</span> and the <span className="text-amber-200/90">Bamberger Solisten</span>, along with jazz performances in venues such as the <span className="text-amber-200/90">Münchner Unterfahrt</span> and on recordings with jazz composers, shaped her multifaceted musical voice.
+      </>
+    )
   },
   {
     id: 4,
     start: 57,
     end: 77,
     position: "top-center",
-    lines: [
-      { text: "Versus Vox & Composition Studies", className: "font-heading text-2xl md:text-3xl text-amber-200/90 italic mb-2" },
-      { text: "In 2005, she founded the Versus Vox Ensemble in Munich, which she has led ever since,", className: "text-white/90 font-body text-base md:text-lg leading-relaxed" },
-      { text: "blending her own compositions with works by other contemporary and historical composers.", className: "text-white/90 font-body text-base md:text-lg leading-relaxed" },
-      { text: "Her compositional studies with Prof. Manfred Stahnke and Prof. Fredrik Schwenk", className: "text-white/90 font-body text-base md:text-lg leading-relaxed" },
-      { text: "culminated in the orchestral project 'ONE', premiered by the Symphonikern Hamburg.", className: "text-white/90 font-body text-base md:text-lg leading-relaxed" }
-    ]
+    title: "Versus Vox & Composition Studies",
+    content: (
+      <>
+        In 2005, she founded the <span className="text-amber-200/90">Versus Vox Ensemble</span> in Munich, which she has led ever since, blending her own compositions with works by other contemporary and historical composers into vibrant musical experiences. Her <span className="text-amber-200/90">studies in composition</span> with Prof. Manfred Stahnke and Prof. Fredrik Schwenk at the University of Music and Theatre Hamburg culminated in the orchestral project ONE, premiered by the Hamburg Symphony Orchestra.
+      </>
+    )
   },
   {
     id: 5,
     start: 83,
     end: 91,
     position: "top-center",
-    lines: [
-      { text: "\"The work bridges Western and Eastern classical music,", className: "text-white/90 font-body text-xl md:text-2xl leading-relaxed italic text-center" },
-      { text: "exploring new forms of notation and performance practice.\"", className: "text-white/90 font-body text-xl md:text-2xl leading-relaxed italic text-center" }
-    ]
+    content: (
+      <>
+        The work bridges Western and Eastern classical music, exploring new forms of notation and performance practice.
+      </>
+    ),
+    isQuote: true
   },
   {
     id: 6,
     start: 92,
     end: 108,
     position: "left",
-    lines: [
-      { text: "Works, Performances & Awards", className: "font-heading text-2xl md:text-3xl text-amber-200/90 italic mb-2" },
-      { text: "Her compositions span solo instruments, chamber music, orchestra, choir, voice, and theater,", className: "text-white/90 font-body text-base md:text-lg leading-relaxed" },
-      { text: "performed by the Chamber Orchestra Solisten from St. Petersburg, members of the Munich Philharmonic", className: "text-white/90 font-body text-base md:text-lg leading-relaxed" },
-      { text: "and Frankfurt Opera, at the BEMUS Music Festival in Belgrade, and the Tiroler Volksschauspiele.", className: "text-white/90 font-body text-base md:text-lg leading-relaxed" },
-      { text: "The chamber orchestra work 'Concerto for Strings' has been broadcast on leading European radio stations.", className: "text-white/90 font-body text-base md:text-lg leading-relaxed" }
-    ]
+    title: "Works, Performances & Awards",
+    content: (
+      <>
+        Her compositions span <span className="text-amber-200/90">solo instruments, chamber music, orchestra, choir, voice, and theater</span>, performed by the <span className="text-amber-200/90">Chamber Orchestra Solisten from St. Petersburg</span>, members of the <span className="text-amber-200/90">Munich Philharmonic</span> and <span className="text-amber-200/90">Frankfurt Opera</span>, at the <span className="text-amber-200/90">BEMUS Music Festival</span> in Belgrade, and the <span className="text-amber-200/90">Tiroler Volksschauspiele</span>. The chamber orchestra work <span className="text-amber-200/90">"Concerto for Strings"</span> has been broadcast on leading European radio stations.
+      </>
+    )
   },
   {
     id: 7,
     start: 117,
     end: 132,
     position: "top-center",
-    lines: [
-      { text: "For 'Lichtspiele', she received support from the Ernst von Siemens Art Foundation", className: "text-white/90 font-body text-lg md:text-xl leading-relaxed text-center" },
-      { text: "and the Gerhard Trede Foundation, and in 2017 won 1st Prize", className: "text-white/90 font-body text-lg md:text-xl leading-relaxed text-center" },
-      { text: "at the International Choral Music Competition organized by the German Choir Association.", className: "text-white/90 font-body text-lg md:text-xl leading-relaxed text-center" }
-    ]
+    content: (
+      <>
+        For <span className="text-amber-200/90">"Lichtspiele"</span>, she received support from the <span className="text-amber-200/90">Ernst von Siemens Art Foundation</span> and the <span className="text-amber-200/90">Gerhard Trede Foundation</span>, and in 2017 won <span className="text-amber-200/90">1st Prize</span> at the International Choral Music Competition organized by the <span className="text-amber-200/90">German Choir Association</span>.
+      </>
+    )
   }
 ];
 
@@ -126,70 +123,124 @@ function TextBlockWithLineAnimation({
   const duration = block.end - block.start;
   const progress = (currentTime - block.start) / duration;
   
-  const totalLines = block.lines.length;
-  const slideInDuration = 0.5;
-  const eraseStartProgress = 0.75;
-  
-  const getLineVisibility = (lineIndex: number) => {
-    const timePerLine = slideInDuration / totalLines;
-    const lineSlideInStart = lineIndex * timePerLine;
-    const lineSlideInEnd = lineSlideInStart + timePerLine;
+  // Block 1 uses the old line-by-line animation
+  if (block.id === 1 && 'lines' in block) {
+    const totalLines = block.lines.length;
+    const slideInDuration = 0.5;
+    const eraseStartProgress = 0.75;
     
-    const reverseIndex = totalLines - 1 - lineIndex;
-    const eraseTimePerLine = (1 - eraseStartProgress) / totalLines;
-    const lineEraseStart = eraseStartProgress + (reverseIndex * eraseTimePerLine);
-    const lineEraseEnd = lineEraseStart + eraseTimePerLine;
+    const getLineVisibility = (lineIndex: number) => {
+      const timePerLine = slideInDuration / totalLines;
+      const lineSlideInStart = lineIndex * timePerLine;
+      const lineSlideInEnd = lineSlideInStart + timePerLine;
+      
+      const reverseIndex = totalLines - 1 - lineIndex;
+      const eraseTimePerLine = (1 - eraseStartProgress) / totalLines;
+      const lineEraseStart = eraseStartProgress + (reverseIndex * eraseTimePerLine);
+      const lineEraseEnd = lineEraseStart + eraseTimePerLine;
+      
+      if (progress < lineSlideInStart) {
+        return { opacity: 0, x: -50, visible: false };
+      } else if (progress >= lineSlideInStart && progress < lineSlideInEnd) {
+        const slideProgress = (progress - lineSlideInStart) / timePerLine;
+        return { 
+          opacity: slideProgress, 
+          x: -50 * (1 - slideProgress),
+          visible: true 
+        };
+      } else if (progress >= lineSlideInEnd && progress < lineEraseStart) {
+        return { opacity: 1, x: 0, visible: true };
+      } else if (progress >= lineEraseStart && progress < lineEraseEnd) {
+        const eraseProgress = (progress - lineEraseStart) / eraseTimePerLine;
+        return { 
+          opacity: Math.max(0, 1 - eraseProgress), 
+          x: 50 * eraseProgress,
+          visible: true 
+        };
+      } else {
+        return { opacity: 0, x: 50, visible: false };
+      }
+    };
     
-    if (progress < lineSlideInStart) {
-      return { opacity: 0, x: -50, visible: false };
-    } else if (progress >= lineSlideInStart && progress < lineSlideInEnd) {
-      const slideProgress = (progress - lineSlideInStart) / timePerLine;
-      return { 
-        opacity: slideProgress, 
-        x: -50 * (1 - slideProgress),
-        visible: true 
-      };
-    } else if (progress >= lineSlideInEnd && progress < lineEraseStart) {
-      return { opacity: 1, x: 0, visible: true };
-    } else if (progress >= lineEraseStart && progress < lineEraseEnd) {
-      const eraseProgress = (progress - lineEraseStart) / eraseTimePerLine;
-      return { 
-        opacity: Math.max(0, 1 - eraseProgress), 
-        x: 50 * eraseProgress,
-        visible: true 
-      };
-    } else {
-      return { opacity: 0, x: 50, visible: false };
-    }
-  };
+    const overlayVisible = progress < 1;
+    
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: overlayVisible ? 1 : 0 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
+        className={`absolute z-20 p-6 rounded-xl backdrop-blur-md bg-[#223C5E]/15 border border-white/5 shadow-2xl overflow-hidden ${positionClasses}`}
+      >
+        {block.lines.map((line, lineIndex) => {
+          const lineVis = getLineVisibility(lineIndex);
+          
+          if (!lineVis.visible && lineVis.opacity === 0) return null;
+          
+          return (
+            <motion.div
+              key={`line-${lineIndex}`}
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: lineVis.opacity, x: lineVis.x }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className={line.className}
+            >
+              {line.text}
+            </motion.div>
+          );
+        })}
+      </motion.div>
+    );
+  }
   
-  const overlayVisible = progress < 1;
+  // Blocks 2-7: New smooth fade-in/fade-out animation
+  const waitDuration = 0.15; // 2 seconds wait (as proportion of total duration)
+  const fadeInDuration = 0.08; // Fade in duration
+  const fadeOutStart = 0.85; // Start fading out at 85% through
+  const fadeOutDuration = 0.15; // Fade out duration
+  
+  let opacity = 0;
+  
+  if (progress < waitDuration) {
+    // Wait phase - no text
+    opacity = 0;
+  } else if (progress >= waitDuration && progress < (waitDuration + fadeInDuration)) {
+    // Fade in phase
+    const fadeProgress = (progress - waitDuration) / fadeInDuration;
+    opacity = fadeProgress;
+  } else if (progress >= (waitDuration + fadeInDuration) && progress < fadeOutStart) {
+    // Static read phase
+    opacity = 1;
+  } else if (progress >= fadeOutStart && progress < (fadeOutStart + fadeOutDuration)) {
+    // Fade out phase
+    const fadeProgress = (progress - fadeOutStart) / fadeOutDuration;
+    opacity = 1 - fadeProgress;
+  } else {
+    // Completely faded out
+    opacity = 0;
+  }
+  
+  if (opacity === 0) return null;
+  
+  const titleClass = "font-heading text-lg md:text-xl text-amber-200/90 italic mb-3";
+  const bodyClass = block.isQuote 
+    ? "text-white/95 font-body text-lg md:text-xl leading-relaxed italic" 
+    : "text-white/95 font-body text-base md:text-lg leading-relaxed";
   
   return (
     <motion.div
       initial={{ opacity: 0 }}
-      animate={{ opacity: overlayVisible ? 1 : 0 }}
+      animate={{ opacity }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
-      className={`absolute z-20 p-6 rounded-xl backdrop-blur-md bg-[#223C5E]/30 border border-white/5 shadow-2xl overflow-hidden ${positionClasses}`}
+      transition={{ duration: 0.6, ease: "easeInOut" }}
+      className={`absolute z-20 p-6 md:p-8 rounded-xl backdrop-blur-md bg-[#223C5E]/15 border border-white/5 shadow-2xl ${positionClasses}`}
     >
-      {block.lines.map((line, lineIndex) => {
-        const lineVis = getLineVisibility(lineIndex);
-        
-        if (!lineVis.visible && lineVis.opacity === 0) return null;
-        
-        return (
-          <motion.div
-            key={`line-${lineIndex}`}
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: lineVis.opacity, x: lineVis.x }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className={line.className}
-          >
-            {line.text}
-          </motion.div>
-        );
-      })}
+      {'title' in block && block.title && (
+        <div className={titleClass}>{block.title}</div>
+      )}
+      <div className={bodyClass}>
+        {block.content}
+      </div>
     </motion.div>
   );
 }
