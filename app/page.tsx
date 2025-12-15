@@ -9,7 +9,7 @@ const overlayBlocks = [
   {
     id: 1,
     start: 0,
-    end: 4,
+    end: 4.5,
     position: "top-left",
     lines: [
       { text: "Dijana Bošković", className: "font-heading text-4xl md:text-6xl text-white font-bold" },
@@ -194,7 +194,7 @@ function TextBlockWithLineAnimation({
   }
   
   // Blocks 2-7: New smooth fade-in/fade-out animation
-  const waitDuration = 0.15; // 2 seconds wait (as proportion of total duration)
+  const waitDuration = 0.08; // 2 seconds wait (as proportion of total duration)
   const fadeInDuration = 0.08; // Fade in duration
   const fadeOutStart = 0.85; // Start fading out at 85% through
   const fadeOutDuration = 0.15; // Fade out duration
