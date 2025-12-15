@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 
 // --- CONFIGURATION ---
 const overlayBlocks = [
@@ -127,8 +127,8 @@ function TextBlockWithLineAnimation({
   const progress = (currentTime - block.start) / duration;
   
   const totalLines = block.lines.length;
-  const slideInDuration = 0.5; // 50% of time for slide-in
-  const eraseStartProgress = 0.75; // Start erasing at 75%
+  const slideInDuration = 0.5;
+  const eraseStartProgress = 0.75;
   
   const getLineVisibility = (lineIndex: number) => {
     const timePerLine = slideInDuration / totalLines;
@@ -287,51 +287,189 @@ function FlipCard({ frontImage, backImage, alt }: { frontImage: string, backImag
   );
 }
 
+// Animated Image Component - triggers every scroll
+function AnimatedImage({ children }: { children: React.ReactNode }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { 
+    once: false,  // Animate every time it comes into view
+    amount: 0.2   // Trigger when 20% visible
+  });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, scale: 0.95, y: 30 }}
+      animate={isInView ? { 
+        opacity: 1, 
+        scale: 1, 
+        y: 0 
+      } : { 
+        opacity: 0, 
+        scale: 0.95, 
+        y: 30 
+      }}
+      transition={{
+        duration: 0.5,
+        ease: [0.25, 0.1, 0.25, 1]
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+// Animated Paragraph Component - triggers every scroll
+function AnimatedParagraph({ 
+  children, 
+  delay = 0 
+}: { 
+  children: React.ReactNode, 
+  delay?: number 
+}) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { 
+    once: false,  // Animate every time it comes into view
+    amount: 0.3   // Trigger when 30% visible
+  });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { 
+        opacity: 1, 
+        y: 0 
+      } : { 
+        opacity: 0, 
+        y: 20 
+      }}
+      transition={{
+        duration: 0.4,
+        delay: delay,
+        ease: "easeOut"
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+// Animated Heading Component
+function AnimatedHeading({ children }: { children: React.ReactNode }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { 
+    once: false,
+    amount: 0.5
+  });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 15 }}
+      animate={isInView ? { 
+        opacity: 1, 
+        y: 0 
+      } : { 
+        opacity: 0, 
+        y: 15 
+      }}
+      transition={{
+        duration: 0.4,
+        ease: "easeOut"
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 function BioBlocks() {
   return (
     <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-24 space-y-32">
       
+      {/* Block 1 */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div className="order-2 md:order-1 space-y-6 text-center md:text-left">
-          <div>
-            <h2 className="font-heading text-3xl text-white font-bold">Dijana Bošković</h2>
-            <h3 className="font-heading text-xl text-amber-200/90 italic">German-Serbian Composer & Flutist</h3>
-          </div>
+          <AnimatedHeading>
+            <div>
+              <h2 className="font-heading text-3xl text-white font-bold">Dijana Bošković</h2>
+              <h3 className="font-heading text-xl text-amber-200/90 italic">German-Serbian Composer & Flutist</h3>
+            </div>
+          </AnimatedHeading>
+          
           <div className="space-y-4 text-blue-50 font-body leading-relaxed">
-            <p>Born in Belgrade, Dijana Bošković was recognized early for her extraordinary musical talent, receiving the October Prize of the City of Belgrade and multiple first prizes at national competitions.</p>
-            <p>She studied flute in Belgrade and at the University of Music in Munich with Prof. Paul Meisen, earning both the Artistic Diploma and Master Class certification. As a versatile musician, Dijana performed as a soloist, in orchestras and chamber ensembles.</p>
-            <p>Collaborations with the Kammerphilharmonie Bremen and the Bamberger Solisten (from the Bamberger Symphoniker), along with jazz performances in venues such as the Münchner Unterfahrt and on recordings with jazz composers, shaped her multifaceted musical voice.</p>
+            <AnimatedParagraph delay={0.1}>
+              <p>Born in Belgrade, Dijana Bošković was recognized early for her extraordinary musical talent, receiving the October Prize of the City of Belgrade and multiple first prizes at national competitions.</p>
+            </AnimatedParagraph>
+            
+            <AnimatedParagraph delay={0.2}>
+              <p>She studied flute in Belgrade and at the University of Music in Munich with Prof. Paul Meisen, earning both the Artistic Diploma and Master Class certification. As a versatile musician, Dijana performed as a soloist, in orchestras and chamber ensembles.</p>
+            </AnimatedParagraph>
+            
+            <AnimatedParagraph delay={0.3}>
+              <p>Collaborations with the Kammerphilharmonie Bremen and the Bamberger Solisten (from the Bamberger Symphoniker), along with jazz performances in venues such as the Münchner Unterfahrt and on recordings with jazz composers, shaped her multifaceted musical voice.</p>
+            </AnimatedParagraph>
           </div>
         </div>
+        
         <div className="order-1 md:order-2">
-           <FlipCard frontImage="/about/block1.jpg" backImage="/about/block1-back.webp" alt="Dijana Performing" />
+          <AnimatedImage>
+            <FlipCard frontImage="/about/block1.jpg" backImage="/about/block1-back.webp" alt="Dijana Performing" />
+          </AnimatedImage>
         </div>
       </section>
 
+      {/* Block 2 */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div className="order-1">
-           <FlipCard frontImage="/about/block2.webp" backImage="/about/block2-back.webp" alt="Versus Vox Ensemble" />
+          <AnimatedImage>
+            <FlipCard frontImage="/about/block2.webp" backImage="/about/block2-back.webp" alt="Versus Vox Ensemble" />
+          </AnimatedImage>
         </div>
+        
         <div className="order-2 space-y-6 text-center md:text-left">
-          <h3 className="font-heading text-3xl text-amber-200/90 italic">Versus Vox & Composition Studies</h3>
+          <AnimatedHeading>
+            <h3 className="font-heading text-3xl text-amber-200/90 italic">Versus Vox & Composition Studies</h3>
+          </AnimatedHeading>
+          
           <div className="space-y-4 text-blue-50 font-body leading-relaxed">
-            <p>In 2005, she founded the Versus Vox Ensemble in Munich, which she has led ever since, blending her own compositions with works by other contemporary and historical composers into vibrant musical experiences.</p>
-            <p>Her compositional studies with Prof. Manfred Stahnke and Prof. Fredrik Schwenk at the University of Music and Theatre Hamburg culminated in the orchestral project "ONE", premiered by the Symphonikern Hamburg.</p>
+            <AnimatedParagraph delay={0.1}>
+              <p>In 2005, she founded the Versus Vox Ensemble in Munich, which she has led ever since, blending her own compositions with works by other contemporary and historical composers into vibrant musical experiences.</p>
+            </AnimatedParagraph>
+            
+            <AnimatedParagraph delay={0.2}>
+              <p>Her compositional studies with Prof. Manfred Stahnke and Prof. Fredrik Schwenk at the University of Music and Theatre Hamburg culminated in the orchestral project "ONE", premiered by the Symphonikern Hamburg.</p>
+            </AnimatedParagraph>
           </div>
         </div>
       </section>
 
+      {/* Block 3 */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div className="order-2 md:order-1 space-y-6 text-center md:text-left">
-          <h3 className="font-heading text-3xl text-amber-200/90 italic">Works, Performances & Awards</h3>
+          <AnimatedHeading>
+            <h3 className="font-heading text-3xl text-amber-200/90 italic">Works, Performances & Awards</h3>
+          </AnimatedHeading>
+          
           <div className="space-y-4 text-blue-50 font-body leading-relaxed">
-            <p>Her compositions span solo instruments, chamber music, orchestra, choir, voice, and theater, performed by the Chamber Orchestra Solisten from St. Petersburg, members of the Munich Philharmonic and Frankfurt Opera, at the BEMUS Music Festival in Belgrade, and the Tiroler Volksschauspiele.</p>
-            <p>The chamber orchestra work "Concerto for Strings" has been broadcast on leading European radio stations.</p>
-            <p>For "Lichtspiele", she received support from the Ernst von Siemens Art Foundation and the Gerhard Trede Foundation, and in 2017 won 1st Prize at the International Choral Music Competition organized by the German Choir Association.</p>
+            <AnimatedParagraph delay={0.1}>
+              <p>Her compositions span solo instruments, chamber music, orchestra, choir, voice, and theater, performed by the Chamber Orchestra Solisten from St. Petersburg, members of the Munich Philharmonic and Frankfurt Opera, at the BEMUS Music Festival in Belgrade, and the Tiroler Volksschauspiele.</p>
+            </AnimatedParagraph>
+            
+            <AnimatedParagraph delay={0.2}>
+              <p>The chamber orchestra work "Concerto for Strings" has been broadcast on leading European radio stations.</p>
+            </AnimatedParagraph>
+            
+            <AnimatedParagraph delay={0.3}>
+              <p>For "Lichtspiele", she received support from the Ernst von Siemens Art Foundation and the Gerhard Trede Foundation, and in 2017 won 1st Prize at the International Choral Music Competition organized by the German Choir Association.</p>
+            </AnimatedParagraph>
           </div>
         </div>
+        
         <div className="order-1 md:order-2">
-           <FlipCard frontImage="/about/block3.webp" backImage="/about/block3-back.webp" alt="Award Ceremony" />
+          <AnimatedImage>
+            <FlipCard frontImage="/about/block3.webp" backImage="/about/block3-back.webp" alt="Award Ceremony" />
+          </AnimatedImage>
         </div>
       </section>
 
@@ -341,6 +479,14 @@ function BioBlocks() {
 
 export default function HomePage() {
   const [splashFinished, setSplashFinished] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
+    return () => {
+      document.documentElement.style.scrollBehavior = '';
+    };
+  }, []);
 
   return (
     <main className="relative min-h-screen w-full bg-[#223C5E] text-white overflow-x-hidden">
