@@ -124,7 +124,7 @@ function TextBlockWithLineAnimation({
   const progress = (currentTime - block.start) / duration;
   
   // Block 1 uses the old line-by-line animation
-  if (block.id === 1 && 'lines' in block) {
+  if (block.id === 1 && 'lines' in block && block.lines) {
     const totalLines = block.lines.length;
     const slideInDuration = 0.5;
     const eraseStartProgress = 0.75;
@@ -312,7 +312,7 @@ function FlipCard({ frontImage, backImage, alt }: { frontImage: string, backImag
 
   return (
     <div 
-      className="group relative w-full aspect-4/5 md:aspect-[4/3] cursor-pointer perspective-1000"
+      className="group relative w-full aspect-4/5 md:aspect-4/3 cursor-pointer perspective-1000"
       onClick={() => setIsFlipped(!isFlipped)}
     >
       <motion.div
