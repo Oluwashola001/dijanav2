@@ -8,19 +8,21 @@ import { motion, AnimatePresence, useInView } from 'framer-motion';
 const overlayBlocks = [
   {
     id: 1,
-    start: 0,
-    end: 4.5,
+    desktop: { start: 2, end: 6 },
+    mobile: { start: 2, end: 5 },
     position: "top-left",
+    mobilePosition: "left",
     lines: [
       { text: "Dijana Bošković", className: "font-heading text-4xl md:text-6xl text-white font-bold" },
-      { text: "German-Serbian Composer & Flutist", className: "font-heading text-xl md:text-2xl text-amber-200/90 italic" }
+      { text: "German-Serbian Composer & Flutist", className: "font-heading text-2xl md:text-3xl text-amber-200/90 italic" }
     ]
   },
   {
     id: 2,
-    start: 5,
-    end: 30,
+    desktop: { start: 9, end: 27 },
+    mobile: { start: 9, end: 27 },
     position: "right",
+    mobilePosition: "upper-right",
     content: (
       <>
         Born in Belgrade, <span className="text-amber-200/90">Dijana Bošković</span> was recognized early for her extraordinary musical talent, receiving the <span className="text-amber-200/90">October Prize of the City of Belgrade</span> and multiple first prizes at national competitions. She studied <span className="text-amber-200/90">flute in Belgrade</span> and at the <span className="text-amber-200/90">University of Music in Munich</span> with <span className="text-amber-200/90">Prof. Paul Meisen</span>, earning both the Artistic Diploma and Master Class certification.
@@ -29,9 +31,10 @@ const overlayBlocks = [
   },
   {
     id: 3,
-    start: 31,
-    end: 52,
+    desktop: { start: 31, end: 49 },
+    mobile: { start: 31, end: 48 },
     position: "left",
+    mobilePosition: "top-center",
     title: "Flute & Performances",
     content: (
       <>
@@ -41,9 +44,10 @@ const overlayBlocks = [
   },
   {
     id: 4,
-    start: 57,
-    end: 77,
+    desktop: { start: 56, end: 78 },
+    mobile: { start: 56, end: 77 },
     position: "top-center",
+    mobilePosition: "top-center",
     title: "Versus Vox & Composition Studies",
     content: (
       <>
@@ -53,9 +57,10 @@ const overlayBlocks = [
   },
   {
     id: 5,
-    start: 83,
-    end: 91,
+    desktop: { start: 82, end: 92 },
+    mobile: { start: 82, end: 92 },
     position: "top-center",
+    mobilePosition: "top-center",
     content: (
       <>
         The work bridges Western and Eastern classical music, exploring new forms of notation and performance practice.
@@ -65,9 +70,10 @@ const overlayBlocks = [
   },
   {
     id: 6,
-    start: 92,
-    end: 108,
+    desktop: { start: 96, end: 114 },
+    mobile: { start: 96, end: 113 },
     position: "left",
+    mobilePosition: "top-center",
     title: "Works, Performances & Awards",
     content: (
       <>
@@ -77,9 +83,10 @@ const overlayBlocks = [
   },
   {
     id: 7,
-    start: 117,
-    end: 132,
+    desktop: { start: 129, end: 149 },
+    mobile: { start: 129, end: 149 },
     position: "top-center",
+    mobilePosition: "top-center",
     content: (
       <>
         For <span className="text-amber-200/90">"Lichtspiele"</span>, she received support from the <span className="text-amber-200/90">Ernst von Siemens Art Foundation</span> and the <span className="text-amber-200/90">Gerhard Trede Foundation</span>, and in 2017 won <span className="text-amber-200/90">1st Prize</span> at the International Choral Music Competition organized by the <span className="text-amber-200/90">German Choir Association</span>.
@@ -114,16 +121,19 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
 function TextBlockWithLineAnimation({ 
   block, 
   currentTime, 
-  positionClasses 
+  positionClasses,
+  isMobile
 }: { 
   block: typeof overlayBlocks[0], 
   currentTime: number, 
-  positionClasses: string 
+  positionClasses: string,
+  isMobile: boolean
 }) {
-  const duration = block.end - block.start;
-  const progress = (currentTime - block.start) / duration;
+  const timing = isMobile ? block.mobile : block.desktop;
+  const duration = timing.end - timing.start;
+  const progress = (currentTime - timing.start) / duration;
   
-  // Block 1 uses the old line-by-line animation
+  // Block 1 uses the line-by-line animation
   if (block.id === 1 && 'lines' in block && block.lines) {
     const totalLines = block.lines.length;
     const slideInDuration = 0.5;
@@ -170,7 +180,7 @@ function TextBlockWithLineAnimation({
         animate={{ opacity: overlayVisible ? 1 : 0 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.2 }}
-        className={`absolute z-20 p-6 rounded-xl backdrop-blur-md bg-[#223C5E]/15 border border-white/5 shadow-2xl overflow-hidden ${positionClasses}`}
+        className={`absolute z-20 p-4 md:p-6 rounded-xl backdrop-blur-md bg-[#223C5E]/15 border border-white/5 shadow-2xl overflow-hidden ${positionClasses}`}
       >
         {block.lines.map((line, lineIndex) => {
           const lineVis = getLineVisibility(lineIndex);
@@ -193,39 +203,34 @@ function TextBlockWithLineAnimation({
     );
   }
   
-  // Blocks 2-7: New smooth fade-in/fade-out animation
-  const waitDuration = 0.08; // 2 seconds wait (as proportion of total duration)
-  const fadeInDuration = 0.08; // Fade in duration
-  const fadeOutStart = 0.85; // Start fading out at 85% through
-  const fadeOutDuration = 0.15; // Fade out duration
+  // Blocks 2-7: Smooth fade-in/fade-out animation
+  const waitDuration = 0.08;
+  const fadeInDuration = 0.08;
+  const fadeOutStart = 0.85;
+  const fadeOutDuration = 0.15;
   
   let opacity = 0;
   
   if (progress < waitDuration) {
-    // Wait phase - no text
     opacity = 0;
   } else if (progress >= waitDuration && progress < (waitDuration + fadeInDuration)) {
-    // Fade in phase
     const fadeProgress = (progress - waitDuration) / fadeInDuration;
     opacity = fadeProgress;
   } else if (progress >= (waitDuration + fadeInDuration) && progress < fadeOutStart) {
-    // Static read phase
     opacity = 1;
   } else if (progress >= fadeOutStart && progress < (fadeOutStart + fadeOutDuration)) {
-    // Fade out phase
     const fadeProgress = (progress - fadeOutStart) / fadeOutDuration;
     opacity = 1 - fadeProgress;
   } else {
-    // Completely faded out
     opacity = 0;
   }
   
   if (opacity === 0) return null;
   
-  const titleClass = "font-heading text-lg md:text-xl text-amber-200/90 italic mb-3";
+  const titleClass = "font-heading text-base md:text-xl text-amber-200/90 italic mb-2 md:mb-3";
   const bodyClass = block.isQuote 
-    ? "text-white/95 font-body text-lg md:text-xl leading-relaxed italic" 
-    : "text-white/95 font-body text-base md:text-lg leading-relaxed";
+    ? "text-white/95 font-body text-sm md:text-xl leading-relaxed italic" 
+    : "text-white/95 font-body text-xs md:text-lg leading-relaxed";
   
   return (
     <motion.div
@@ -233,7 +238,7 @@ function TextBlockWithLineAnimation({
       animate={{ opacity }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.6, ease: "easeInOut" }}
-      className={`absolute z-20 p-6 md:p-8 rounded-xl backdrop-blur-md bg-[#223C5E]/15 border border-white/5 shadow-2xl ${positionClasses}`}
+      className={`absolute z-20 p-4 md:p-10 rounded-xl backdrop-blur-md bg-[#223C5E]/15 border border-white/5 shadow-2xl ${positionClasses}`}
     >
       {'title' in block && block.title && (
         <div className={titleClass}>{block.title}</div>
@@ -248,6 +253,18 @@ function TextBlockWithLineAnimation({
 function HeroVideo({ startPlaying }: { startPlaying: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [currentTime, setCurrentTime] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     if (startPlaying && videoRef.current) {
@@ -261,15 +278,27 @@ function HeroVideo({ startPlaying }: { startPlaying: boolean }) {
     }
   };
 
-  const activeBlock = overlayBlocks.find(block => currentTime >= block.start && currentTime <= block.end);
+  const activeBlock = overlayBlocks.find(block => {
+    const timing = isMobile ? block.mobile : block.desktop;
+    return currentTime >= timing.start && currentTime <= timing.end;
+  });
 
-  const getPositionClasses = (pos: string) => {
-    switch (pos) {
-      case 'top-left': return 'top-8 left-8 md:top-20 md:left-8 max-w-md items-start text-left';
-      case 'left': return 'top-1/2 -translate-y-1/2 left-8 md:left-20 max-w-lg items-start text-left';
-      case 'top-center': return 'top-12 left-1/2 -translate-x-1/2 max-w-2xl items-center text-center';
-      case 'right': return 'top-1/2 -translate-y-1/2 right-8 md:right-20 max-w-lg items-start text-left'; 
-      default: return 'bottom-20 left-1/2 -translate-x-1/2 max-w-2xl items-center text-center';
+  const getPositionClasses = (pos: string, mobilePos: string) => {
+    const position = isMobile ? mobilePos : pos;
+    
+    switch (position) {
+      case 'top-left': 
+        return 'top-8 left-8 md:top-20 md:left-8 max-w-xs md:max-w-md items-start text-left';
+      case 'left': 
+        return 'top-1/2 -translate-y-1/2 left-4 md:left-20 max-w-xs md:max-w-2xl items-start text-left';
+      case 'upper-right':
+        return 'top-8 right-4 md:right-20 max-w-xs md:max-w-2xl items-start text-left';
+      case 'top-center': 
+        return 'top-12 md:top-16 left-1/2 -translate-x-1/2 max-w-xs md:max-w-3xl items-center text-center';
+      case 'right': 
+        return 'top-1/2 -translate-y-1/2 right-4 md:right-20 max-w-xs md:max-w-2xl items-start text-left'; 
+      default: 
+        return 'bottom-20 left-1/2 -translate-x-1/2 max-w-xs md:max-w-3xl items-center text-center';
     }
   };
 
@@ -283,6 +312,7 @@ function HeroVideo({ startPlaying }: { startPlaying: boolean }) {
         onTimeUpdate={handleTimeUpdate}
         className="w-full h-full object-cover object-center"
       >
+        <source src="/videos/about-film-mobile.webm" type="video/webm" media="(max-width: 768px)" />
         <source src="/videos/about-film.webm" type="video/webm" />
         <source src="/videos/about-film.mp4" type="video/mp4" />
       </video>
@@ -295,7 +325,8 @@ function HeroVideo({ startPlaying }: { startPlaying: boolean }) {
             key={activeBlock.id}
             block={activeBlock}
             currentTime={currentTime}
-            positionClasses={getPositionClasses(activeBlock.position)}
+            positionClasses={getPositionClasses(activeBlock.position, activeBlock.mobilePosition)}
+            isMobile={isMobile}
           />
         )}
       </AnimatePresence>
@@ -307,69 +338,7 @@ function HeroVideo({ startPlaying }: { startPlaying: boolean }) {
   );
 }
 
-function FlipCard({ frontImage, backImage, alt }: { frontImage: string, backImage: string, alt: string }) {
-  const [isFlipped, setIsFlipped] = useState(false);
-
-  return (
-    <div 
-      className="group relative w-full aspect-4/5 md:aspect-4/3 cursor-pointer perspective-1000"
-      onClick={() => setIsFlipped(!isFlipped)}
-    >
-      <motion.div
-        className="w-full h-full relative preserve-3d transition-all duration-700"
-        animate={{ rotateY: isFlipped ? 180 : 0 }}
-        transition={{ type: "spring", stiffness: 50, damping: 14 }}
-        style={{ transformStyle: "preserve-3d" }}
-      >
-        <div className="absolute inset-0 w-full h-full backface-hidden rounded-[25px] overflow-hidden shadow-2xl border border-white/10">
-          <img src={frontImage} alt={alt} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-[#223C5E]/20 mix-blend-multiply transition-colors group-hover:bg-transparent" />
-          <div className="absolute bottom-4 right-4 text-white/80 text-[10px] uppercase tracking-widest border border-white/20 px-3 py-1 bg-[#223C5E]/60 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity font-body">Flip</div>
-        </div>
-        <div 
-          className="absolute inset-0 w-full h-full backface-hidden rounded-[25px] overflow-hidden shadow-2xl border border-white/10"
-          style={{ transform: "rotateY(180deg)" }}
-        >
-          <img src={backImage} alt={`${alt} Alternate`} className="w-full h-full object-cover" />
-           <div className="absolute inset-0 bg-amber-900/10 mix-blend-overlay" />
-        </div>
-      </motion.div>
-    </div>
-  );
-}
-
-// Animated Image Component - triggers every scroll
-function AnimatedImage({ children }: { children: React.ReactNode }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { 
-    once: false,  // Animate every time it comes into view
-    amount: 0.2   // Trigger when 20% visible
-  });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, scale: 0.95, y: 30 }}
-      animate={isInView ? { 
-        opacity: 1, 
-        scale: 1, 
-        y: 0 
-      } : { 
-        opacity: 0, 
-        scale: 0.95, 
-        y: 30 
-      }}
-      transition={{
-        duration: 0.5,
-        ease: [0.25, 0.1, 0.25, 1]
-      }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-// Animated Paragraph Component - triggers every scroll
+// Animated Paragraph Component
 function AnimatedParagraph({ 
   children, 
   delay = 0 
@@ -379,8 +348,8 @@ function AnimatedParagraph({
 }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { 
-    once: false,  // Animate every time it comes into view
-    amount: 0.3   // Trigger when 30% visible
+    once: false,
+    amount: 0.3
   });
 
   return (
@@ -436,93 +405,86 @@ function AnimatedHeading({ children }: { children: React.ReactNode }) {
 
 function BioBlocks() {
   return (
-    <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-24 space-y-32">
+    <div className="relative z-10 w-full max-w-4xl mx-auto px-6 py-24 space-y-20">
       
       {/* Block 1 */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <div className="order-2 md:order-1 space-y-6 text-center md:text-left">
-          <AnimatedHeading>
-            <div>
-              <h2 className="font-heading text-3xl text-white font-bold">Dijana Bošković</h2>
-              <h3 className="font-heading text-xl text-amber-200/90 italic">German-Serbian Composer & Flutist</h3>
-            </div>
-          </AnimatedHeading>
-          
-          <div className="space-y-4 text-blue-50 font-body leading-relaxed">
-            <AnimatedParagraph delay={0.1}>
-              <p>Born in Belgrade, Dijana Bošković was recognized early for her extraordinary musical talent, receiving the October Prize of the City of Belgrade and multiple first prizes at national competitions.</p>
-            </AnimatedParagraph>
-            
-            <AnimatedParagraph delay={0.2}>
-              <p>She studied flute in Belgrade and at the University of Music in Munich with Prof. Paul Meisen, earning both the Artistic Diploma and Master Class certification. As a versatile musician, Dijana performed as a soloist, in orchestras and chamber ensembles.</p>
-            </AnimatedParagraph>
-            
-            <AnimatedParagraph delay={0.3}>
-              <p>Collaborations with the Kammerphilharmonie Bremen and the Bamberger Solisten (from the Bamberger Symphoniker), along with jazz performances in venues such as the Münchner Unterfahrt and on recordings with jazz composers, shaped her multifaceted musical voice.</p>
-            </AnimatedParagraph>
+      <section className="space-y-6 text-center">
+        <AnimatedHeading>
+          <div>
+            <h2 className="font-heading text-3xl md:text-4xl text-white font-bold mb-2">Dijana Bošković</h2>
+            <h3 className="font-heading text-xl md:text-2xl text-amber-200/90 italic">German-Serbian Composer & Flutist</h3>
           </div>
-        </div>
+        </AnimatedHeading>
         
-        <div className="order-1 md:order-2">
-          <AnimatedImage>
-            <FlipCard frontImage="/about/block1.jpg" backImage="/about/block1-back.webp" alt="Dijana Performing" />
-          </AnimatedImage>
+        <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-lg">
+          <AnimatedParagraph delay={0.1}>
+            <p>Born in Belgrade, Dijana Bošković was recognized early for her extraordinary musical talent, receiving the October Prize of the City of Belgrade and multiple first prizes at national competitions.</p>
+          </AnimatedParagraph>
+          
+          <AnimatedParagraph delay={0.2}>
+            <p>She studied flute in Belgrade and at the University of Music in Munich with Prof. Paul Meisen, earning both the Artistic Diploma and Master Class certification. As a versatile musician, Dijana performed as a soloist, in orchestras and chamber ensembles.</p>
+          </AnimatedParagraph>
+          
+          <AnimatedParagraph delay={0.3}>
+            <p>Collaborations with the Kammerphilharmonie Bremen and the Bamberger Solisten (from the Bamberger Symphoniker), along with jazz performances in venues such as the Münchner Unterfahrt and on recordings with jazz composers, shaped her multifaceted musical voice.</p>
+          </AnimatedParagraph>
         </div>
       </section>
 
       {/* Block 2 */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <div className="order-1">
-          <AnimatedImage>
-            <FlipCard frontImage="/about/block2.webp" backImage="/about/block2-back.webp" alt="Versus Vox Ensemble" />
-          </AnimatedImage>
-        </div>
+      <section className="space-y-6 text-center">
+        <AnimatedHeading>
+          <h3 className="font-heading text-xl md:text-2xl text-amber-200/90 italic">Versus Vox & Composition Studies</h3>
+        </AnimatedHeading>
         
-        <div className="order-2 space-y-6 text-center md:text-left">
-          <AnimatedHeading>
-            <h3 className="font-heading text-3xl text-amber-200/90 italic">Versus Vox & Composition Studies</h3>
-          </AnimatedHeading>
+        <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-lg">
+          <AnimatedParagraph delay={0.1}>
+            <p>In 2005, she founded the Versus Vox Ensemble in Munich, which she has led ever since, blending her own compositions with works by other contemporary and historical composers into vibrant musical experiences.</p>
+          </AnimatedParagraph>
           
-          <div className="space-y-4 text-blue-50 font-body leading-relaxed">
-            <AnimatedParagraph delay={0.1}>
-              <p>In 2005, she founded the Versus Vox Ensemble in Munich, which she has led ever since, blending her own compositions with works by other contemporary and historical composers into vibrant musical experiences.</p>
-            </AnimatedParagraph>
-            
-            <AnimatedParagraph delay={0.2}>
-              <p>Her compositional studies with Prof. Manfred Stahnke and Prof. Fredrik Schwenk at the University of Music and Theatre Hamburg culminated in the orchestral project "ONE", premiered by the Symphonikern Hamburg.</p>
-            </AnimatedParagraph>
-          </div>
+          <AnimatedParagraph delay={0.2}>
+            <p>Her compositional studies with Prof. Manfred Stahnke and Prof. Fredrik Schwenk at the University of Music and Theatre Hamburg culminated in the orchestral project "ONE", premiered by the Symphonikern Hamburg.</p>
+          </AnimatedParagraph>
         </div>
       </section>
 
       {/* Block 3 */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <div className="order-2 md:order-1 space-y-6 text-center md:text-left">
-          <AnimatedHeading>
-            <h3 className="font-heading text-3xl text-amber-200/90 italic">Works, Performances & Awards</h3>
-          </AnimatedHeading>
-          
-          <div className="space-y-4 text-blue-50 font-body leading-relaxed">
-            <AnimatedParagraph delay={0.1}>
-              <p>Her compositions span solo instruments, chamber music, orchestra, choir, voice, and theater, performed by the Chamber Orchestra Solisten from St. Petersburg, members of the Munich Philharmonic and Frankfurt Opera, at the BEMUS Music Festival in Belgrade, and the Tiroler Volksschauspiele.</p>
-            </AnimatedParagraph>
-            
-            <AnimatedParagraph delay={0.2}>
-              <p>The chamber orchestra work "Concerto for Strings" has been broadcast on leading European radio stations.</p>
-            </AnimatedParagraph>
-            
-            <AnimatedParagraph delay={0.3}>
-              <p>For "Lichtspiele", she received support from the Ernst von Siemens Art Foundation and the Gerhard Trede Foundation, and in 2017 won 1st Prize at the International Choral Music Competition organized by the German Choir Association.</p>
-            </AnimatedParagraph>
-          </div>
-        </div>
+      <section className="space-y-6 text-center">
+        <AnimatedHeading>
+          <h3 className="font-heading text-xl md:text-2xl text-amber-200/90 italic">Works, Performances & Awards</h3>
+        </AnimatedHeading>
         
-        <div className="order-1 md:order-2">
-          <AnimatedImage>
-            <FlipCard frontImage="/about/block3.webp" backImage="/about/block3-back.webp" alt="Award Ceremony" />
-          </AnimatedImage>
+        <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-lg">
+          <AnimatedParagraph delay={0.1}>
+            <p>Her compositions span solo instruments, chamber music, orchestra, choir, voice, and theater, performed by the Chamber Orchestra Solisten from St. Petersburg, members of the Munich Philharmonic and Frankfurt Opera, at the BEMUS Music Festival in Belgrade, and the Tiroler Volksschauspiele.</p>
+          </AnimatedParagraph>
+          
+          <AnimatedParagraph delay={0.2}>
+            <p>The chamber orchestra work "Concerto for Strings" has been broadcast on leading European radio stations.</p>
+          </AnimatedParagraph>
+          
+          <AnimatedParagraph delay={0.3}>
+            <p>For "Lichtspiele", she received support from the Ernst von Siemens Art Foundation and the Gerhard Trede Foundation, and in 2017 won 1st Prize at the International Choral Music Competition organized by the German Choir Association.</p>
+          </AnimatedParagraph>
         </div>
       </section>
+
+      {/* Final Image */}
+      <motion.section 
+        className="pt-16"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.3 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        <div className="max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+          <img 
+            src="/about/bio-final.webp" 
+            alt="Dijana Bošković Portrait" 
+            className="w-full h-auto object-cover"
+          />
+        </div>
+      </motion.section>
 
     </div>
   );
