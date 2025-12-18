@@ -47,9 +47,9 @@ function TreeBackground({ onGolden }: { onGolden: () => void }) {
         className="absolute top-0 left-0 w-full h-full object-cover object-center"
       >
         {/* Mobile Source */}
-        <source src="/videos/work-idle-mobile.mp4" type="video/mp4" media="(max-width: 768px)" />
+        <source src="/videos/work-idle-mobile.webm" type="video/webm" media="(max-width: 768px)" />
         {/* Desktop Source */}
-        <source src="/videos/work-idle.mp4" type="video/mp4" />
+        <source src="/videos/work-idle.webm" type="video/webm" />
       </video>
 
       {/* INTRO VIDEO (Plays once) */}
