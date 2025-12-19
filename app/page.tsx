@@ -413,7 +413,7 @@ function HeroVideo({ startPlaying }: { startPlaying: boolean }) {
         playsInline
         loop 
         onTimeUpdate={handleTimeUpdate}
-        className="w-full h-full object-cover object-center"
+        className="w-full h-full object-cover object-left md:object-center"
       >
         <source src="/videos/about-film-mobile.webm" type="video/webm" media="(max-width: 768px)" />
         <source src="/videos/about-film.webm" type="video/webm" />
