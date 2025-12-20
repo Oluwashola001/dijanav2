@@ -57,7 +57,7 @@ const overlayBlocks = [
     desktop: { start: 54, end: 79 },
     mobile: { start: 54, end: 79 },
     position: "top-center-higher",
-    mobilePosition: "mid-screen", // Keeps existing setting
+    mobilePosition: "full-width", // Keeps existing setting
     title: "Versus Vox & Composition Studies",
     content: (
       <>
@@ -199,7 +199,7 @@ function TextBlockWithLineAnimation({
         // FIX 3: Increased duration to 0.8s so the slide is clearly visible
         transition={{ duration: 0.8, ease: "easeOut" }}
         
-        className={`absolute z-20 p-4 md:p-6 rounded-xl backdrop-blur-md bg-[#223C5E]/10 border border-white/5 shadow-2xl overflow-hidden ${positionClasses}`}
+        className={`absolute z-20 p-4 md:p-6 rounded-xl bg-[#223C5E]/15 border border-white/5 shadow-2xl overflow-hidden ${positionClasses}`}
       >
         {linesToShow.map((line, lineIndex) => {
           const lineVis = getLineVisibility(lineIndex);
@@ -251,7 +251,7 @@ function TextBlockWithLineAnimation({
     if (isMobile) {
       // Mobile padding adjustments
       // ✏️ CLIENT CHANGE: Block 2 - Increased height by 1/2 (from py-12 to py-18)
-      if (block.id === 2) return 'py-14 px-4'; // Block 2: Much taller on mobile
+      if (block.id === 2) return 'py-14 px-6'; // Block 2: Much taller on mobile
       // ✏️ CLIENT CHANGE: Block 3 - Increased height 2x (from py-6 to py-12)
       if (block.id === 3) return 'py-12 px-4'; // Block 3: Doubled height
       // ✏️ CLIENT CHANGE: Block 4 - Increased height 2x (from py-6 to py-12)
@@ -266,10 +266,10 @@ function TextBlockWithLineAnimation({
     }
     // Desktop padding
     // ✏️ CLIENT CHANGE: Block 2 - Width reduced by 1/4 (padding remains same, width adjusted in positioning)
-    if (block.id === 2) return 'md:py-20 md:px-8'; // Block 2: Even taller
+    if (block.id === 2) return 'md:py-12 md:px-8'; // Block 2: Even taller
     // ✏️ CLIENT CHANGE: Block 4 - Reduced height slightly (from py-10 to py-8)
     if (block.id === 4) return 'md:py-8 md:px-10'; // Block 4: Slightly reduced height, wider
-    if (block.id === 6) return 'md:py-16 md:px-8'; // Block 6: Taller
+    if (block.id === 6) return 'md:py-8 md:px-8'; // Block 6: Taller
     if (block.id === 7) return 'md:py-14 md:px-12'; // Block 7: Wider
     return 'md:py-12 md:px-8'; // Default for others
   };
@@ -293,12 +293,12 @@ function TextBlockWithLineAnimation({
       if (block.id === 7) return "text-white/95 font-body text-sm md:text-xl leading-relaxed";
     }
     // Desktop text sizes
-    if (block.id === 2) return "text-white/95 font-body text-xs md:text-xl leading-relaxed"; // Block 2: Larger text
-    if (block.id === 3) return "text-white/95 font-body text-xs md:text-xl leading-relaxed";
-    if (block.id === 4) return "text-white/95 font-body text-xs md:text-xl leading-relaxed"; // Block 4: Text fills wider space
-    if (block.id === 6) return "text-white/95 font-body text-xs md:text-xl leading-relaxed";
-    if (block.id === 7) return "text-white/95 font-body text-xs md:text-xl leading-relaxed"; // Block 7: Text fills wider space
-    if (block.isQuote) return "text-white/95 font-body text-sm md:text-2xl leading-relaxed italic";
+    if (block.id === 2) return "text-white/95 font-body text-xs md:text-[1.75rem] leading-relaxed"; // Block 2: Larger text
+    if (block.id === 3) return "text-white/95 font-body text-xs md:text-2xl leading-relaxed";
+    if (block.id === 4) return "text-white/95 font-body text-xs md:text-[1.7rem] leading-relaxed"; // Block 4: Text fills wider space
+    if (block.id === 6) return "text-white/95 font-body text-xs md:text-[1.7rem] leading-relaxed";
+    if (block.id === 7) return "text-white/95 font-body text-xs md:text-[1.7rem] leading-relaxed"; // Block 7: Text fills wider space
+    if (block.isQuote) return "text-white/95 font-body text-sm md:text-4xl leading-relaxed italic";
     return "text-white/95 font-body text-xs md:text-lg leading-relaxed";
   };
   
@@ -310,7 +310,7 @@ function TextBlockWithLineAnimation({
       animate={{ opacity }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.6, ease: "easeInOut" }}
-      className={`absolute z-20 p-4 ${getPadding()} rounded-xl backdrop-blur-md bg-[#223C5E]/10 border border-white/5 shadow-2xl ${positionClasses}`}
+      className={`absolute z-20 p-4 ${getPadding()} rounded-xl bg-[#223C5E]/15 border border-white/5 shadow-2xl ${positionClasses}`}
     >
       {'title' in block && block.title && (
         <div className={titleClass}>{block.title}</div>
@@ -372,13 +372,13 @@ function HeroVideo({ startPlaying }: { startPlaying: boolean }) {
           return 'top-12 right-4 w-[56%] max-w-sm items-start text-left'; // Block 2: Narrower width, taller
         case 'full-width':
           // ✏️ CLIENT CHANGE: Blocks 3 & 4 ONLY - Kept at 15%
-          return 'top-[15%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center'; 
+          return 'top-[4%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center'; 
         case 'high-up':
            // FIX: New case just for Block 6 to move it up
-           return 'top-[8%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center';
+           return 'top-[4%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center';
           case 'mid-screen':
           // ✏️ CLIENT CHANGE: Blocks 5 & 7 ONLY - Centered at 40%
-          return 'top-[30%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center';
+          return 'top-[20%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center';
         default: 
           return 'top-12 left-1/2 -translate-x-1/2 w-[85%] max-w-md items-center text-center';
       }
@@ -389,15 +389,15 @@ function HeroVideo({ startPlaying }: { startPlaying: boolean }) {
       case 'top-left': 
         return 'top-8 left-8 md:top-20 md:left-8 max-w-xs md:max-w-md items-start text-left';
       case 'left': 
-        return 'top-1/2 -translate-y-1/2 left-4 md:left-16 max-w-xs md:max-w-xl items-start text-left'; // Block 6: Shifted more left
+        return 'top-1/2 -translate-y-1/2 left-4 md:left-16 max-w-xs md:max-w-2xl items-start text-left'; // Block 6: Shifted more left
       case 'upper-right':
         // ✏️ CLIENT CHANGE: Block 2 DESKTOP - Width reduced by 1/4 (from max-w-xl to max-w-lg)
         return 'top-8 right-4 md:right-8 max-w-xs md:max-w-lg items-start text-left'; // Block 2: Width reduced by 1/4
       case 'top-center': 
-        return 'top-12 md:top-16 left-1/2 -translate-x-1/2 max-w-xs md:max-w-3xl items-center text-center';
+        return 'top-12 md:top-16 left-1/2 -translate-x-1/2 max-w-xs w-full md:max-w-6xl items-center text-center';
       case 'top-center-higher':
         // ✏️ CLIENT CHANGE: Block 4 DESKTOP - Moved up slightly (from top-12 to top-8)
-        return 'top-8 md:top-8 left-1/2 -translate-x-1/2 max-w-xs md:max-w-4xl items-center text-center'; // Block 4: Moved up
+        return 'top-8 md:top-8 left-1/2 -translate-x-1/2 w-full max-w-xs md:max-w-6xl items-center text-center'; // Block 4: Moved up
       case 'right': 
         return 'top-1/2 -translate-y-1/2 right-4 md:right-6 max-w-xs md:max-w-xl items-start text-left'; // Block 7: Wider
       default: 
@@ -420,7 +420,7 @@ function HeroVideo({ startPlaying }: { startPlaying: boolean }) {
         <source src="/videos/about-film.mp4" type="video/mp4" />
       </video>
 
-      <div className="absolute inset-0 bg-[#223C5E]/10 pointer-events-none" />
+      <div className="absolute inset-0 bg-[#223C5E]/15 pointer-events-none" />
       
       <AnimatePresence mode="wait">
         {activeBlock && (
