@@ -9,22 +9,12 @@ const overlayBlocks = [
   {
     id: 1,
     desktop: { start: 1, end: 7 },
-    mobile: { start: 1, end: 3.5 },
-    position: "top-left",
-    mobilePosition: "top-center",
-    lines: [
-      { text: "Dijana Bošković", className: "font-heading text-4xl md:text-6xl text-white font-bold" },
-      { text: "German-Serbian Composer & Flutist", className: "font-heading text-2xl md:text-3xl text-amber-200/90 italic" }
-    ]
-  },
-  {
-    id: 1.5,
-    desktop: { start: 0, end: 0 },
-    mobile: { start: 3.5, end: 7 },
+    mobile: { start: 1, end: 7 },
     position: "top-left",
     mobilePosition: "top-left",
     lines: [
-      { text: "German-Serbian Composer & Flutist", className: "font-heading text-2xl text-amber-200/90 italic" }
+      { text: "Dijana Bošković", className: "font-heading text-4xl md:text-6xl text-white font-bold" },
+      { text: "German-Serbian Composer & Flutist", className: "font-heading text-2xl md:text-3xl text-amber-200/90 italic" }
     ]
   },
   {
@@ -143,52 +133,40 @@ function TextBlockWithLineAnimation({
   const duration = timing.end - timing.start;
   const progress = (currentTime - timing.start) / duration;
   
-  // Block 1 and 1.5 use slide-in then fade-out animation (ALL LINES TOGETHER)
-  if ((block.id === 1 || block.id === 1.5) && 'lines' in block && block.lines) {
-    // DESKTOP: Simple fade in after 1 sec, then fade out
-    // MOBILE: Keep slide-in animation
-    const waitDuration = isMobile ? 0 : 0.167; // ~1 second wait on desktop (1/6 of duration)
-    const fadeInDuration = isMobile ? 0.5 : 0.1;
+  // Block 1 uses simple fade-in then fade-out animation (ALL LINES TOGETHER)
+  if (block.id === 1 && 'lines' in block && block.lines) {
+    // Same fade animation for both mobile and desktop
+    const waitDuration = 0.167; // ~1 second wait (1/6 of duration)
+    const fadeInDuration = 0.1;
     const fadeOutStart = 0.75;
     const fadeOutDuration = 0.25;
     
-    // Calculate opacity and x position for the entire block
+    // Calculate opacity for the entire block
     let blockOpacity = 0;
-    let blockX = isMobile ? -50 : 0; // No sliding on desktop
     
     if (progress < waitDuration) {
       blockOpacity = 0;
-      blockX = isMobile ? -50 : 0;
     } else if (progress >= waitDuration && progress < (waitDuration + fadeInDuration)) {
       const fadeProgress = (progress - waitDuration) / fadeInDuration;
       blockOpacity = fadeProgress;
-      if (isMobile) {
-        blockX = -50 * (1 - fadeProgress);
-      }
     } else if (progress >= (waitDuration + fadeInDuration) && progress < fadeOutStart) {
       blockOpacity = 1;
-      blockX = 0;
     } else if (progress >= fadeOutStart && progress < (fadeOutStart + fadeOutDuration)) {
       const fadeProgress = (progress - fadeOutStart) / fadeOutDuration;
       blockOpacity = Math.max(0, 1 - fadeProgress);
-      blockX = 0;
     } else {
       blockOpacity = 0;
-      blockX = 0;
     }
     
     const overlayVisible = progress < 1;
     
-    // Special handling for mobile block 1 - show only first line
-    const linesToShow = isMobile && block.id === 1 ? block.lines.slice(0, 1) : block.lines;
-    
-    // Check if this is the subtitle block on mobile
-    const isSubtitleBlock = isMobile && block.id === 1.5;
+    // Show all lines for block 1
+    const linesToShow = block.lines;
 
     return (
       <motion.div
-        initial={{ opacity: 0, x: isSubtitleBlock ? -100 : (isMobile ? -50 : 0) }}
-        animate={{ opacity: overlayVisible ? blockOpacity : 0, x: blockX }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: overlayVisible ? blockOpacity : 0 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         className={`absolute z-20 p-4 md:p-6 rounded-xl bg-[#223C5E]/15 border border-white/5 shadow-2xl overflow-hidden ${positionClasses}`}
@@ -232,7 +210,7 @@ function TextBlockWithLineAnimation({
   // Get dynamic padding based on block ID
   const getPadding = () => {
     if (isMobile) {
-      if (block.id === 2) return 'py-8 px-6';
+      if (block.id === 2) return 'py-12 px-6';
       if (block.id === 3) return 'py-12 px-4';
       if (block.id === 4) return 'py-12 px-4';
       if (block.id === 5) return 'py-8 px-4';
@@ -247,12 +225,12 @@ function TextBlockWithLineAnimation({
     return 'md:py-12 md:px-8';
   };
   
-  const titleClass = "font-heading text-base md:text-2xl text-amber-200/90 italic mb-2 md:mb-4";
+  const titleClass = "font-heading text-3xl md:text-4xl text-amber-200/90 italic mb-2 md:mb-4";
   
   // Get dynamic body text size based on block ID
   const getBodyClass = () => {
     if (isMobile) {
-      if (block.id === 2) return "text-white/95 font-body text-xl md:text-xl leading-relaxed";
+      if (block.id === 2) return "text-white/95 font-body text-[1.4rem] md:text-xl leading-relaxed";
       if (block.id === 3) return "text-white/95 font-body text-lg md:text-xl leading-relaxed";
       if (block.id === 4) return "text-white/95 font-body text-lg md:text-xl leading-relaxed";
       if (block.id === 5) return "text-white/95 font-body text-lg md:text-2xl leading-relaxed italic";
@@ -329,9 +307,9 @@ function HeroVideo({ startPlaying }: { startPlaying: boolean }) {
         case 'top-center': 
           return 'top-14 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[85%] max-w-md items-center text-center';
         case 'top-left':
-          return 'top-[20%] left-4 w-[60%] max-w-xs items-start text-left';
+          return 'top-[6%] left-4 w-[60%] max-w-xs items-start text-left';
         case 'upper-right':
-          return 'top-12 right-4 w-[56%] max-w-sm items-start text-left';
+          return 'top-12 right-4 w-[80%] max-w-sm items-center text-center';
         case 'full-width':
           return 'top-[4%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center'; 
         case 'high-up':
@@ -348,7 +326,7 @@ function HeroVideo({ startPlaying }: { startPlaying: boolean }) {
       case 'top-left': 
         return 'top-8 left-8 md:top-20 md:left-8 max-w-xs md:max-w-md items-start text-left';
       case 'left': 
-        return 'top-1/2 -translate-y-1/2 left-4 md:left-16 max-w-xs md:max-w-2xl items-start text-left';
+        return 'top-1/2 -translate-y-1/2 left-4 md:left-16 max-w-xs md:max-w-2xl items-center text-center';
       case 'upper-right':
         return 'top-8 right-4 md:right-8 max-w-xs md:max-w-lg items-start text-left';
       case 'top-center': 
@@ -356,7 +334,7 @@ function HeroVideo({ startPlaying }: { startPlaying: boolean }) {
       case 'top-center-higher':
         return 'top-8 md:top-8 left-1/2 -translate-x-1/2 w-full max-w-xs md:max-w-6xl items-center text-center';
       case 'right': 
-        return 'top-1/2 -translate-y-1/2 right-4 md:right-6 max-w-xs md:max-w-xl items-start text-left';
+        return 'top-1/2 -translate-y-1/2 right-4 md:right-6 max-w-xs md:max-w-xl items-center text-center';
       default: 
         return 'bottom-20 left-1/2 -translate-x-1/2 max-w-xs md:max-w-2xl items-center text-center';
     }
