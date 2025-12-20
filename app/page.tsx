@@ -524,7 +524,7 @@ function BioBlocks() {
           <img 
             src="/about/bio-final.webp" 
             alt="Dijana Bošković Portrait" 
-            className="w-full h-auto md:h-[400px] object-cover object-top"
+            className="w-full h-[400px] md:h-[400px] object-cover object-top"
           />
         </div>
       </motion.section>
