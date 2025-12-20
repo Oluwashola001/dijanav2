@@ -9,7 +9,7 @@ const overlayBlocks = [
   {
     id: 1,
     desktop: { start: 1, end: 7 },
-    mobile: { start: 1, end: 3.5 }, // Dijana name block - starts immediately
+    mobile: { start: 1, end: 3.5 },
     position: "top-left",
     mobilePosition: "top-center",
     lines: [
@@ -18,9 +18,9 @@ const overlayBlocks = [
     ]
   },
   {
-    id: 1.5, // New block for second part of mobile split
-    desktop: { start: 0, end: 0 }, // Not shown on desktop
-    mobile: { start: 3.5, end: 7 }, // Second part - subtitle
+    id: 1.5,
+    desktop: { start: 0, end: 0 },
+    mobile: { start: 3.5, end: 7 },
     position: "top-left",
     mobilePosition: "top-left",
     lines: [
@@ -44,7 +44,7 @@ const overlayBlocks = [
     desktop: { start: 29, end: 50 },
     mobile: { start: 29, end: 50 },
     position: "left",
-    mobilePosition: "full-width", // Keeps existing setting
+    mobilePosition: "full-width",
     title: "Flute & Performances",
     content: (
       <>
@@ -57,7 +57,7 @@ const overlayBlocks = [
     desktop: { start: 54, end: 79 },
     mobile: { start: 54, end: 79 },
     position: "top-center-higher",
-    mobilePosition: "full-width", // Keeps existing setting
+    mobilePosition: "full-width",
     title: "Versus Vox & Composition Studies",
     content: (
       <>
@@ -70,7 +70,7 @@ const overlayBlocks = [
     desktop: { start: 80, end: 94 },
     mobile: { start: 80, end: 94 },
     position: "top-center",
-    mobilePosition: "mid-screen", // UPDATED: Changed from full-width to mid-screen
+    mobilePosition: "mid-screen",
     content: (
       <>
         The work bridges Western and Eastern classical music, exploring new forms of notation and performance practice.
@@ -83,7 +83,7 @@ const overlayBlocks = [
     desktop: { start: 93, end: 115 },
     mobile: { start: 94, end: 115 },
     position: "left",
-    mobilePosition: "high-up", // UPDATED: Changed from full-width to mid-screen
+    mobilePosition: "high-up",
     title: "Works, Performances & Awards",
     content: (
       <>
@@ -96,7 +96,7 @@ const overlayBlocks = [
     desktop: { start: 127, end: 149 },
     mobile: { start: 127, end: 149 },
     position: "top-center",
-    mobilePosition: "mid-screen", // UPDATED: Changed from full-width to mid-screen
+    mobilePosition: "mid-screen",
     content: (
       <>
         For <span className="text-amber-200/90">"Lichtspiele"</span>, she received support from the <span className="text-amber-200/90">Ernst von Siemens Art Foundation</span> and the <span className="text-amber-200/90">Gerhard Trede Foundation</span>, and in 2017 won <span className="text-amber-200/90">1st Prize</span> at the International Choral Music Competition organized by the <span className="text-amber-200/90">German Choir Association</span>.
@@ -143,40 +143,39 @@ function TextBlockWithLineAnimation({
   const duration = timing.end - timing.start;
   const progress = (currentTime - timing.start) / duration;
   
-  // Block 1 and 1.5 use slide-in then fade-out animation
+  // Block 1 and 1.5 use slide-in then fade-out animation (ALL LINES TOGETHER)
   if ((block.id === 1 || block.id === 1.5) && 'lines' in block && block.lines) {
-    const totalLines = block.lines.length;
-    const slideInDuration = 0.5;
+    // DESKTOP: Simple fade in after 1 sec, then fade out
+    // MOBILE: Keep slide-in animation
+    const waitDuration = isMobile ? 0 : 0.167; // ~1 second wait on desktop (1/6 of duration)
+    const fadeInDuration = isMobile ? 0.5 : 0.1;
     const fadeOutStart = 0.75;
     const fadeOutDuration = 0.25;
     
-    const getLineVisibility = (lineIndex: number) => {
-      const timePerLine = slideInDuration / totalLines;
-      const lineSlideInStart = lineIndex * timePerLine;
-      const lineSlideInEnd = lineSlideInStart + timePerLine;
-      
-      if (progress < lineSlideInStart) {
-        return { opacity: 0, x: -50, visible: false };
-      } else if (progress >= lineSlideInStart && progress < lineSlideInEnd) {
-        const slideProgress = (progress - lineSlideInStart) / timePerLine;
-        return { 
-          opacity: slideProgress, 
-          x: -50 * (1 - slideProgress),
-          visible: true 
-        };
-      } else if (progress >= lineSlideInEnd && progress < fadeOutStart) {
-        return { opacity: 1, x: 0, visible: true };
-      } else if (progress >= fadeOutStart && progress < (fadeOutStart + fadeOutDuration)) {
-        const fadeProgress = (progress - fadeOutStart) / fadeOutDuration;
-        return { 
-          opacity: Math.max(0, 1 - fadeProgress), 
-          x: 0,
-          visible: true 
-        };
-      } else {
-        return { opacity: 0, x: 0, visible: false };
+    // Calculate opacity and x position for the entire block
+    let blockOpacity = 0;
+    let blockX = isMobile ? -50 : 0; // No sliding on desktop
+    
+    if (progress < waitDuration) {
+      blockOpacity = 0;
+      blockX = isMobile ? -50 : 0;
+    } else if (progress >= waitDuration && progress < (waitDuration + fadeInDuration)) {
+      const fadeProgress = (progress - waitDuration) / fadeInDuration;
+      blockOpacity = fadeProgress;
+      if (isMobile) {
+        blockX = -50 * (1 - fadeProgress);
       }
-    };
+    } else if (progress >= (waitDuration + fadeInDuration) && progress < fadeOutStart) {
+      blockOpacity = 1;
+      blockX = 0;
+    } else if (progress >= fadeOutStart && progress < (fadeOutStart + fadeOutDuration)) {
+      const fadeProgress = (progress - fadeOutStart) / fadeOutDuration;
+      blockOpacity = Math.max(0, 1 - fadeProgress);
+      blockX = 0;
+    } else {
+      blockOpacity = 0;
+      blockX = 0;
+    }
     
     const overlayVisible = progress < 1;
     
@@ -188,36 +187,20 @@ function TextBlockWithLineAnimation({
 
     return (
       <motion.div
-        // FIX 1: Start from left (-100) if it is the subtitle block
-        initial={{ opacity: 0, x: isSubtitleBlock ? -100 : 0 }}
-        
-        // FIX 2: Animate to position 0
-        animate={{ opacity: overlayVisible ? 1 : 0, x: 0 }}
-        
+        initial={{ opacity: 0, x: isSubtitleBlock ? -100 : (isMobile ? -50 : 0) }}
+        animate={{ opacity: overlayVisible ? blockOpacity : 0, x: blockX }}
         exit={{ opacity: 0 }}
-        
-        // FIX 3: Increased duration to 0.8s so the slide is clearly visible
         transition={{ duration: 0.8, ease: "easeOut" }}
-        
         className={`absolute z-20 p-4 md:p-6 rounded-xl bg-[#223C5E]/15 border border-white/5 shadow-2xl overflow-hidden ${positionClasses}`}
       >
-        {linesToShow.map((line, lineIndex) => {
-          const lineVis = getLineVisibility(lineIndex);
-          
-          if (!lineVis.visible && lineVis.opacity === 0) return null;
-          
-          return (
-            <motion.div
-              key={`line-${lineIndex}`}
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: lineVis.opacity, x: lineVis.x }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className={line.className}
-            >
-              {line.text}
-            </motion.div>
-          );
-        })}
+        {linesToShow.map((line, lineIndex) => (
+          <div
+            key={`line-${lineIndex}`}
+            className={line.className}
+          >
+            {line.text}
+          </div>
+        ))}
       </motion.div>
     );
   }
@@ -249,29 +232,19 @@ function TextBlockWithLineAnimation({
   // Get dynamic padding based on block ID
   const getPadding = () => {
     if (isMobile) {
-      // Mobile padding adjustments
-      // ✏️ CLIENT CHANGE: Block 2 - Increased height by 1/2 (from py-12 to py-18)
-      if (block.id === 2) return 'py-14 px-6'; // Block 2: Much taller on mobile
-      // ✏️ CLIENT CHANGE: Block 3 - Increased height 2x (from py-6 to py-12)
-      if (block.id === 3) return 'py-12 px-4'; // Block 3: Doubled height
-      // ✏️ CLIENT CHANGE: Block 4 - Increased height 2x (from py-6 to py-12)
-      if (block.id === 4) return 'py-12 px-4'; // Block 4: Doubled height
-      // ✏️ CLIENT CHANGE: Block 5 - Standard (will be centered via positioning)
-      if (block.id === 5) return 'py-8 px-4'; // Block 5: Standard
-      // ✏️ CLIENT CHANGE: Block 6 - Increased height by 1/2 (from py-5 to py-8)
-      if (block.id === 6) return 'py-8 px-4'; // Block 6: Increased height
-      // ✏️ CLIENT CHANGE: Block 7 - Increased height (from py-6 to py-10)
-      if (block.id === 7) return 'py-10 px-6'; // Block 7: Increased height and width
+      if (block.id === 2) return 'py-8 px-6';
+      if (block.id === 3) return 'py-12 px-4';
+      if (block.id === 4) return 'py-12 px-4';
+      if (block.id === 5) return 'py-8 px-4';
+      if (block.id === 6) return 'py-8 px-4';
+      if (block.id === 7) return 'py-10 px-6';
       return 'py-8 px-4';
     }
-    // Desktop padding
-    // ✏️ CLIENT CHANGE: Block 2 - Width reduced by 1/4 (padding remains same, width adjusted in positioning)
-    if (block.id === 2) return 'md:py-12 md:px-8'; // Block 2: Even taller
-    // ✏️ CLIENT CHANGE: Block 4 - Reduced height slightly (from py-10 to py-8)
-    if (block.id === 4) return 'md:py-8 md:px-10'; // Block 4: Slightly reduced height, wider
-    if (block.id === 6) return 'md:py-8 md:px-8'; // Block 6: Taller
-    if (block.id === 7) return 'md:py-14 md:px-12'; // Block 7: Wider
-    return 'md:py-12 md:px-8'; // Default for others
+    if (block.id === 2) return 'md:py-12 md:px-8';
+    if (block.id === 4) return 'md:py-8 md:px-10';
+    if (block.id === 6) return 'md:py-8 md:px-8';
+    if (block.id === 7) return 'md:py-14 md:px-12';
+    return 'md:py-12 md:px-8';
   };
   
   const titleClass = "font-heading text-base md:text-2xl text-amber-200/90 italic mb-2 md:mb-4";
@@ -279,25 +252,18 @@ function TextBlockWithLineAnimation({
   // Get dynamic body text size based on block ID
   const getBodyClass = () => {
     if (isMobile) {
-      // Mobile text size adjustments
-      // ✏️ CLIENT CHANGE: Block 2 - Increased text size (from text-sm to text-base) to fit new height
-      if (block.id === 2) return "text-white/95 font-body text-base md:text-xl leading-relaxed"; // Block 2: Larger text on mobile
-      // ✏️ CLIENT CHANGE: Block 3 - Increased text size (from text-xs to text-sm) for 2x height
-      if (block.id === 3) return "text-white/95 font-body text-sm md:text-xl leading-relaxed";
-      // ✏️ CLIENT CHANGE: Block 4 - Increased text size (from text-xs to text-sm) for 2x height
-      if (block.id === 4) return "text-white/95 font-body text-sm md:text-xl leading-relaxed";
-      if (block.id === 5) return "text-white/95 font-body text-sm md:text-2xl leading-relaxed italic";
-      // ✏️ CLIENT CHANGE: Block 6 - Increased text size (from text-xs to text-sm) to fit new height
-      if (block.id === 6) return "text-white/95 font-body text-sm md:text-xl leading-relaxed";
-      // ✏️ CLIENT CHANGE: Block 7 - Increased text size (from text-xs to text-sm) for new dimensions
-      if (block.id === 7) return "text-white/95 font-body text-sm md:text-xl leading-relaxed";
+      if (block.id === 2) return "text-white/95 font-body text-xl md:text-xl leading-relaxed";
+      if (block.id === 3) return "text-white/95 font-body text-lg md:text-xl leading-relaxed";
+      if (block.id === 4) return "text-white/95 font-body text-lg md:text-xl leading-relaxed";
+      if (block.id === 5) return "text-white/95 font-body text-lg md:text-2xl leading-relaxed italic";
+      if (block.id === 6) return "text-white/95 font-body text-lg md:text-xl leading-relaxed";
+      if (block.id === 7) return "text-white/95 font-body text-lg md:text-xl leading-relaxed";
     }
-    // Desktop text sizes
-    if (block.id === 2) return "text-white/95 font-body text-xs md:text-[1.75rem] leading-relaxed"; // Block 2: Larger text
+    if (block.id === 2) return "text-white/95 font-body text-xs md:text-[1.75rem] leading-relaxed";
     if (block.id === 3) return "text-white/95 font-body text-xs md:text-2xl leading-relaxed";
-    if (block.id === 4) return "text-white/95 font-body text-xs md:text-[1.7rem] leading-relaxed"; // Block 4: Text fills wider space
+    if (block.id === 4) return "text-white/95 font-body text-xs md:text-[1.7rem] leading-relaxed";
     if (block.id === 6) return "text-white/95 font-body text-xs md:text-[1.7rem] leading-relaxed";
-    if (block.id === 7) return "text-white/95 font-body text-xs md:text-[1.7rem] leading-relaxed"; // Block 7: Text fills wider space
+    if (block.id === 7) return "text-white/95 font-body text-xs md:text-[1.7rem] leading-relaxed";
     if (block.isQuote) return "text-white/95 font-body text-sm md:text-4xl leading-relaxed italic";
     return "text-white/95 font-body text-xs md:text-lg leading-relaxed";
   };
@@ -359,25 +325,18 @@ function HeroVideo({ startPlaying }: { startPlaying: boolean }) {
     const position = isMobile ? mobilePos : pos;
     
     if (isMobile) {
-      // Mobile positioning with width adjustments
       switch (position) {
         case 'top-center': 
-          // ✏️ CLIENT CHANGE: Block 1 & 1.5 - Adjusted
           return 'top-14 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[85%] max-w-md items-center text-center';
         case 'top-left':
-          // ✏️ CLIENT CHANGE: Block 1.5 (subtitle) - Moved down to middle north-west, reduced width
           return 'top-[20%] left-4 w-[60%] max-w-xs items-start text-left';
         case 'upper-right':
-          // ✏️ CLIENT CHANGE: Block 2 - Width reduced by 1/4 (from 75% to 56%)
-          return 'top-12 right-4 w-[56%] max-w-sm items-start text-left'; // Block 2: Narrower width, taller
+          return 'top-12 right-4 w-[56%] max-w-sm items-start text-left';
         case 'full-width':
-          // ✏️ CLIENT CHANGE: Blocks 3 & 4 ONLY - Kept at 15%
           return 'top-[4%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center'; 
         case 'high-up':
-           // FIX: New case just for Block 6 to move it up
-           return 'top-[4%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center';
-          case 'mid-screen':
-          // ✏️ CLIENT CHANGE: Blocks 5 & 7 ONLY - Centered at 40%
+          return 'top-[4%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center';
+        case 'mid-screen':
           return 'top-[20%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center';
         default: 
           return 'top-12 left-1/2 -translate-x-1/2 w-[85%] max-w-md items-center text-center';
@@ -389,17 +348,15 @@ function HeroVideo({ startPlaying }: { startPlaying: boolean }) {
       case 'top-left': 
         return 'top-8 left-8 md:top-20 md:left-8 max-w-xs md:max-w-md items-start text-left';
       case 'left': 
-        return 'top-1/2 -translate-y-1/2 left-4 md:left-16 max-w-xs md:max-w-2xl items-start text-left'; // Block 6: Shifted more left
+        return 'top-1/2 -translate-y-1/2 left-4 md:left-16 max-w-xs md:max-w-2xl items-start text-left';
       case 'upper-right':
-        // ✏️ CLIENT CHANGE: Block 2 DESKTOP - Width reduced by 1/4 (from max-w-xl to max-w-lg)
-        return 'top-8 right-4 md:right-8 max-w-xs md:max-w-lg items-start text-left'; // Block 2: Width reduced by 1/4
+        return 'top-8 right-4 md:right-8 max-w-xs md:max-w-lg items-start text-left';
       case 'top-center': 
         return 'top-12 md:top-16 left-1/2 -translate-x-1/2 max-w-xs w-full md:max-w-6xl items-center text-center';
       case 'top-center-higher':
-        // ✏️ CLIENT CHANGE: Block 4 DESKTOP - Moved up slightly (from top-12 to top-8)
-        return 'top-8 md:top-8 left-1/2 -translate-x-1/2 w-full max-w-xs md:max-w-6xl items-center text-center'; // Block 4: Moved up
+        return 'top-8 md:top-8 left-1/2 -translate-x-1/2 w-full max-w-xs md:max-w-6xl items-center text-center';
       case 'right': 
-        return 'top-1/2 -translate-y-1/2 right-4 md:right-6 max-w-xs md:max-w-xl items-start text-left'; // Block 7: Wider
+        return 'top-1/2 -translate-y-1/2 right-4 md:right-6 max-w-xs md:max-w-xl items-start text-left';
       default: 
         return 'bottom-20 left-1/2 -translate-x-1/2 max-w-xs md:max-w-2xl items-center text-center';
     }
@@ -413,7 +370,10 @@ function HeroVideo({ startPlaying }: { startPlaying: boolean }) {
         playsInline
         loop 
         onTimeUpdate={handleTimeUpdate}
-        className="w-full h-full object-cover object-left md:object-center"
+        className="w-full h-full object-cover md:object-center"
+        style={{ 
+          objectPosition: isMobile ? '15% 15%' : 'center center'
+        }}
       >
         <source src="/videos/about-film-mobile.webm" type="video/webm" media="(max-width: 768px)" />
         <source src="/videos/about-film.webm" type="video/webm" />
@@ -441,7 +401,7 @@ function HeroVideo({ startPlaying }: { startPlaying: boolean }) {
   );
 }
 
-// Animated Paragraph Component
+// Animated Paragraph Component - Cinematic subtle reveal
 function AnimatedParagraph({ 
   children, 
   delay = 0 
@@ -452,24 +412,25 @@ function AnimatedParagraph({
   const ref = useRef(null);
   const isInView = useInView(ref, { 
     once: false,
-    amount: 0.3
+    amount: 0.2,
+    margin: "0px 0px -100px 0px"
   });
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { 
         opacity: 1, 
         y: 0 
       } : { 
         opacity: 0, 
-        y: 20 
+        y: 30 
       }}
       transition={{
-        duration: 0.4,
+        duration: 0.8,
         delay: delay,
-        ease: "easeOut"
+        ease: [0.25, 0.1, 0.25, 1]
       }}
     >
       {children}
@@ -477,28 +438,29 @@ function AnimatedParagraph({
   );
 }
 
-// Animated Heading Component
+// Animated Heading Component - Cinematic subtle reveal
 function AnimatedHeading({ children }: { children: React.ReactNode }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { 
     once: false,
-    amount: 0.5
+    amount: 0.3,
+    margin: "0px 0px -100px 0px"
   });
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 15 }}
+      initial={{ opacity: 0, y: 25 }}
       animate={isInView ? { 
         opacity: 1, 
         y: 0 
       } : { 
         opacity: 0, 
-        y: 15 
+        y: 25 
       }}
       transition={{
-        duration: 0.4,
-        ease: "easeOut"
+        duration: 0.9,
+        ease: [0.25, 0.1, 0.25, 1]
       }}
     >
       {children}
@@ -508,65 +470,65 @@ function AnimatedHeading({ children }: { children: React.ReactNode }) {
 
 function BioBlocks() {
   return (
-    <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-12 md:py-24 space-y-12 md:space-y-16">
+    <div className="relative z-10 w-full max-w-5xl mx-auto md:ml-[2%] md:mr-auto px-6 py-12 md:py-24 space-y-12 md:space-y-16">
       
       {/* Block 1 */}
-      <section className="space-y-6 text-center max-w-3xl mx-auto">
+      <section className="space-y-6">
         <AnimatedHeading>
           <div>
-            <h2 className="font-heading text-3xl md:text-4xl text-white font-bold mb-2">Dijana Bošković</h2>
-            <h3 className="font-heading text-xl md:text-2xl text-amber-200/90 italic">German-Serbian Composer & Flutist</h3>
+            <h2 className="font-heading text-3xl md:text-5xl text-white font-bold mb-2">Dijana Bošković</h2>
+            <h3 className="font-heading text-xl md:text-3xl text-amber-200/90 italic">German-Serbian Composer & Flutist</h3>
           </div>
         </AnimatedHeading>
         
-        <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-lg">
+        <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-xl">
           <AnimatedParagraph delay={0.1}>
             <p>Born in Belgrade, Dijana Bošković was recognized early for her extraordinary musical talent, receiving the October Prize of the City of Belgrade and multiple first prizes at national competitions.</p>
           </AnimatedParagraph>
           
-          <AnimatedParagraph delay={0.2}>
+          <AnimatedParagraph delay={0.15}>
             <p>She studied flute in Belgrade and at the University of Music in Munich with Prof. Paul Meisen, earning both the Artistic Diploma and Master Class certification. As a versatile musician, Dijana performed as a soloist, in orchestras and chamber ensembles.</p>
           </AnimatedParagraph>
           
-          <AnimatedParagraph delay={0.3}>
+          <AnimatedParagraph delay={0.2}>
             <p>Collaborations with the Kammerphilharmonie Bremen and the Bamberger Solisten (from the Bamberger Symphoniker), along with jazz performances in venues such as the Münchner Unterfahrt and on recordings with jazz composers, shaped her multifaceted musical voice.</p>
           </AnimatedParagraph>
         </div>
       </section>
 
       {/* Block 2 */}
-      <section className="space-y-6 text-center max-w-3xl mx-auto">
+      <section className="space-y-6">
         <AnimatedHeading>
-          <h3 className="font-heading text-xl md:text-2xl text-amber-200/90 italic">Versus Vox & Composition Studies</h3>
+          <h3 className="font-heading text-xl md:text-3xl text-amber-200/90 italic">Versus Vox & Composition Studies</h3>
         </AnimatedHeading>
         
-        <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-lg">
+        <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-xl">
           <AnimatedParagraph delay={0.1}>
             <p>In 2005, she founded the Versus Vox Ensemble in Munich, which she has led ever since, blending her own compositions with works by other contemporary and historical composers into vibrant musical experiences.</p>
           </AnimatedParagraph>
           
-          <AnimatedParagraph delay={0.2}>
+          <AnimatedParagraph delay={0.15}>
             <p>Her compositional studies with Prof. Manfred Stahnke and Prof. Fredrik Schwenk at the University of Music and Theatre Hamburg culminated in the orchestral project "ONE", premiered by the Symphonikern Hamburg.</p>
           </AnimatedParagraph>
         </div>
       </section>
 
       {/* Block 3 */}
-      <section className="space-y-6 text-center max-w-3xl mx-auto">
+      <section className="space-y-6">
         <AnimatedHeading>
-          <h3 className="font-heading text-xl md:text-2xl text-amber-200/90 italic">Works, Performances & Awards</h3>
+          <h3 className="font-heading text-xl md:text-3xl text-amber-200/90 italic">Works, Performances & Awards</h3>
         </AnimatedHeading>
         
-        <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-lg">
+        <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-xl">
           <AnimatedParagraph delay={0.1}>
             <p>Her compositions span solo instruments, chamber music, orchestra, choir, voice, and theater, performed by the Chamber Orchestra Solisten from St. Petersburg, members of the Munich Philharmonic and Frankfurt Opera, at the BEMUS Music Festival in Belgrade, and the Tiroler Volksschauspiele.</p>
           </AnimatedParagraph>
           
-          <AnimatedParagraph delay={0.2}>
+          <AnimatedParagraph delay={0.15}>
             <p>The chamber orchestra work "Concerto for Strings" has been broadcast on leading European radio stations.</p>
           </AnimatedParagraph>
           
-          <AnimatedParagraph delay={0.3}>
+          <AnimatedParagraph delay={0.2}>
             <p>For "Lichtspiele", she received support from the Ernst von Siemens Art Foundation and the Gerhard Trede Foundation, and in 2017 won 1st Prize at the International Choral Music Competition organized by the German Choir Association.</p>
           </AnimatedParagraph>
         </div>
@@ -575,17 +537,16 @@ function BioBlocks() {
       {/* Final Image */}
       <motion.section 
         className="pt-0"
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.3 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        viewport={{ once: false, amount: 0.3, margin: "0px 0px -100px 0px" }}
+        transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
       >
-        <div className="w-full mx-auto rounded-2xl overflow-hidden shadow-2xl border border-white/10">
-          {/* FIX: Added md:h-[500px] object-cover object-top to constrain desktop height */}
+        <div className="w-full md:w-[118%]  mx-auto rounded-2xl overflow-hidden shadow-2xl border border-white/10">
           <img 
             src="/about/bio-final.webp" 
             alt="Dijana Bošković Portrait" 
-            className="w-full h-auto md:h-[500px] object-cover object-top"
+            className="w-full h-auto md:h-[400px] object-cover object-top"
           />
         </div>
       </motion.section>
@@ -614,10 +575,9 @@ export default function HomePage() {
 
       <HeroVideo startPlaying={splashFinished} />
 
-      <div className="relative z-10 bg-gradient-to-b from-[#111f33] to-[#223C5E] pb-24">
+      <div className="relative z-10 bg-linear-to-b from-[#111f33] to-[#223C5E] pb-24">
         <BioBlocks />
         
-        {/* FIX: Reduced spacing further from mt-8 to mt-4 */}
         <div className="flex justify-center mt-4">
            <a href="/work">
             <motion.button 
