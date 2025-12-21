@@ -225,7 +225,7 @@ function TextBlockWithLineAnimation({
     return 'md:py-12 md:px-8';
   };
   
-  const titleClass = "font-heading text-3xl md:text-4xl text-amber-200/90 italic mb-2 md:mb-4";
+  const titleClass = "font-heading text-2xl md:text-4xl text-amber-200/90 italic mb-2 md:mb-4";
   
   // Get dynamic body text size based on block ID
   const getBodyClass = () => {
