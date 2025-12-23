@@ -71,7 +71,7 @@ const overlayBlocks = [
   {
     id: 6,
     desktop: { start: 93, end: 115 },
-    mobile: { start: 94, end: 115 },
+    mobile: { start: 94, end: 117 },
     position: "left",
     mobilePosition: "high-up",
     title: "Works, Performances & Awards",
