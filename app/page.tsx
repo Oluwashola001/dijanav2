@@ -566,7 +566,7 @@ export default function HomePage() {
               whileTap={{ scale: 0.95 }}
               className="px-12 py-4 border border-white/20 text-white/70 transition-all duration-300 uppercase tracking-[0.2em] text-xs font-medium bg-[#050B14]/50 backdrop-blur-md rounded-full hover:shadow-[0_0_20px_rgba(251,191,36,0.3)]"
             >
-              View Musical Works
+              View Compositions
             </motion.button>
            </a>
         </div>
