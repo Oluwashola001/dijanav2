@@ -557,7 +557,7 @@ export default function HomePage() {
         <BioBlocks />
         
         <div className="flex justify-center mt-4">
-           <a href="/work">
+           <a href="/compositions">
             <motion.button 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
