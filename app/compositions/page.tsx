@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
+import Link from 'next/link';
 // import Link from 'next/link';
 
 // --- DATA ---
@@ -94,6 +95,13 @@ function StaticContent() {
       animate={{ opacity: 1 }}
       className="relative w-full min-h-screen"
     >
+
+      <Link href="/">
+        <button className="absolute top-8 left-6 md:top-10 md:left-10 z-50 text-white/50 hover:text-amber-200/90 transition-colors uppercase tracking-widest text-xs md:text-sm font-bold cursor-pointer">
+          ← BACK
+        </button>
+      </Link>
+
       {/* Background Image Layer */}
       <div className="fixed inset-0 z-0 bg-[#223C5E]">
          <img
