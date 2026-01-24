@@ -54,11 +54,30 @@ export default function CompositionsPage() {
     }
   };
 
-  // Toggle Mute
+  // Toggle Mute & FORCE PLAY if browser blocked autoplay
   const toggleMute = () => {
-    setIsMuted(!isMuted);
-    if (introAudioRef.current) introAudioRef.current.muted = !isMuted;
-    if (loopAudioRef.current) loopAudioRef.current.muted = !isMuted;
+    const nextMuted = !isMuted;
+    setIsMuted(nextMuted);
+
+    // 1. Apply mute state to both refs immediately
+    if (introAudioRef.current) introAudioRef.current.muted = nextMuted;
+    if (loopAudioRef.current) loopAudioRef.current.muted = nextMuted;
+
+    // 2. CRITICAL FIX: If we are unmuting, we must ensure the audio is actually PLAYING.
+    // (Browsers often block the initial autoplay, leaving the audio paused at 0:00)
+    if (!nextMuted) {
+        if (videoFinished) {
+            // Visuals are looping -> Force Loop Audio
+            if (loopAudioRef.current && loopAudioRef.current.paused) {
+                loopAudioRef.current.play().catch(e => console.error("Force play loop", e));
+            }
+        } else {
+            // Visuals are in intro -> Force Intro Audio
+            if (introAudioRef.current && introAudioRef.current.paused) {
+                introAudioRef.current.play().catch(e => console.error("Force play intro", e));
+            }
+        }
+    }
   };
 
   // --- INITIALIZATION ---
@@ -124,7 +143,6 @@ export default function CompositionsPage() {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
-            // REMOVED bg-[#223c5e] to eliminate the color flash
             className="fixed inset-0 z-10 w-full dvh"
           >
             <video
