@@ -57,7 +57,7 @@ const overlayBlocks = [
   },
   {
     id: 5,
-    desktop: { start: 80, end: 94 },
+    desktop: { start: 80, end: 92 },
     mobile: { start: 80, end: 94 },
     position: "top-center",
     mobilePosition: "mid-screen",
@@ -70,7 +70,7 @@ const overlayBlocks = [
   },
   {
     id: 6,
-    desktop: { start: 93, end: 115 },
+    desktop: { start: 92, end: 114 },
     mobile: { start: 94, end: 117 },
     position: "left",
     mobilePosition: "high-up",
@@ -83,7 +83,7 @@ const overlayBlocks = [
   },
   {
     id: 7,
-    desktop: { start: 127, end: 149 },
+    desktop: { start: 125, end: 147 },
     mobile: { start: 127, end: 149 },
     position: "top-center",
     mobilePosition: "mid-screen",
@@ -353,7 +353,7 @@ function HeroVideo({ startPlaying }: { startPlaying: boolean }) {
           objectPosition: isMobile ? '15% 15%' : 'center center'
         }}
       >
-        <source src="/videos/about-film-mobile.webm" type="video/webm" media="(max-width: 768px)" />
+        <source src="/videos/about-film-mobile-new.webm" type="video/webm" media="(max-width: 768px)" />
         <source src="/videos/about-film.webm" type="video/webm" />
         <source src="/videos/about-film.mp4" type="video/mp4" />
       </video>
