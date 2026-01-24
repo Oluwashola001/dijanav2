@@ -28,7 +28,9 @@ export default function CompositionsPage() {
   // --- STATE ---
   const [videoFinished, setVideoFinished] = useState(false); // Controls Video Layer (Intro -> Loop)
   const [showEnterUI, setShowEnterUI] = useState(false);     // Controls Text Layer (Compositions -> Enter)
-  const [isMuted, setIsMuted] = useState(false);
+  
+  // UPDATED: Starts TRUE so browser allows autoplay. User must click to unmute.
+  const [isMuted, setIsMuted] = useState(true);
 
   // Refs for media control
   const introVideoRef = useRef<HTMLVideoElement>(null);
@@ -122,7 +124,8 @@ export default function CompositionsPage() {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="fixed inset-0 z-10 w-full dvh bg-[#223c5e]"
+            // REMOVED bg-[#223c5e] to eliminate the color flash
+            className="fixed inset-0 z-10 w-full dvh"
           >
             <video
               ref={introVideoRef}
