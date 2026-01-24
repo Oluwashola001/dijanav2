@@ -107,13 +107,13 @@ export default function CompositionsPage() {
       <div className="hidden">
         <audio 
             ref={introAudioRef} 
-            src="/music/composition.mp3" 
+            src="/Music/composition.mp3" 
             onEnded={handleIntroAudioEnded}
             muted={isMuted}
         />
         <audio 
             ref={loopAudioRef} 
-            src="/music/composition-loop.mp3" 
+            src="/Music/composition-loop.mp3" 
             loop 
             muted={isMuted}
         />
