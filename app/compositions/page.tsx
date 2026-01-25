@@ -17,12 +17,29 @@ const TIMING = {
   textRevealDuration: 2.5  // Duration: Long text fade in speed
 };
 
-// --- DATA ---
+// --- DATA WITH STYLED WORDS ---
+// Words wrapped in ** will be rendered in gray/blue-gray tones
 const introText = [
-  "In her native country, the former Yugoslavia—an area formed through centuries of cultural exchange—Dijana Bošković came into contact with music of Slavic, Western European, Turkish, and Hindustani origin.",
-  "Her works are rooted in contemporary classical music and the European avant-garde, drawing on elements of traditional, jazz, and pop music. This musical language seeks to transcend stylistic dogmas and to develop distinctly individual compositional responses to spiritual and socio-political themes that traverse cultural, religious, and linguistic boundaries.",
-  "A further characteristic of her work is its reference to tonal centers, as pulse, harmony, and musical line unfold in response to the variable and often fragile rhythms of human breathing."
+  "In her **native country**, the former Yugoslavia—an area formed through **centuries of cultural exchange**—Dijana Bošković came into contact with music of **Slavic**, Western European, **Turkish**, and Hindustani origin.",
+  "Her works are rooted in contemporary classical music and the **European avant-garde**, drawing on elements of **traditional**, jazz, and pop music. This musical language seeks to **transcend stylistic dogmas** and to develop distinctly individual compositional responses to **spiritual and socio-political themes** that traverse cultural, religious, and linguistic boundaries.",
+  "A further characteristic of her work is its reference to **tonal centers**, as pulse, harmony, and musical line unfold in response to the **variable and often fragile rhythms** of human breathing."
 ];
+
+// Function to parse and style text
+const parseStyledText = (text: string) => {
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, index) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      const cleanText = part.slice(2, -2);
+      return (
+        <span key={index} className="text-slate-400">
+          {cleanText}
+        </span>
+      );
+    }
+    return <span key={index}>{part}</span>;
+  });
+};
 
 export default function CompositionsPage() {
   // --- STATE ---
@@ -41,6 +58,7 @@ export default function CompositionsPage() {
   // --- LOGIC 1: AUDIO SEQUENCE (Independent) ---
   const handleIntroAudioEnded = () => {
     if (loopAudioRef.current) {
+      loopAudioRef.current.currentTime = 0; // Reset to start
       loopAudioRef.current.play().catch(e => console.log("Loop audio play error", e));
     }
   };
@@ -86,7 +104,12 @@ export default function CompositionsPage() {
     if (introVideoRef.current) introVideoRef.current.play().catch(e => console.log("Intro video autoplay prevented", e));
     if (introAudioRef.current) introAudioRef.current.play().catch(e => console.log("Intro audio autoplay prevented", e));
 
-    // 2. Set Timer for TEXT/UI CHANGE only
+    // 2. Preload loop audio to ensure seamless transition
+    if (loopAudioRef.current) {
+      loopAudioRef.current.load();
+    }
+
+    // 3. Set Timer for TEXT/UI CHANGE only
     const timer = setTimeout(() => {
         setShowEnterUI(true);
     }, TIMING.uiTransitionDelay);
@@ -110,12 +133,14 @@ export default function CompositionsPage() {
             src="/Music/composition.mp3" 
             onEnded={handleIntroAudioEnded}
             muted={isMuted}
+            preload="auto"
         />
         <audio 
             ref={loopAudioRef} 
             src="/Music/composition-loop.mp3" 
             loop 
             muted={isMuted}
+            preload="auto"
         />
       </div>
 
@@ -165,7 +190,7 @@ export default function CompositionsPage() {
       <div className="relative z-20 w-full min-h-screen flex flex-col items-center pt-[9.5rem] md:pt-24 px-4 md:px-20 pb-20">
         
         {/* Navigation & Controls Container */}
-        <div className="absolute top-8 left-0 w-full px-6 md:px-10 z-50 flex justify-between items-start pointer-events-none">
+        <div className="absolute top-6 left-0 w-full px-6 md:px-10 z-50 flex justify-between items-start pointer-events-none">
           {/* Back Button */}
           <Link href="/" className="pointer-events-auto">
             <button className="text-white/50 hover:text-amber-200/90 transition-colors uppercase tracking-widest text-xs md:text-sm font-bold cursor-pointer">
@@ -195,8 +220,7 @@ export default function CompositionsPage() {
         </div>
 
         {/* Dynamic Header Area */}
-        {/* Depends on 'showEnterUI' (timer), NOT video playback */}
-        <div className="absolute top-[6rem] md:top-6 left-0 w-full z-40 flex justify-center pointer-events-none">
+        <div className="absolute top-[4rem] md:top-6 left-0 w-full z-40 flex justify-center pointer-events-none">
             <AnimatePresence mode="wait">
                 {!showEnterUI ? (
                     // 1. Initial Title
@@ -212,32 +236,35 @@ export default function CompositionsPage() {
                         COMPOSITIONS
                     </motion.h1>
                 ) : (
-                    // 2. "ENTER" Button with Arrow
+                    // 2. Single "ENTER" Button with Arrow
                     <motion.button
                         key="title-interactive"
                         initial={{ opacity: 0, filter: "blur(10px)" }}
                         animate={{ opacity: 1, filter: "blur(0px)" }}
                         transition={{ duration: TIMING.enterButtonFadeIn, delay: TIMING.enterButtonDelay }}
-                        className="pointer-events-auto font-heading text-[2rem] md:text-6xl lg:text-7xl font-bold text-white tracking-widest transition-all duration-300 cursor-pointer flex items-center gap-2 md:gap-3 hover:scale-105 group"
-                        style={{ textShadow: "0px 0px 20px rgba(251, 191, 36, 0.8)" }}
+                        className="pointer-events-auto text-[2rem] md:text-6xl lg:text-7xl font-bold text-white tracking-wide transition-all duration-300 cursor-pointer hover:scale-105 flex items-center gap-2 md:gap-3"
+                        style={{ 
+                            textShadow: "0px 0px 20px rgba(251, 191, 36, 0.8)",
+                            fontFamily: "'Comic Sans MS', 'Comic Sans', cursive"
+                        }}
                         onMouseEnter={(e) => e.currentTarget.style.textShadow = "0px 0px 40px rgba(251, 191, 36, 1), 0px 0px 60px rgba(251, 191, 36, 0.6)"}
                         onMouseLeave={(e) => e.currentTarget.style.textShadow = "0px 0px 20px rgba(251, 191, 36, 0.8)"}
                         onClick={() => console.log("Enter clicked")}
                     >
-                        ENTER 
+                        ENTER
                         <motion.svg 
-                            width="80" 
-                            height="60" 
-                            viewBox="0 0 80 60" 
+                            width="50" 
+                            height="40" 
+                            viewBox="0 0 50 40" 
                             fill="none" 
-                            className="w-12 h-8 md:w-16 md:h-12 lg:w-20 lg:h-14"
-                            animate={{ x: [0, 8, 0] }}
+                            className="w-8 h-6 md:w-12 md:h-8 lg:w-14 lg:h-10"
+                            animate={{ x: [0, 6, 0] }}
                             transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                         >
                             <path 
-                                d="M10 30 L65 30 M50 18 L65 30 L50 42" 
+                                d="M5 20 L40 20 M30 12 L40 20 L30 28" 
                                 stroke="currentColor" 
-                                strokeWidth="3" 
+                                strokeWidth="2.5" 
                                 strokeLinecap="round" 
                                 strokeLinejoin="round"
                             />
@@ -247,25 +274,32 @@ export default function CompositionsPage() {
             </AnimatePresence>
         </div>
 
-        {/* Content Reveal */}
+        {/* Content Reveal - Individual Paragraph Backgrounds */}
         <AnimatePresence>
             {showEnterUI && (
                 <motion.div
-                    initial={{ opacity: 0, y: 30, filter: "blur(5px)" }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
                     transition={{ duration: TIMING.textRevealDuration, delay: TIMING.textRevealDelay, ease: "easeOut" }}
-                    className="w-full max-w-4xl mt-6 md:mt-12"
+                    className="w-full max-w-4xl -mt-8 md:mt-12 space-y-4 md:space-y-6"
                 >
-                    <div className="space-y-6 md:space-y-8 text-center">
-                        {introText.map((paragraph, i) => (
-                            <p 
-                                key={i} 
-                                className="font-body text-white text-lg md:text-xl lg:text-2xl leading-relaxed md:leading-relaxed drop-shadow-lg"
-                            >
-                                {paragraph}
+                    {introText.map((paragraph, i) => (
+                        <motion.div
+                            key={i}
+                            initial={{ opacity: 0, y: 30, filter: "blur(5px)" }}
+                            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                            transition={{ 
+                                duration: TIMING.textRevealDuration, 
+                                delay: TIMING.textRevealDelay + (i * 0.3),
+                                ease: "easeOut" 
+                            }}
+                            className="bg-[#223c5e]/80 backdrop-blur-sm px-6 py-5 md:px-8 md:py-6 rounded-lg"
+                        >
+                            <p className="font-body text-white text-lg md:text-xl lg:text-2xl leading-relaxed md:leading-relaxed drop-shadow-lg text-left">
+                                {parseStyledText(paragraph)}
                             </p>
-                        ))}
-                    </div>
+                        </motion.div>
+                    ))}
                 </motion.div>
             )}
         </AnimatePresence>
