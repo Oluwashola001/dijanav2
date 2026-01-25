@@ -133,6 +133,14 @@ function TextBlockWithLineAnimation({
   const duration = timing.end - timing.start;
   const progress = (currentTime - timing.start) / duration;
   
+  // Get background opacity class based on block ID
+  const getBackgroundClass = () => {
+    if (block.id === 2 || block.id === 7) {
+      return 'bg-[#223C5E]/50'; // Less transparent (50% opacity)
+    }
+    return 'bg-[#223C5E]/15'; // Default (15% opacity)
+  };
+  
   // Block 1 uses simple fade-in then fade-out animation (ALL LINES TOGETHER)
   if (block.id === 1 && 'lines' in block && block.lines) {
     // Same fade animation for both mobile and desktop
@@ -169,7 +177,7 @@ function TextBlockWithLineAnimation({
         animate={{ opacity: overlayVisible ? blockOpacity : 0 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className={`absolute z-20 p-4 md:p-6 rounded-xl bg-[#223C5E]/15 border border-white/5 shadow-2xl overflow-hidden ${positionClasses}`}
+        className={`absolute z-20 p-4 md:p-6 rounded-xl ${getBackgroundClass()} border border-white/5 shadow-2xl overflow-hidden ${positionClasses}`}
       >
         {linesToShow.map((line, lineIndex) => (
           <div
@@ -254,7 +262,7 @@ function TextBlockWithLineAnimation({
       animate={{ opacity }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.6, ease: "easeInOut" }}
-      className={`absolute z-20 p-4 ${getPadding()} rounded-xl bg-[#223C5E]/15 border border-white/5 shadow-2xl ${positionClasses}`}
+      className={`absolute z-20 p-4 ${getPadding()} rounded-xl ${getBackgroundClass()} border border-white/5 shadow-2xl ${positionClasses}`}
     >
       {'title' in block && block.title && (
         <div className={titleClass}>{block.title}</div>
