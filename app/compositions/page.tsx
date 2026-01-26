@@ -192,7 +192,7 @@ export default function CompositionsPage() {
         {/* Navigation & Controls Container */}
         <div className="absolute top-6 left-0 w-full px-6 md:px-10 z-50 flex justify-between items-start pointer-events-none">
           {/* Back Button */}
-          <Link href="/" className="pointer-events-auto">
+          <Link href="/about" className="pointer-events-auto">
             <button className="text-white/50 hover:text-amber-200/90 transition-colors uppercase tracking-widest text-xs md:text-sm font-bold cursor-pointer">
               ← BACK
             </button>
