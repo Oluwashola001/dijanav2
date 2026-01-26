@@ -176,7 +176,7 @@ export default function WaterIntroPage() {
                   opacity: { duration: 1.5, delay: TIMING.enter, ease: "easeOut" },
                   filter: { duration: 1.5, delay: TIMING.enter, ease: "easeOut" }
                 }}
-                className="font-heading text-[2rem] md:text-6xl lg:text-7xl font-bold text-white tracking-widest transition-all duration-300 cursor-pointer flex items-center gap-1 md:gap-2 md:hover:scale-105 group animate-[breathe_2s_ease-in-out_infinite] md:animate-none"
+                className="font-heading text-[2rem] md:text-6xl lg:text-7xl font-bold text-white tracking-widest transition-all duration-300 cursor-pointer flex items-center gap-1 md:gap-2 md:hover:scale-105 group animate-[breathe_4s_ease-in-out_infinite] md:animate-none"
                 style={{ 
                     textShadow: "0px 0px 20px rgba(251, 191, 36, 0.8)",
                     fontFamily: "'Comic Sans MS', 'Comic Sans', cursive"
