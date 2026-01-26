@@ -47,7 +47,14 @@ export default function WaterIntroPage() {
   };
 
   return (
-    <main className="relative w-full h-[100dvh] bg-black overflow-hidden">
+    <>
+      <style jsx global>{`
+        @keyframes breathe {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.08); }
+        }
+      `}</style>
+      <main className="relative w-full h-[100dvh] bg-black overflow-hidden">
       
       {/* 0. AUDIO (Hidden) */}
       <audio 
@@ -161,9 +168,15 @@ export default function WaterIntroPage() {
           <Link href="/about">
             <motion.button
                 initial={{ opacity: 0, filter: "blur(10px)" }}
-                animate={{ opacity: 1, filter: "blur(0px)" }}
-                transition={{ duration: 1.5, delay: TIMING.enter, ease: "easeOut" }}
-                className="font-heading text-[2rem] md:text-6xl lg:text-7xl font-bold text-white tracking-widest transition-all duration-300 cursor-pointer flex items-center gap-1 md:gap-2 hover:scale-105 group"
+                animate={{ 
+                  opacity: 1, 
+                  filter: "blur(0px)"
+                }}
+                transition={{ 
+                  opacity: { duration: 1.5, delay: TIMING.enter, ease: "easeOut" },
+                  filter: { duration: 1.5, delay: TIMING.enter, ease: "easeOut" }
+                }}
+                className="font-heading text-[2rem] md:text-6xl lg:text-7xl font-bold text-white tracking-widest transition-all duration-300 cursor-pointer flex items-center gap-1 md:gap-2 md:hover:scale-105 group animate-[breathe_2s_ease-in-out_infinite] md:animate-none"
                 style={{ 
                     textShadow: "0px 0px 20px rgba(251, 191, 36, 0.8)",
                     fontFamily: "'Comic Sans MS', 'Comic Sans', cursive"
@@ -196,5 +209,6 @@ export default function WaterIntroPage() {
       </div>
 
     </main>
+    </>
   );
 }
