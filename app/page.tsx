@@ -51,7 +51,7 @@ export default function WaterIntroPage() {
       <style jsx global>{`
         @keyframes breathe {
           0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.08); }
+          50% { transform: scale(1.1); }
         }
       `}</style>
       <main className="relative w-full h-[100dvh] bg-black overflow-hidden">
