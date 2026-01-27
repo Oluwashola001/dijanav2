@@ -115,20 +115,28 @@ export default function WaterIntroPage() {
         
         {/* ELEMENT A: PROFILE PIC (Bottom Left) */}
         {/* Z-Index 30: Middle Priority */}
+        {/* TO ADJUST SIZE: Change w-[65vw] h-[70vh] for mobile, md:max-w-[500px] for desktop max size */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1.5, delay: TIMING.head, ease: "easeOut" }}
-          className="absolute bottom-0 left-0 z-30 w-[55vw] md:w-[45vw] max-w-[400px]"
+          className="absolute bottom-0 left-0 z-30 w-[65vw] h-[70vh] md:w-[55vw] md:h-auto md:max-w-[650px]"
           style={{
             maskImage: 'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%)',
             WebkitMaskImage: 'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%)'
           }}
         >
+            {/* Mobile Image - TO ADJUST: Change w-full, h-full, object-top */}
+            <img 
+                src="/profile-pic-mobile.webp" 
+                alt="Dijana Profile" 
+                className="md:hidden w-full h-full object-cover object-top drop-shadow-2xl"
+            />
+            {/* Desktop Image - TO ADJUST: Change w-full */}
             <img 
                 src="/profile-pic.webp" 
                 alt="Dijana Profile" 
-                className="w-full h-auto object-contain drop-shadow-2xl"
+                className="hidden md:block w-full h-auto object-contain drop-shadow-2xl"
             />
         </motion.div>
 
@@ -149,11 +157,12 @@ export default function WaterIntroPage() {
 
         {/* ELEMENT C: SIGNATURE/LOGO (Top Right) */}
         {/* Z-Index 30. Positioned to the left of the Mute button. */}
+        {/* TO ADJUST SIZE: Change w-[70vw] for mobile, md:w-[40vw] for desktop, max-w-[700px] for max size */}
         <motion.div
           initial={{ opacity: 0, x: 20, y: -20 }}
           animate={{ opacity: 1, x: 0, y: 0 }}
           transition={{ duration: 1.5, delay: TIMING.signature, ease: "easeOut" }}
-          className="absolute top-2 right-16 md:-top-4 md:right-20 z-30 w-[60vw] md:w-[35vw] max-w-[600px]"
+          className="absolute top-2 right-6 md:-top-10 md:right-6 z-30 w-[100vw] md:w-[60vw] max-w-[900px]"
         >
            <img 
                src="/logo.webp" 
@@ -164,7 +173,8 @@ export default function WaterIntroPage() {
 
         {/* ELEMENT D: ENTER BUTTON (Bottom Right) */}
         {/* Z-Index 50: Highest Priority (Always on top) */}
-        <div className="absolute bottom-2 right-4 md:bottom-12 md:right-12 z-50 pointer-events-auto">
+        {/* TO CHANGE COLOR BACK TO BLACK: Change text-[#223c5e] to text-black */}
+        <div className="absolute bottom-4 right-2 md:bottom-12 md:right-12 z-50 pointer-events-auto">
           <Link href="/about">
             <motion.button
                 initial={{ opacity: 0, filter: "blur(10px)" }}
@@ -176,21 +186,18 @@ export default function WaterIntroPage() {
                   opacity: { duration: 1.5, delay: TIMING.enter, ease: "easeOut" },
                   filter: { duration: 1.5, delay: TIMING.enter, ease: "easeOut" }
                 }}
-                className="font-heading text-[2rem] md:text-6xl lg:text-7xl font-bold text-white tracking-widest transition-all duration-300 cursor-pointer flex items-center gap-1 md:gap-2 md:hover:scale-105 group animate-[breathe_4s_ease-in-out_infinite] md:animate-none"
-                style={{ 
-                    textShadow: "0px 0px 20px rgba(251, 191, 36, 0.8)",
-                    fontFamily: "'Comic Sans MS', 'Comic Sans', cursive"
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.textShadow = "0px 0px 40px rgba(251, 191, 36, 1), 0px 0px 60px rgba(251, 191, 36, 0.6)"}
-                onMouseLeave={(e) => e.currentTarget.style.textShadow = "0px 0px 20px rgba(251, 191, 36, 0.8)"}
+                className="relative text-2xl md:text-4xl lg:text-5xl font-bold text-[#223c5e] px-8 py-4 md:px-12 md:py-5 bg-white rounded-full shadow-2xl cursor-pointer flex items-center gap-2 md:gap-3 transition-all duration-300 active:scale-95 md:active:scale-100 md:hover:bg-[#d4e3f0] overflow-hidden group"
             >
+                {/* Glass slide effect on hover (desktop only) */}
+                <span className="hidden md:block absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+                
                 ENTER 
                 <motion.svg 
-                    width="60" 
-                    height="50" 
+                    width="40" 
+                    height="40" 
                     viewBox="0 0 80 60" 
                     fill="none" 
-                    className="hidden md:block md:w-12 md:h-10 lg:w-14 lg:h-12"
+                    className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10"
                     animate={{ x: [0, 8, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                 >
