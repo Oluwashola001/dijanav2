@@ -456,88 +456,89 @@ function AnimatedHeading({ children }: { children: React.ReactNode }) {
 
 function BioBlocks() {
   return (
-    <div className="relative z-10 w-full max-w-5xl mx-auto md:ml-[2%] md:mr-auto px-6 py-12 md:py-24 space-y-12 md:space-y-16">
-      
-      {/* Block 1 */}
-      <section className="space-y-6">
-        <AnimatedHeading>
-          <div>
-            <h2 className="font-heading text-3xl md:text-5xl text-white font-bold mb-2">Dijana Bošković</h2>
-            <h3 className="font-heading text-xl md:text-3xl text-amber-200/90 italic">German-Serbian Composer & Flutist</h3>
+    <>
+      <div className="relative z-10 w-full max-w-5xl mx-auto md:ml-[2%] md:mr-auto px-6 py-12 md:py-24 space-y-12 md:space-y-16">
+        
+        {/* Block 1 */}
+        <section className="space-y-6">
+          <AnimatedHeading>
+            <div>
+              <h2 className="font-heading text-3xl md:text-5xl text-white font-bold mb-2">Dijana Bošković</h2>
+              <h3 className="font-heading text-xl md:text-3xl text-amber-200/90 italic">German-Serbian Composer & Flutist</h3>
+            </div>
+          </AnimatedHeading>
+          
+          <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-xl">
+            <AnimatedParagraph delay={0.1}>
+              <p>Born in Belgrade, Dijana Bošković was recognized early for her extraordinary musical talent, receiving the October Prize of the City of Belgrade and multiple first prizes at national competitions.</p>
+            </AnimatedParagraph>
+            
+            <AnimatedParagraph delay={0.15}>
+              <p>She studied flute in Belgrade and at the University of Music in Munich with Prof. Paul Meisen, earning both the Artistic Diploma and Master Class certification. As a versatile musician, Dijana performed as a soloist, in orchestras and chamber ensembles.</p>
+            </AnimatedParagraph>
+            
+            <AnimatedParagraph delay={0.2}>
+              <p>Collaborations with the Kammerphilharmonie Bremen and the Bamberger Solisten (from the Bamberger Symphoniker), along with jazz performances in venues such as the Münchner Unterfahrt and on recordings with jazz composers, shaped her multifaceted musical voice.</p>
+            </AnimatedParagraph>
           </div>
-        </AnimatedHeading>
-        
-        <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-xl">
-          <AnimatedParagraph delay={0.1}>
-            <p>Born in Belgrade, Dijana Bošković was recognized early for her extraordinary musical talent, receiving the October Prize of the City of Belgrade and multiple first prizes at national competitions.</p>
-          </AnimatedParagraph>
-          
-          <AnimatedParagraph delay={0.15}>
-            <p>She studied flute in Belgrade and at the University of Music in Munich with Prof. Paul Meisen, earning both the Artistic Diploma and Master Class certification. As a versatile musician, Dijana performed as a soloist, in orchestras and chamber ensembles.</p>
-          </AnimatedParagraph>
-          
-          <AnimatedParagraph delay={0.2}>
-            <p>Collaborations with the Kammerphilharmonie Bremen and the Bamberger Solisten (from the Bamberger Symphoniker), along with jazz performances in venues such as the Münchner Unterfahrt and on recordings with jazz composers, shaped her multifaceted musical voice.</p>
-          </AnimatedParagraph>
-        </div>
-      </section>
+        </section>
 
-      {/* Block 2 */}
-      <section className="space-y-6">
-        <AnimatedHeading>
-          <h3 className="font-heading text-xl md:text-3xl text-amber-200/90 italic">Versus Vox & Composition Studies</h3>
-        </AnimatedHeading>
-        
-        <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-xl">
-          <AnimatedParagraph delay={0.1}>
-            <p>In 2005, she founded the Versus Vox Ensemble in Munich, which she has led ever since, blending her own compositions with works by other contemporary and historical composers into vibrant musical experiences.</p>
-          </AnimatedParagraph>
+        {/* Block 2 */}
+        <section className="space-y-6">
+          <AnimatedHeading>
+            <h3 className="font-heading text-xl md:text-3xl text-amber-200/90 italic">Versus Vox & Composition Studies</h3>
+          </AnimatedHeading>
           
-          <AnimatedParagraph delay={0.15}>
-            <p>Her compositional studies with Prof. Manfred Stahnke and Prof. Fredrik Schwenk at the University of Music and Theatre Hamburg culminated in the orchestral project "ONE", premiered by the Symphonikern Hamburg.</p>
-          </AnimatedParagraph>
-        </div>
-      </section>
+          <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-xl">
+            <AnimatedParagraph delay={0.1}>
+              <p>In 2005, she founded the Versus Vox Ensemble in Munich, which she has led ever since, blending her own compositions with works by other contemporary and historical composers into vibrant musical experiences.</p>
+            </AnimatedParagraph>
+            
+            <AnimatedParagraph delay={0.15}>
+              <p>Her compositional studies with Prof. Manfred Stahnke and Prof. Fredrik Schwenk at the University of Music and Theatre Hamburg culminated in the orchestral project "ONE", premiered by the Symphonikern Hamburg.</p>
+            </AnimatedParagraph>
+          </div>
+        </section>
 
-      {/* Block 3 */}
-      <section className="space-y-6">
-        <AnimatedHeading>
-          <h3 className="font-heading text-xl md:text-3xl text-amber-200/90 italic">Works, Performances & Awards</h3>
-        </AnimatedHeading>
-        
-        <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-xl">
-          <AnimatedParagraph delay={0.1}>
-            <p>Her compositions span solo instruments, chamber music, orchestra, choir, voice, and theater, performed by the Chamber Orchestra Solisten from St. Petersburg, members of the Munich Philharmonic and Frankfurt Opera, at the BEMUS Music Festival in Belgrade, and the Tiroler Volksschauspiele.</p>
-          </AnimatedParagraph>
+        {/* Block 3 */}
+        <section className="space-y-6">
+          <AnimatedHeading>
+            <h3 className="font-heading text-xl md:text-3xl text-amber-200/90 italic">Works, Performances & Awards</h3>
+          </AnimatedHeading>
           
-          <AnimatedParagraph delay={0.15}>
-            <p>The chamber orchestra work "Concerto for Strings" has been broadcast on leading European radio stations.</p>
-          </AnimatedParagraph>
-          
-          <AnimatedParagraph delay={0.2}>
-            <p>For "Lichtspiele", she received support from the Ernst von Siemens Art Foundation and the Gerhard Trede Foundation, and in 2017 won 1st Prize at the International Choral Music Competition organized by the German Choir Association.</p>
-          </AnimatedParagraph>
-        </div>
-      </section>
+          <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-xl">
+            <AnimatedParagraph delay={0.1}>
+              <p>Her compositions span solo instruments, chamber music, orchestra, choir, voice, and theater, performed by the Chamber Orchestra Solisten from St. Petersburg, members of the Munich Philharmonic and Frankfurt Opera, at the BEMUS Music Festival in Belgrade, and the Tiroler Volksschauspiele.</p>
+            </AnimatedParagraph>
+            
+            <AnimatedParagraph delay={0.15}>
+              <p>The chamber orchestra work "Concerto for Strings" has been broadcast on leading European radio stations.</p>
+            </AnimatedParagraph>
+            
+            <AnimatedParagraph delay={0.2}>
+              <p>For "Lichtspiele", she received support from the Ernst von Siemens Art Foundation and the Gerhard Trede Foundation, and in 2017 won 1st Prize at the International Choral Music Competition organized by the German Choir Association.</p>
+            </AnimatedParagraph>
+          </div>
+        </section>
+      </div>
 
-      {/* Final Image */}
+      {/* Final Image - OUTSIDE the constrained container */}
       <motion.section 
-        className="pt-0"
+        className="w-full"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, amount: 0.3, margin: "0px 0px -100px 0px" }}
         transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
       >
-        <div className="w-full md:w-[118%]  mx-auto rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+        <div className="w-full overflow-hidden">
           <img 
             src="/about/bio-final.webp" 
             alt="Dijana Bošković Portrait" 
-            className="w-full h-[200px] md:h-[400px] object-cover object-top"
+            className="w-full h-auto object-cover object-top"
           />
         </div>
       </motion.section>
-
-    </div>
+    </>
   );
 }
 
@@ -564,7 +565,7 @@ export default function HomePage() {
       <div className="relative z-10 bg-linear-to-b from-[#111f33] to-[#223C5E] pb-24">
         <BioBlocks />
         
-        <div className="flex justify-center mt-4">
+        <div className="flex justify-center mt-12">
            <a href="/compositions">
             <motion.button 
               initial={{ opacity: 0, y: 20 }}
