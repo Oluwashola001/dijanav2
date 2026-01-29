@@ -15,6 +15,7 @@ const navigationItems = [
   { id: "string_orch", label: "String Orchestra" },
   { id: "orch", label: "Orchestra" },
   { id: "voice", label: "Voice & Choir" },
+  { id: "order", label: "Order Request" },
 ];
 
 const worksData = [
@@ -684,7 +685,7 @@ export default function MusicalWorksPage() {
 
         {/* ORDER BOX */}
         <ScrollReveal delay={0.1}>
-          <div className="bg-[#172F4F] border border-[#47719E] p-6 mt-16 shadow-2xl">
+          <div id="order" className="bg-[#172F4F] border border-[#47719E] p-6 mt-16 shadow-2xl scroll-mt-32">
               <div className="bg-[#10223a] border border-[#47719E]/50 p-6 flex flex-col gap-4">
                   <p className="text-sm text-gray-400 italic text-center md:text-left">
                       Dear visitors*, for many of the listed works you can order the sheet music if you are interested. Please enter your contact details and exact order description below.
