@@ -237,6 +237,7 @@ export default function CompositionsPage() {
                     </motion.h1>
                 ) : (
                     // 2. Single "ENTER" Button with Arrow
+                    <Link href="/compositions/works">
                     <motion.button
                         key="title-interactive"
                         initial={{ opacity: 0, filter: "blur(10px)" }}
@@ -270,6 +271,7 @@ export default function CompositionsPage() {
                             />
                         </motion.svg>
                     </motion.button>
+                    </Link>
                 )}
             </AnimatePresence>
         </div>
