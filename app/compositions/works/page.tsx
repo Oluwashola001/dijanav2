@@ -10,7 +10,7 @@ const navigationItems = [
   { id: "strings", label: "Strings & Ensemble" },
   { id: "piano", label: "Piano & Ensemble" },
   { id: "flute", label: "Flute & Ensemble" },
-  { id: "young", label: "Young Performers" },
+  { id: "young", label: "Youth Music" },
   { id: "chamber", label: "Chamber Music (Large)" },
   { id: "string_orch", label: "String Orchestra" },
   { id: "orch", label: "Orchestra" },
@@ -105,7 +105,7 @@ const worksData = [
   },
   {
     id: "young",
-    title: "MUSIC FOR YOUNG PERFORMERS",
+    title: "MUSIC FOR YOUTHS",
     works: [
       {
         title: "An Encounter with the Sea (1998)",
