@@ -75,12 +75,10 @@ export default function WaterIntroPage() {
           className="w-full h-full object-cover opacity-80"
         >
           {/* Mobile Video Sources */}
-          <source src="/videos/loop-mobile.webm" type="video/webm" media="(max-width: 768px)" />
-          <source src="/videos/loop-mobile.mp4" type="video/mp4" media="(max-width: 768px)" />
+          <source src="/videos/water.mp4" type="video/mp4" media="(max-width: 768px)" />
           
           {/* Desktop Video Sources */}
-          <source src="/videos/loop.webm" type="video/webm" />
-          <source src="/videos/loop.mp4" type="video/mp4" />
+          <source src="/videos/water.mp4" type="video/mp4" />
         </video>
         {/* Subtle overlay to make elements pop */}
         <div className="absolute inset-0 bg-black/20" />
