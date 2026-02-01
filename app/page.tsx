@@ -6,12 +6,30 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 // --- ANIMATION TIMING ---
-// Water video plays alone for 5 seconds, then elements fade in
+// 🔧 ADJUST THESE VALUES TO CONTROL WHEN EACH ELEMENT APPEARS
 const TIMING = {
-  waterAlone: 2,      // Water video plays alone for 5 seconds
-  noteAndProfile: 3,  // Note + Profile pic start rising from underwater (after 5s)
-  logoAndEnter: 6,    // Logo + Enter fade in (2s after note started)
-  blueBg: 10,          // Blue background fades in (same time as logo/enter)
+  waterAlone: 2,           // Water video plays alone for 2 seconds
+  noteAndLogo: 2,          // Note + Logo start appearing (after water alone time)
+  profileAndEnter: 5.5,    // Profile pic + Enter start appearing
+  textLine1: 8.0,          // First text line "DIJANA BOSHKOVICH" appears (after profile + enter)
+  textLine2: 9.0,          // Second text line "COMPOSER & FLUTIST" appears (1 second after first line)
+  blueBg: 10,              // Blue background fades in last
+};
+
+// --- ANIMATION DURATIONS (How long fade-in takes) ---
+// 🔧 INCREASE THESE VALUES TO MAKE ANIMATIONS MORE SUBTLE/SLOWER
+// 🔧 DECREASE THESE VALUES TO MAKE ANIMATIONS FASTER
+const DURATIONS = {
+  noteAndLogo: 4.0,        // How long Note + Logo take to fully fade in (seconds) - SLOW & CINEMATIC
+  profileAndEnter: 2.5,    // How long Profile + Enter take to fully fade in (seconds)
+  textLines: 1.5,          // How long each text line takes to fade in (seconds)
+  blueBg: 1.5,             // How long blue background takes to fade in (seconds)
+};
+
+// --- RISING DISTANCES (For "underwater" effect) ---
+// 🔧 LARGER VALUES = ELEMENTS RISE FROM FURTHER DOWN
+const RISE = {
+  noteAndProfile: 100,     // Distance note and profile rise from (pixels)
 };
 
 export default function WaterIntroPage() {
@@ -67,12 +85,13 @@ export default function WaterIntroPage() {
       {/* 2. BLUE BACKGROUND (Full Width - Fades in LAST, covers water completely) */}
       {/* 
         🔧 TO ADJUST BLUE BACKGROUND FADE-IN TIME:
-        - Change delay: TIMING.blueBg to your desired seconds
+        - Change TIMING.blueBg in the constants at the top
+        - Change DURATIONS.blueBg to adjust how slowly it fades in
       */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1.5, delay: TIMING.blueBg, ease: "easeOut" }}
+        transition={{ duration: DURATIONS.blueBg, delay: TIMING.blueBg, ease: "easeOut" }}
         className="absolute inset-0 z-10"
       >
         <img 
@@ -109,24 +128,20 @@ export default function WaterIntroPage() {
       {/* 3. CONTENT LAYER */}
       <div className="relative z-20 w-full h-full pointer-events-none">
         
+        {/* ==================== PHASE 1: NOTE + LOGO (Appear Together First) ==================== */}
+        
         {/* NOTE IMAGE (With spacing - rises from underwater) */}
         {/* 
-          🔧 TO ADJUST NOTE SPACING (Currently 6px top/bottom, 12px left/right):
-          - Find: style={{ padding: '6px 12px' }}
-          - Change to: style={{ padding: 'TOPpx LEFTRIGHTpx' }}
-          - Example: style={{ padding: '10px 20px' }} = 10px top/bottom, 20px left/right
-          
-          🔧 TO ADJUST NOTE FADE-IN TIME:
-          - Change delay: TIMING.noteAndProfile
-          
-          🔧 TO ADJUST "RISING FROM UNDERWATER" DISTANCE:
-          - Change initial={{ opacity: 0, y: 100 }} - larger number = rises from further down
+          🔧 TO ADJUST NOTE FADE-IN:
+          - Change TIMING.noteAndLogo to control when it starts appearing
+          - Change DURATIONS.noteAndLogo to control how slowly it fades in
+          - Change RISE.noteAndProfile to control rising distance
         */}
         <motion.div
-          initial={{ opacity: 0, y: 100 }}
+          initial={{ opacity: 0, y: RISE.noteAndProfile }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 2.0, delay: TIMING.noteAndProfile, ease: "easeOut" }}
-          className="absolute inset-0 z-20 flex items-center justify-center px-8 py-8 md:px-[142px] md:py-8"
+          transition={{ duration: DURATIONS.noteAndLogo, delay: TIMING.noteAndLogo, ease: "easeOut" }}
+          className="absolute inset-0 z-20 flex items-center justify-center px-0 py-8 md:px-[142px] md:py-0"
         >
           <img 
             src="/note.webp" 
@@ -134,6 +149,34 @@ export default function WaterIntroPage() {
             className="w-full h-full object-cover"
           />
         </motion.div>
+
+        {/* LOGO (Appears with Note - GLUED TOGETHER with same animation) */}
+        {/* 
+          🔧 TO ADJUST LOGO SIZE:
+          - w-[100vw] = width mobile (100% of viewport)
+          - md:w-[65vw] = width desktop (65% of viewport)
+          - max-w-[750px] = maximum width limit
+          
+          🔧 TO ADJUST LOGO POSITION:
+          - top-2 = 8px from top (mobile)
+          - right-0 = 0px from right (mobile)
+          - md:-top-2 = -8px from top (desktop, negative goes UP)
+          - md:right-22 = custom right spacing (desktop)
+        */}
+        <motion.div
+          initial={{ opacity: 0, y: RISE.noteAndProfile }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: DURATIONS.noteAndLogo, delay: TIMING.noteAndLogo, ease: "easeOut" }}
+          className="absolute top-2 right-0 md:-top-2 md:right-22 z-30 w-[100vw] md:w-[65vw] max-w-[750px]"
+        >
+          <img 
+            src="/logo.webp" 
+            alt="Boshkovich Logo"
+            className="w-full h-auto object-contain drop-shadow-lg"
+          />
+        </motion.div>
+
+        {/* ==================== PHASE 2: PROFILE PIC + TEXT + ENTER (Appear Together After) ==================== */}
 
         {/* PROFILE PIC (Positioned on the note) */}
         {/* 
@@ -143,21 +186,18 @@ export default function WaterIntroPage() {
           - h-[70vh] = height (70% of viewport height)
           
           DESKTOP (md: prefix):
-          - md:w-[55vw] = width on desktop
-          - md:max-w-[450px] = maximum width limit
-          
-          Example: To make smaller, change to w-[50vw] h-[60vh] md:w-[40vw] md:max-w-[350px]
+          - md:w-[70vw] = width on desktop
+          - md:max-w-[600px] = maximum width limit
           
           🔧 TO ADJUST PROFILE PIC POSITION:
-          - bottom-0 left-0 = positioned at bottom-left corner
-          - Change to: bottom-[10px] left-[20px] for custom positioning
-          - Or use: bottom-4 left-4 (Tailwind spacing: 4 = 16px)
+          - bottom-8 left-0 = positioned at bottom (mobile)
+          - md:left-35.5 md:bottom-0 = desktop positioning
         */}
         <motion.div
-          initial={{ opacity: 0, y: 100 }}
+          initial={{ opacity: 0, y: RISE.noteAndProfile }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 2.0, delay: TIMING.noteAndProfile, ease: "easeOut" }}
-          className="absolute bottom-8 left-8 md:left-35.5 md:bottom-8 z-30 w-[65vw] h-[70vh] md:w-[45vw] md:h-auto md:max-w-[400px]"
+          transition={{ duration: DURATIONS.profileAndEnter, delay: TIMING.profileAndEnter, ease: "easeOut" }}
+          className="absolute bottom-8 left-0 md:left-35.5 md:bottom-0 z-30 w-[65vw] h-[70vh] md:w-[70vw] md:h-auto md:max-w-[600px]"
           style={{
             maskImage: 'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%)',
             WebkitMaskImage: 'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%)'
@@ -177,67 +217,88 @@ export default function WaterIntroPage() {
           />
         </motion.div>
 
-        {/* LOGO (Positioned on the note - Top Right area) */}
+        {/* WHITE TEXT OVERLAY (In front of profile picture - APPEARS LAST, LINE BY LINE) */}
         {/* 
-          🔧 TO ADJUST LOGO SIZE:
+          🔧 TO ADJUST TEXT POSITION:
+          
           MOBILE:
-          - w-[100vw] = width (100% of viewport width)
+          - bottom-[25vh] = Distance from bottom (25% of viewport height)
+          - left-[68vw] = Distance from left (68% of viewport width)
           
           DESKTOP:
-          - md:w-[60vw] = width on desktop (60% of viewport)
-          - max-w-[900px] = maximum width limit
+          - md:bottom-[30vh] = Distance from bottom on desktop
+          - md:left-[36vw] = Distance from left on desktop
           
-          Example: To make smaller, change to w-[80vw] md:w-[50vw] max-w-[700px]
+          EXAMPLES:
+          - To move text UP: Increase bottom value (e.g., bottom-[35vh])
+          - To move text DOWN: Decrease bottom value (e.g., bottom-[15vh])
+          - To move text LEFT: Decrease left value (e.g., left-[30vw])
+          - To move text RIGHT: Increase left value (e.g., left-[40vw])
           
-          🔧 TO ADJUST LOGO POSITION:
-          - top-2 right-6 = 8px from top, 24px from right (mobile)
-          - md:-top-10 md:right-6 = -40px from top (negative = goes up!), 24px from right (desktop)
+          🔧 TO ADJUST TEXT SIZE:
+          - text-3xl = mobile size (1.875rem / 30px)
+          - md:text-6xl = desktop size (3.75rem / 60px)
           
-          To move logo down: Change top-2 to top-10 (40px from top)
-          To move logo left: Change right-6 to right-12 (48px from right)
+          Available sizes: text-xl, text-2xl, text-3xl, text-4xl, text-5xl, text-6xl, text-7xl, text-8xl, text-9xl
+          
+          🔧 TO ADJUST TEXT TIMING:
+          - TIMING.textLine1 = when first line appears (currently 8.0s)
+          - TIMING.textLine2 = when second line appears (currently 9.0s)
+          - DURATIONS.textLines = how long fade-in takes (currently 1.5s)
+          
+          🔧 TO ADJUST TEXT SPACING:
+          - leading-tight = line height (space between two lines)
+          
+          Available: leading-none, leading-tight, leading-snug, leading-normal, leading-relaxed
         */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.5, delay: TIMING.logoAndEnter, ease: "easeOut" }}
-          className="absolute top-2 right-0 md:-top-2 md:right-22 z-30 w-[100vw] md:w-[60vw] max-w-[700px]"
+        <div className="absolute bottom-[56vh] left-[42vw] md:bottom-[30vh] md:left-[36vw] z-40 pointer-events-none"
+          style={{ fontFamily: "'Times New Roman', Times, serif" }}
         >
-          <img 
-            src="/logo.webp" 
-            alt="Boshkovich Logo"
-            className="w-full h-auto object-contain drop-shadow-lg"
-          />
-        </motion.div>
+          <div className="text-white font-bold text-3xl md:text-6xl leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+            {/* First Line - Appears First */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: DURATIONS.textLines, delay: TIMING.textLine1, ease: "easeOut" }}
+            >
+              DIJANA BOSHKOVICH
+            </motion.div>
+            
+            {/* Second Line - Appears After First Line */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: DURATIONS.textLines, delay: TIMING.textLine2, ease: "easeOut" }}
+            >
+              COMPOSER & FLUTIST
+            </motion.div>
+          </div>
+        </div>
 
-        {/* ENTER IMAGE (Positioned on the note - Bottom Right area) */}
+        {/* ENTER BUTTON (Appears with Profile + Text) */}
         {/* 
           🔧 TO ADJUST ENTER IMAGE SIZE:
-          - w-32 = width mobile (128px)
-          - md:w-48 = width tablet (192px)
-          - lg:w-64 = width desktop (256px)
-          
-          Example: To make smaller, change to w-24 md:w-32 lg:w-40
-          To make larger, change to w-40 md:w-56 lg:w-80
+          - w-64 = width mobile (256px)
+          - md:w-72 = width tablet (288px)
+          - lg:w-108 = width desktop (432px)
           
           🔧 TO ADJUST ENTER IMAGE POSITION:
-          - bottom-4 right-2 = 16px from bottom, 8px from right (mobile)
-          - md:bottom-12 md:right-12 = 48px from bottom, 48px from right (desktop)
-          
-          To move closer to corner: Change to bottom-2 right-2 md:bottom-4 md:right-4
-          To move further from corner: Change to bottom-8 right-8 md:bottom-20 md:right-20
+          - bottom-6 = 24px from bottom (mobile)
+          - -right-12 = -48px from right (mobile, negative goes OFF screen right)
+          - md:bottom-6 md:right-24 = desktop positioning
         */}
         <div className="absolute bottom-6 -right-12 md:bottom-6 md:right-24 z-40 pointer-events-auto">
           <Link href="/about">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1.5, delay: TIMING.logoAndEnter, ease: "easeOut" }}
+              transition={{ duration: DURATIONS.profileAndEnter, delay: TIMING.profileAndEnter, ease: "easeOut" }}
               className="cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95"
             >
               <img 
                 src="/enter.webp" 
                 alt="Enter" 
-                className="w-64 h-auto md:w-64 lg:w-86 drop-shadow-2xl"
+                className="w-64 h-auto md:w-72 lg:w-108 drop-shadow-2xl"
               />
             </motion.div>
           </Link>
