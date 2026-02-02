@@ -272,7 +272,7 @@ export default function WaterIntroPage() {
           COMPOSER & FLUTIST
         </motion.div>
 
-         {/* ENTER BUTTON (Appears with Profile + Text) */}
+           {/* ENTER BUTTON (Appears with Profile + Text) */}
         {/* 
           🔧 TO ADJUST ENTER IMAGE SIZE:
           - w-64 = width mobile (256px)
@@ -292,9 +292,9 @@ export default function WaterIntroPage() {
               transition={{ duration: DURATIONS.profileAndEnter, delay: TIMING.profileAndEnter, ease: "easeOut" }}
               className="relative cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95"
             >
-              {/* White glow - blends top and left edges only */}
+              {/* White glow - blends top and left edges only - MOBILE ONLY */}
               <div 
-                className="absolute inset-0 -left-8 bg-white/70 -z-10"
+                className="md:hidden absolute inset-0 -left-8 bg-white/70 -z-10"
                 style={{
                   filter: 'blur(25px)',
                   // 🔧 HEIGHT CONTROL:

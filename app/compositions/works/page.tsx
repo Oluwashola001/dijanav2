@@ -24,38 +24,38 @@ const worksData = [
     title: "STRING INSTRUMENTS & ENSEMBLE",
     works: [
       {
-        title: "Suite after Folk Melodies from Serbia, Macedonia, and Montenegro (2005)",
-        details: ["for Violin and Violoncello", "I. Lament Dance · II. Song – Improvisation – Kolo", "Duration: 10 min · World Premiere: Gasteig Cultural Center, Munich, 2006"],
+        title: "Suite after Folk Melodies from Serbia, Macedonia and Montenegro (2005)",
+        details: ["Duo – Violin & Violoncello", "I. Lament–Dance · II. Song–Improvisation–Kolo", "Duration: ca. 10 min · Premiere: Gasteig Cultural Center, Munich (2006)"],
         audio: "/Music/suite.mp3",
         youtube: "https://www.youtube.com/watch?v=WvxSkxnr1bQ"
       },
       {
         title: "Con Fretta (2024)",
-        details: ["for String Trio (Violin, Viola, Violoncello)", "Commissioned by the Munich Philharmonic", "Duration: approx. 10 min · World Premiere: German Embassy, Beijing, 2024"],
+        details: ["String Trio – Violin, Viola, Violoncello", "Commission by the Munich Philharmonic", "Duration: ca. 10 min · Premiere: German Embassy, Beijing (2024)"],
         audio: null,
         youtube: null
       },
       {
         title: "Memories (2024)",
-        details: ["for String Quartet", "Commissioned by the Munich Philharmonic", "I. For My Mother · II. Contourless", "Duration: approx. 20 min · World Premiere: Künstlerhaus, Munich, 2024"],
+        details: ["String Quartet – 2 Violins, Viola, Violoncello", "Commission by the Munich Philharmonic", "I. For My Mother · II. Blurred Edges", "Duration: ca. 20 min · Premiere: Künstlerhaus, Munich (2024)"],
         audio: null,
         youtube: null
       },
       {
-        title: "Sun Dance, from the cycle Light Plays (2015)",
-        details: ["for Piano Trio", "Duration: approx. 9 min · World Premiere: Alfred Schnittke Academy, Hamburg, 2016"],
+        title: "Sun Dance from the cycle Light Plays (2015)",
+        details: ["Piano Trio – Violin, Violoncello, Piano", "Duration: ca. 9 min · Premiere: Alfred Schnittke Academy, Hamburg (2016)"],
         audio: "/Music/Website Sundance MP3.mp3",
         youtube: "https://www.youtube.com/watch?v=qzC-frjrHR0"
       },
       {
         title: "Light Plays (2012)",
-        details: ["for Violin and Piano", "I. Reflections / Darkness · II. Luminance", "Duration: 10 min · World Premiere: Gasteig Cultural Center, Munich, 2013"],
+        details: ["Violin & Piano", "I. Reflections / Darkness · II. Luminance", "Duration: ca. 10 min · Premiere: Gasteig Cultural Center, Munich (2013)"],
         audio: "/Music/lichtspiele.mp3", 
         youtube: "https://www.youtube.com/watch?v=Mtyn18iBWik"
       },
       {
-        title: "Song of the Flame, from the cycle Light Plays (2016)",
-        details: ["for Solo Violoncello", "Duration: approx. 7 min · World Premiere: Alfred Schnittke Academy, Hamburg, 2016"],
+        title: "Song of the Flame from Light Plays (2016)",
+        details: ["Violoncello Solo", "Duration: ca. 7 min · Premiere: Alfred Schnittke Academy, Hamburg (2016)"],
         audio: "/Music/Website Singing Flame MP3.mp3",
         youtube: "https://www.youtube.com/watch?v=yWdFsA8GqxQ"
       }
@@ -66,14 +66,14 @@ const worksData = [
     title: "PIANO & ENSEMBLE",
     works: [
       {
-        title: "Black and White, from the cycle Light Plays (2023/2024)",
-        details: ["for Two Pianos", "Duration: approx. 13 min · World Premiere: Theater Erfurt, 2024"],
+        title: "Black and White from Light Plays (2023/24)",
+        details: ["Two Pianos", "Duration: ca. 13 min · Premiere: Theatre Erfurt, Grand Hall (2024)"],
         audio: null,
         youtube: null
       },
       {
         title: "No Tinnitus (2011)",
-        details: ["for Piano and 21 Tibetan Singing Bowls", "Duration: 17 min · World Premiere: Gasteig Cultural Center, Munich, 2011"],
+        details: ["Piano & 21 Tibetan Singing Bowls", "Duration: ca. 17 min · Premiere: Gasteig Cultural Center, Munich (2011)"],
         audio: "/Music/No Tinnitus Klavier Boskovic.mp3",
         youtube: null
       }
@@ -85,19 +85,19 @@ const worksData = [
     works: [
       {
         title: "Between East and West I (1999)",
-        details: ["for Flute and Percussion", "Duration: approx. 5 min · World Premiere: Freies Musikzentrum Munich, 1999"],
+        details: ["Flute & Percussion", "Duration: ca. 5 min · Premiere: Freies Musikzentrum Munich (1999)"],
         audio: "/Music/Website Zwischen Ost und West I MP3.mp3",
         youtube: null
       },
       {
-        title: "Between East and West II (1999; rev. 2016)",
-        details: ["for Solo Flute", "Duration: approx. 4 min · World Premiere: Stadtsaal Kaufbeuren, 1999"],
+        title: "Between East and West II (1999 / rev. 2016)",
+        details: ["Solo Flute", "Duration: ca. 4 min · Premiere: Stadtsaal Kaufbeuren (1999)"],
         audio: null,
         youtube: null
       },
       {
         title: "Conversations with Death (2014)",
-        details: ["for Flute and Organ", "Prelude · Quasi una Toccata · Postlude", "Duration: approx. 9 min · World Premiere: Altach Organ Soirée, 2014"],
+        details: ["Flute & Organ", "Prelude · Quasi una Toccata · Postlude", "Duration: ca. 9 min · Premiere: Altach Organ Soirée (2014)"],
         audio: null,
         youtube: null
       }
@@ -105,41 +105,41 @@ const worksData = [
   },
   {
     id: "young",
-    title: "MUSIC FOR YOUTHS",
+    title: "MUSIC FOR YOUNG PERFORMERS",
     works: [
       {
         title: "An Encounter with the Sea (1998)",
-        details: ["for Solo Flute · Duration: 4 min"],
+        details: ["Solo Flute", "Duration: ca. 4 min · Premiere: Town Hall, Kaufbeuren (1998)"],
         audio: null,
         youtube: null
       },
       {
         title: "Catch Me If You Can (2021)",
-        details: ["for Two Flutes · World Premiere: Munich, 2022"],
+        details: ["Two Flutes", "Premiere: Municipal Music School Munich (2022)"],
         audio: null,
         youtube: null
       },
       {
         title: "Enchanted Girls (2016)",
-        details: ["for Three Flutes with Theatre · Duration: approx. 4 min"],
+        details: ["Three Flutes & Acting", "Duration: ca. 4 min · Premiere: Jugend musiziert Competition, Munich (2017)"],
         audio: null,
         youtube: null
       },
       {
-        title: "The Night Flight (2015)",
-        details: ["for Flute and Piano · Duration: 2 min"],
+        title: "Night Flight (2015)",
+        details: ["Flute & Piano", "Premiere: Jugend musiziert Competition (2016)"],
         audio: null,
         youtube: null
       },
       {
         title: "Dance Monkey (2015)",
-        details: ["for Flute and Piano"],
+        details: ["Flute & Piano", "Premiere: Jugend musiziert Competition (2016)"],
         audio: null,
         youtube: null
       },
       {
         title: "Between East and West (2016)",
-        details: ["for Flute and Tape", "Duration: 7 min · 1st Prize & Special Prize, Jugend musiziert 2017"],
+        details: ["Flute & Tape", "Duration: ca. 7 min · First Prize & Special Award, Jugend musiziert (2017)", "Premiere: Carl Orff Hall, Munich"],
         audio: null,
         youtube: null
       }
@@ -151,13 +151,13 @@ const worksData = [
     works: [
       {
         title: "Versus Vox Integra (2007)",
-        details: ["for Flute, Violin, Clarinet, Violoncello, Piano, Percussion", "Duration: 12 min · World Premiere: BEMUS Festival, Belgrade, 2007"],
+        details: ["Sextet – Flute, Violin, Clarinet, Violoncello, Piano, Percussion", "Canticum – Versus – Vox – Integra", "Duration: ca. 12 min · Premiere: BEMUS International Music Festival, Belgrade (2007)"],
         audio: "/Music/versus II.mp3",
         youtube: "https://www.youtube.com/watch?v=qK4EA-K2VO4"
       },
       {
-        title: "Three Pieces after Texts by Spiritual Poets (2000/2001)",
-        details: ["for Piano, Two Harps, Two Flutes, Mezzo-Soprano", "Duration: 10 min · World Premiere: Graz Opera House, 2001"],
+        title: "Three Pieces after Spiritual Poets (2000/01)",
+        details: ["Sextet – Piano, 2 Harps, 2 Flutes, Mezzo-Soprano", "Duration: ca. 10 min · Premiere: Graz Opera House (2001)"],
         audio: null,
         youtube: null
       }
@@ -168,14 +168,14 @@ const worksData = [
     title: "STRING ORCHESTRA",
     works: [
       {
-        title: "Divertimento (2007/2008)",
-        details: ["Duration: 5:30 min · World Premiere: Munich, 2008"],
+        title: "Divertimento (2007/08)",
+        details: ["Duration: ca. 5:30 min · Premiere: Gasteig Cultural Center, Munich (2008)"],
         audio: "/Music/divertimento_f_strings.mp3",
         youtube: null
       },
       {
-        title: "Concerto for Strings (2009)",
-        details: ["Duration: 15 min · World Premiere: Kolarac Hall, Belgrade, 2009"],
+        title: "Concerto for Strings (2008/2009)",
+        details: ["Duration: ca. 15 min · Premiere: Kolarac Hall, Belgrade – BEMUS Festival (2009)"],
         audio: "/Music/concerto_f_strings.mp3",
         youtube: null
       }
@@ -186,14 +186,14 @@ const worksData = [
     title: "ORCHESTRA",
     works: [
       {
-        title: "One (2017/2018)",
-        details: ["Duration: 17 min · World Premiere: Hamburg, 2018"],
+        title: "One (2017/18)",
+        details: ["For symphony orchestra and two archaic instruments (one wind and one string instrument from spiritual traditions of the world)", "Duration: ca. 17 min · Premiere: Hamburg University of Music and Theatre (2018)"],
         audio: "/Music/ONE Orchesterstuck Boskovic.mp3",
         youtube: null
       },
       {
-        title: "Danse Archaique",
-        details: ["Duration: 5 min"],
+        title: "Danse Archaïque",
+        details: ["Duration: ca. 5 min"],
         audio: null,
         youtube: null
       }
@@ -201,47 +201,53 @@ const worksData = [
   },
   {
     id: "voice",
-    title: "VOICE & CHOIR",
+    title: "VOICE & ENSEMBLE",
     works: [
       {
         title: "Two Songs (2004)",
-        details: ["for Mezzo-Soprano or Soprano and Piano", "Duration: 6 min"],
+        details: ["Voice & Piano", "I. Consolation · II. Song of the Blackbird", "Duration: ca. 6 min · Versions for mezzo-soprano and soprano", "Premiere: Max-Joseph-Saal, Munich Residenz (2004)"],
         audio: "/Music/trost.mp3",
         youtube: "https://www.youtube.com/watch?v=Z_2WtxWsMIA"
       },
       {
-        title: "It Is So Beautiful… (2015/2016)",
-        details: ["for Mezzo-Soprano and Piano", "Duration: 6 min"],
+        title: "It Is So Beautiful… (2015/16)",
+        details: ["Concert piece from Transit", "Duration: ca. 6 min · Premiere: Laeiszhalle, Hamburg (2016)"],
         audio: "/Music/Es ist so schon.mp3",
         youtube: "https://www.youtube.com/watch?v=tE3DgpMd5B8"
       },
       {
         title: "Transit (2016)",
-        details: ["Multimedia work for Mezzo-Soprano, Accordion, and Video", "Duration: 9 min"],
+        details: ["Multimedia Work – mezzo-soprano, accordion & video", "Duration: ca. 9 min · Premiere: Resonanzraum, Hamburg (2016)"],
         audio: null,
         youtube: null
       },
       {
         title: "Eternal Question (1999/2000)",
-        details: ["for Vocal Ensemble and Double Bass", "Duration: 5 min"],
+        details: ["Vocal Ensemble – vocal ensemble & double bass", "Duration: ca. 5 min · Premiere: Kunsthaus Kaufbeuren (2000)"],
         audio: null,
         youtube: null
       },
       {
         title: "Media Vita – Ātman Aeternus (2025)",
-        details: ["for Vocal Ensemble (SSATTTBB) and Two Horns or Natural Horns"],
+        details: ["For vocal ensemble (SSATTTBB) and 2 horns or natural horns", "A contemplation after Media Vita in Morte sumus and Vedic philosophy"],
         audio: null,
         youtube: null
       },
       {
         title: "Dona nobis pacem – Shanti",
-        details: ["for Mixed Choir (with or without Percussion)", "Duration: 4:30–5 min"],
+        details: ["For mixed choir & percussion", "Duration: ca. 5 min · Premiere: St. Reinoldi Church, Dortmund / Deutschlandradio (2017)"],
         audio: "/Music/Chor Dona nobis pacem Shanti Boskovic.mp3",
         youtube: null
       },
       {
-        title: "Ave Maria / Bogorodice Djevo",
-        details: ["for Mixed Choir and Tenor Solo", "Duration: 4:50 min"],
+        title: "Dona nobis pacem – Shanti",
+        details: ["For mixed choir", "Duration: ca. 4:30 min"],
+        audio: null,
+        youtube: null
+      },
+      {
+        title: "Ave Maria / Bogorodice djevo",
+        details: ["For mixed choir & tenor solo", "Duration: ca. 4:50 min · Premiere: St. Sylvester's Church, Munich (2015)"],
         audio: null,
         youtube: null
       }
@@ -249,18 +255,45 @@ const worksData = [
   }
 ];
 
-// Modern Minimal Music Player Component - FIXED VERSION
-function MinimalMusicPlayer({ src }: { src: string }) {
+// Animated Waveform Music Player Component with Web Audio API
+function WaveformMusicPlayer({ src }: { src: string }) {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const analyserRef = useRef<AnalyserNode | null>(null);
+  const dataArrayRef = useRef<Uint8Array<ArrayBuffer> | null>(null);
+  const sourceRef = useRef<MediaElementAudioSourceNode | null>(null);
+  const animationRef = useRef<number | null>(null);
+  
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [dragPosition, setDragPosition] = useState(0);
   const wasPlayingBeforeDrag = useRef(false);
 
+  // Initialize Web Audio API
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
+
+    const initAudioContext = () => {
+      if (!audioContextRef.current) {
+        const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+        audioContextRef.current = new AudioContext();
+        analyserRef.current = audioContextRef.current.createAnalyser();
+        analyserRef.current.fftSize = 128; // Smaller for visible bars
+        
+        const bufferLength = analyserRef.current.frequencyBinCount;
+        dataArrayRef.current = new Uint8Array(bufferLength);
+
+        if (!sourceRef.current) {
+          sourceRef.current = audioContextRef.current.createMediaElementSource(audio);
+          sourceRef.current.connect(analyserRef.current);
+          analyserRef.current.connect(audioContextRef.current.destination);
+        }
+      }
+    };
 
     const updateTime = () => {
       if (!isDragging) {
@@ -276,18 +309,13 @@ function MinimalMusicPlayer({ src }: { src: string }) {
     
     const handleEnded = () => setIsPlaying(false);
 
-    // Try to get duration immediately if already loaded
-    if (audio.duration && isFinite(audio.duration)) {
-      setDuration(audio.duration);
-    }
-
     audio.addEventListener('timeupdate', updateTime);
     audio.addEventListener('loadedmetadata', updateDuration);
     audio.addEventListener('durationchange', updateDuration);
     audio.addEventListener('canplay', updateDuration);
     audio.addEventListener('ended', handleEnded);
+    audio.addEventListener('play', initAudioContext);
 
-    // Force load metadata
     audio.load();
 
     return () => {
@@ -296,41 +324,132 @@ function MinimalMusicPlayer({ src }: { src: string }) {
       audio.removeEventListener('durationchange', updateDuration);
       audio.removeEventListener('canplay', updateDuration);
       audio.removeEventListener('ended', handleEnded);
+      audio.removeEventListener('play', initAudioContext);
+      
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
     };
   }, [isDragging, src]);
 
-  const togglePlayPause = () => {
+  // Draw waveform visualization
+  const drawWaveform = () => {
+    const canvas = canvasRef.current;
+    const analyser = analyserRef.current;
+    const dataArray = dataArrayRef.current;
+    
+    if (!canvas || !analyser || !dataArray) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const WIDTH = canvas.width;
+    const HEIGHT = canvas.height;
+    const bufferLength = analyser.frequencyBinCount;
+
+    analyser.getByteFrequencyData(dataArray);
+
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+    const barWidth = (WIDTH / bufferLength) * 2.5;
+    let x = 0;
+
+    for (let i = 0; i < bufferLength; i++) {
+      const barHeight = (dataArray[i] / 255) * HEIGHT * 0.8;
+      
+      // Gold gradient for bars
+      const gradient = ctx.createLinearGradient(0, HEIGHT - barHeight, 0, HEIGHT);
+      gradient.addColorStop(0, '#fde68a'); // amber-200
+      gradient.addColorStop(1, '#fcd34d'); // amber-300
+      
+      ctx.fillStyle = isPlaying ? gradient : 'rgba(253, 230, 138, 0.3)';
+      ctx.fillRect(x, HEIGHT - barHeight, barWidth - 1, barHeight);
+
+      x += barWidth;
+    }
+
+    animationRef.current = requestAnimationFrame(drawWaveform);
+  };
+
+  // Start/stop visualization
+  useEffect(() => {
+    if (isPlaying) {
+      drawWaveform();
+    } else if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+      // Draw static waveform when paused
+      const canvas = canvasRef.current;
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          // Draw minimal bars when not playing
+          const barCount = 32;
+          const barWidth = canvas.width / barCount;
+          for (let i = 0; i < barCount; i++) {
+            const height = 8 + Math.random() * 12;
+            ctx.fillStyle = 'rgba(253, 230, 138, 0.2)';
+            ctx.fillRect(i * barWidth, canvas.height - height, barWidth - 1, height);
+          }
+        }
+      }
+    }
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [isPlaying]);
+
+  const togglePlayPause = async () => {
     const audio = audioRef.current;
     if (!audio) return;
 
     if (isPlaying) {
       audio.pause();
+      setIsPlaying(false);
     } else {
-      audio.play();
+      try {
+        await audio.play();
+        setIsPlaying(true);
+        // Resume audio context if suspended
+        if (audioContextRef.current?.state === 'suspended') {
+          await audioContextRef.current.resume();
+        }
+      } catch (err) {
+        console.error('Playback failed:', err);
+      }
     }
-    setIsPlaying(!isPlaying);
   };
 
-  const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const audio = audioRef.current;
-    if (!audio || !duration) return;
+    const canvas = canvasRef.current;
+    if (!audio || !duration || !canvas) return;
 
-    const rect = e.currentTarget.getBoundingClientRect();
+    const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const percentage = x / rect.width;
     const newTime = percentage * duration;
     
     audio.currentTime = newTime;
     setCurrentTime(newTime);
+    setDragPosition(percentage);
   };
 
-  const handleMouseDown = () => {
+  const handleMouseDown = (e: React.MouseEvent) => {
     const audio = audioRef.current;
     if (!audio) return;
     
-    // Remember if audio was playing before drag
     wasPlayingBeforeDrag.current = !audio.paused;
     setIsDragging(true);
+    handleCanvasClick(e as any);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    handleCanvasClick(e as any);
   };
 
   const handleMouseUp = () => {
@@ -339,7 +458,6 @@ function MinimalMusicPlayer({ src }: { src: string }) {
     
     setIsDragging(false);
     
-    // Resume playback if it was playing before drag
     if (wasPlayingBeforeDrag.current && audio.paused) {
       audio.play();
     }
@@ -352,11 +470,11 @@ function MinimalMusicPlayer({ src }: { src: string }) {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
+  const progress = duration > 0 ? (isDragging ? dragPosition : currentTime / duration) : 0;
 
   return (
     <div className="flex items-center gap-3 bg-[#0a1625]/70 px-4 py-3 rounded-lg border border-white/10">
-      <audio ref={audioRef} src={src} preload="metadata" />
+      <audio ref={audioRef} src={src} preload="metadata" crossOrigin="anonymous" />
       
       {/* Play/Pause Button */}
       <button
@@ -376,36 +494,34 @@ function MinimalMusicPlayer({ src }: { src: string }) {
         )}
       </button>
 
-      {/* Progress Bar Container */}
+      {/* Waveform Container */}
       <div className="flex-1 flex items-center gap-3">
         {/* Current Time */}
         <span className="text-[11px] font-mono text-gray-400 min-w-[38px]">
           {formatTime(currentTime)}
         </span>
 
-        {/* Progress Bar */}
-        <div 
-          className="flex-1 h-1.5 bg-white/10 rounded-full cursor-pointer relative group/progress"
-          onClick={handleProgressClick}
-          onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-        >
-          {/* Background track */}
-          <div className="absolute inset-0 rounded-full overflow-hidden">
-            {/* Filled progress */}
-            <motion.div 
-              className="h-full bg-gradient-to-r from-amber-200 to-amber-300 rounded-full relative"
-              style={{ width: `${progress}%` }}
-              initial={false}
-              transition={{ duration: 0.1 }}
-            >
-              {/* Progress dot/handle - REMOVED AS REQUESTED */}
-            </motion.div>
-          </div>
+        {/* Waveform Canvas with Scrubber */}
+        <div className="flex-1 relative group/waveform">
+          <canvas
+            ref={canvasRef}
+            width={800}
+            height={40}
+            className="w-full h-10 cursor-pointer rounded"
+            onClick={handleCanvasClick}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+          />
           
-          {/* Hover effect */}
-          <div className="absolute inset-0 rounded-full bg-white/5 opacity-0 group-hover/progress:opacity-100 transition-opacity" />
+          {/* Progress indicator overlay */}
+          <div 
+            className="absolute top-0 left-0 h-full pointer-events-none"
+            style={{ width: `${progress * 100}%` }}
+          >
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-amber-300 rounded-full shadow-lg border-2 border-white/20 opacity-0 group-hover/waveform:opacity-100 transition-opacity" />
+          </div>
         </div>
 
         {/* Duration */}
@@ -417,7 +533,7 @@ function MinimalMusicPlayer({ src }: { src: string }) {
   );
 }
 
-// Scroll Reveal Wrapper Component - Fixed to prevent content shift and work bidirectionally
+// Scroll Reveal Wrapper Component
 function ScrollReveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, margin: "-100px" });
@@ -447,32 +563,26 @@ export default function MusicalWorksPage() {
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    const scrollSpeed = 0.5; // Pixels per frame
+    const scrollSpeed = 0.5;
     let animationId: number;
 
     const animate = () => {
-      // Check if user recently scrolled manually
       const timeSinceManualScroll = Date.now() - lastManualScrollTime.current;
       const shouldAutoScroll = !isTouching && timeSinceManualScroll > 2000 && isAutoScrolling;
 
       if (shouldAutoScroll) {
-        // Increment scroll position
         container.scrollLeft += scrollSpeed;
         
-        // Seamless loop: when we reach 1/3 of the way, jump back to start
-        // Since we have 3 copies of the nav items, this creates infinite loop
         const oneThirdWidth = container.scrollWidth / 3;
         
-        // When scrolled past first set of items, reset to beginning
         if (container.scrollLeft >= oneThirdWidth) {
-          container.scrollLeft = 1; // Reset to 1 instead of 0 to avoid visual snap
+          container.scrollLeft = 1;
         }
       }
 
       animationId = requestAnimationFrame(animate);
     };
 
-    // Start animation immediately
     animationId = requestAnimationFrame(animate);
 
     return () => {
@@ -533,7 +643,6 @@ export default function MusicalWorksPage() {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
-      // Resume auto-scrolling after 3 seconds
       setTimeout(() => setIsAutoScrolling(true), 3000);
     }
   };
@@ -558,8 +667,7 @@ export default function MusicalWorksPage() {
           className="overflow-x-auto overflow-y-hidden no-scrollbar w-full cursor-grab active:cursor-grabbing"
         >
             <div className="flex whitespace-nowrap px-4 py-3 gap-3" style={{ width: 'max-content' }}>
-            {/* Triple duplicate for smoother infinite effect */}
-            {[ ...navigationItems].map((item, index) => (
+            {navigationItems.map((item, index) => (
                 <a 
                     key={`${item.id}-${index}`}
                     href={`#${item.id}`}
@@ -657,7 +765,7 @@ export default function MusicalWorksPage() {
                                             
                                             {work.audio && (
                                                 <div className="flex-1 w-full">
-                                                    <MinimalMusicPlayer src={work.audio} />
+                                                    <WaveformMusicPlayer src={work.audio} />
                                                 </div>
                                             )}
 
