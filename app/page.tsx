@@ -152,22 +152,27 @@ export default function WaterIntroPage() {
 
         {/* LOGO (Appears with Note - GLUED TOGETHER with same animation) */}
         {/* 
-          🔧 TO ADJUST LOGO SIZE:
-          - w-[100vw] = width mobile (100% of viewport)
-          - md:w-[65vw] = width desktop (65% of viewport)
-          - max-w-[750px] = maximum width limit
+          🔧 TO ADJUST LOGO SIZE ON MOBILE:
+          - w-[120vw] = current mobile size (120% of viewport width)
+          - Increase for bigger: w-[130vw], w-[140vw], etc.
+          - Decrease for smaller: w-[110vw], w-[100vw], etc.
           
-          🔧 TO ADJUST LOGO POSITION:
-          - top-2 = 8px from top (mobile)
-          - right-0 = 0px from right (mobile)
+          🔧 TO ADJUST LOGO VERTICAL POSITION ON MOBILE:
+          - top-16 = 64px from top
+          - Increase to move down: top-20, top-24, top-32, etc.
+          - Decrease to move up: top-12, top-8, top-4, etc.
+          
+          🔧 DESKTOP (unchanged):
           - md:-top-2 = -8px from top (desktop, negative goes UP)
           - md:right-22 = custom right spacing (desktop)
+          - md:w-[65vw] = width desktop (65% of viewport)
+          - max-w-[750px] = maximum width limit
         */}
         <motion.div
           initial={{ opacity: 0, y: RISE.noteAndProfile }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: DURATIONS.noteAndLogo, delay: TIMING.noteAndLogo, ease: "easeOut" }}
-          className="absolute top-2 right-0 md:-top-2 md:right-22 z-30 w-[100vw] md:w-[65vw] max-w-[750px]"
+          className="absolute top-8 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-auto md:-top-2 md:right-22 z-30 w-[120vw] md:w-[65vw] max-w-[750px]"
         >
           <img 
             src="/logo.webp" 
@@ -217,65 +222,57 @@ export default function WaterIntroPage() {
           />
         </motion.div>
 
-        {/* WHITE TEXT OVERLAY (In front of profile picture - APPEARS LAST, LINE BY LINE) */}
+        {/* WHITE TEXT OVERLAY (In front of profile picture - DESKTOP ONLY) */}
         {/* 
-          🔧 TO ADJUST TEXT POSITION:
+          🔧 MOBILE CHANGE: Text hidden on mobile with "hidden md:block"
           
-          MOBILE:
-          - bottom-[25vh] = Distance from bottom (25% of viewport height)
-          - left-[68vw] = Distance from left (68% of viewport width)
+          🔧 TO ADJUST FIRST LINE (DIJANA BOSHKOVICH) POSITION (DESKTOP ONLY):
+          - md:bottom-[34vh] = Distance from bottom on desktop
+          - md:left-[49vw] = Distance from left on desktop
           
-          DESKTOP:
-          - md:bottom-[30vh] = Distance from bottom on desktop
-          - md:left-[36vw] = Distance from left on desktop
-          
-          EXAMPLES:
-          - To move text UP: Increase bottom value (e.g., bottom-[35vh])
-          - To move text DOWN: Decrease bottom value (e.g., bottom-[15vh])
-          - To move text LEFT: Decrease left value (e.g., left-[30vw])
-          - To move text RIGHT: Increase left value (e.g., left-[40vw])
-          
-          🔧 TO ADJUST TEXT SIZE:
-          - text-3xl = mobile size (1.875rem / 30px)
-          - md:text-6xl = desktop size (3.75rem / 60px)
+          🔧 TO ADJUST FIRST LINE TEXT SIZE (DESKTOP ONLY):
+          - md:text-7xl = desktop size (4.5rem / 72px)
           
           Available sizes: text-xl, text-2xl, text-3xl, text-4xl, text-5xl, text-6xl, text-7xl, text-8xl, text-9xl
+        */}
+        {/* First Line - DIJANA BOSHKOVICH - VERDANA FONT - LARGER - DESKTOP ONLY */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: DURATIONS.textLines, delay: TIMING.textLine1, ease: "easeOut" }}
+          style={{ fontFamily: "Verdana, Geneva, sans-serif" }}
+          className="hidden md:block absolute md:bottom-[38vh] md:left-[32vw] z-40 pointer-events-none text-white font-bold md:text-[94px] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+        >
+          DIJANA BOSHKOVICH
+        </motion.div>
+
+        {/* 
+          🔧 MOBILE CHANGE: Text hidden on mobile with "hidden md:block"
+          
+          🔧 TO ADJUST SECOND LINE (COMPOSER & FLUTIST) POSITION (DESKTOP ONLY):
+          - md:bottom-[28vh] = Distance from bottom on desktop
+          - md:left-[49vw] = Distance from left on desktop
+          
+          🔧 TO ADJUST SECOND LINE TEXT SIZE (DESKTOP ONLY):
+          - md:text-5xl = desktop size (3rem / 48px)
           
           🔧 TO ADJUST TEXT TIMING:
           - TIMING.textLine1 = when first line appears (currently 8.0s)
           - TIMING.textLine2 = when second line appears (currently 9.0s)
           - DURATIONS.textLines = how long fade-in takes (currently 1.5s)
-          
-          🔧 TO ADJUST TEXT SPACING:
-          - leading-tight = line height (space between two lines)
-          
-          Available: leading-none, leading-tight, leading-snug, leading-normal, leading-relaxed
         */}
-        <div className="absolute bottom-[56vh] left-[42vw] md:bottom-[30vh] md:left-[36vw] z-40 pointer-events-none"
+        {/* Second Line - COMPOSER & FLUTIST - TIMES NEW ROMAN FONT - SMALLER - DESKTOP ONLY */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: DURATIONS.textLines, delay: TIMING.textLine2, ease: "easeOut" }}
           style={{ fontFamily: "'Times New Roman', Times, serif" }}
+          className="hidden md:block absolute md:bottom-[30vh] md:left-[60vw] z-40 pointer-events-none text-white font-bold md:text-[54px] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
         >
-          <div className="text-white font-bold text-3xl md:text-6xl leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-            {/* First Line - Appears First */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: DURATIONS.textLines, delay: TIMING.textLine1, ease: "easeOut" }}
-            >
-              DIJANA BOSHKOVICH
-            </motion.div>
-            
-            {/* Second Line - Appears After First Line */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: DURATIONS.textLines, delay: TIMING.textLine2, ease: "easeOut" }}
-            >
-              COMPOSER & FLUTIST
-            </motion.div>
-          </div>
-        </div>
+          COMPOSER & FLUTIST
+        </motion.div>
 
-        {/* ENTER BUTTON (Appears with Profile + Text) */}
+         {/* ENTER BUTTON (Appears with Profile + Text) */}
         {/* 
           🔧 TO ADJUST ENTER IMAGE SIZE:
           - w-64 = width mobile (256px)
@@ -285,20 +282,40 @@ export default function WaterIntroPage() {
           🔧 TO ADJUST ENTER IMAGE POSITION:
           - bottom-6 = 24px from bottom (mobile)
           - -right-12 = -48px from right (mobile, negative goes OFF screen right)
-          - md:bottom-6 md:right-24 = desktop positioning
+          - md:bottom-2 md:right-46 = desktop positioning
         */}
-        <div className="absolute bottom-6 -right-12 md:bottom-6 md:right-24 z-40 pointer-events-auto">
+        <div className="absolute bottom-6.5 -right-10 md:bottom-2 md:right-46 z-40 pointer-events-auto">
           <Link href="/about">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: DURATIONS.profileAndEnter, delay: TIMING.profileAndEnter, ease: "easeOut" }}
-              className="cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95"
+              className="relative cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95"
             >
+              {/* White glow - blends top and left edges only */}
+              <div 
+                className="absolute inset-0 -left-8 bg-white/70 -z-10"
+                style={{
+                  filter: 'blur(25px)',
+                  // 🔧 HEIGHT CONTROL:
+                  // First number = cut from TOP (0% = extends full height upward)
+                  // Last number = cut from BOTTOM (32% = cuts bottom 32%)
+                  // To extend MORE upward: decrease first number (try -20%, -30%, -40%)
+                  // Negative values let it extend BEYOND the button upward
+                  clipPath: 'inset(0 0 0 0)',
+                  transform: 'translateY(-6px)',
+                  // 🔧 TOP BLEND: Change "30%" below to control top edge fade
+                  maskImage: 'linear-gradient(to bottom, transparent 0%, white 40%, white 100%), linear-gradient(to right, transparent 0%, white 15%, white 100%)',
+                  maskComposite: 'intersect',
+                  // 🔧 LEFT BLEND: Change "15%" above to control left edge fade
+                  WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, white 30%, white 100%), linear-gradient(to right, transparent 0%, white 25%, white 100%)',
+                  WebkitMaskComposite: 'source-in'
+                }}
+              ></div>
               <img 
                 src="/enter.webp" 
                 alt="Enter" 
-                className="w-64 h-auto md:w-72 lg:w-108 drop-shadow-2xl"
+                className="w-64 h-auto md:w-72 lg:w-108 drop-shadow-2xl relative z-10"
               />
             </motion.div>
           </Link>
