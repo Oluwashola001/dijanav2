@@ -8,7 +8,7 @@ import Link from 'next/link';
 const TIMING = {
   // This ONLY controls when "COMPOSITIONS" fades out and "ENTER" appears.
   // It does NOT stop the video.
-  uiTransitionDelay: 15700, // 10000ms = 10 seconds after load, the text changes.
+  uiTransitionDelay: 15700, // 15700ms after load, the text changes.
 
   titleFadeOut: 0.4,       // Duration: "COMPOSITIONS" fade out speed
   enterButtonDelay: 5.0,   // Delay: Wait time before "ENTER" starts fading in
@@ -49,69 +49,59 @@ export default function CompositionsPage() {
   // UPDATED: Starts TRUE so browser allows autoplay. User must click to unmute.
   const [isMuted, setIsMuted] = useState(true);
 
-  // Refs for media control
+  // Refs for video control
   const introVideoRef = useRef<HTMLVideoElement>(null);
   const loopVideoRef = useRef<HTMLVideoElement>(null);
-  const introAudioRef = useRef<HTMLAudioElement>(null);
-  const loopAudioRef = useRef<HTMLAudioElement>(null);
 
-  // --- LOGIC 1: AUDIO SEQUENCE (Independent) ---
-  const handleIntroAudioEnded = () => {
-    if (loopAudioRef.current) {
-      loopAudioRef.current.currentTime = 0; // Reset to start
-      loopAudioRef.current.play().catch(e => console.log("Loop audio play error", e));
-    }
-  };
-
-  // --- LOGIC 2: VIDEO SEQUENCE (Independent) ---
+  // --- VIDEO SEQUENCE ---
   // Only triggers when the actual video file finishes playing.
   const handleIntroVideoEnded = () => {
     setVideoFinished(true);
     if (loopVideoRef.current) {
-      loopVideoRef.current.play().catch(e => console.log("Loop video autoplay prevent", e));
+      loopVideoRef.current.play().catch(e => console.log("Loop video autoplay prevented", e));
     }
   };
 
-  // Toggle Mute & FORCE PLAY if browser blocked autoplay
+  // Toggle Mute for Videos
   const toggleMute = () => {
     const nextMuted = !isMuted;
     setIsMuted(nextMuted);
 
-    // 1. Apply mute state to both refs immediately
-    if (introAudioRef.current) introAudioRef.current.muted = nextMuted;
-    if (loopAudioRef.current) loopAudioRef.current.muted = nextMuted;
+    // Apply mute state to video refs
+    if (introVideoRef.current) introVideoRef.current.muted = nextMuted;
+    if (loopVideoRef.current) loopVideoRef.current.muted = nextMuted;
 
-    // 2. CRITICAL FIX: If we are unmuting, we must ensure the audio is actually PLAYING.
-    // (Browsers often block the initial autoplay, leaving the audio paused at 0:00)
+    // Force play if unmuting (in case browser blocked autoplay)
     if (!nextMuted) {
-        if (videoFinished) {
-            // Visuals are looping -> Force Loop Audio
-            if (loopAudioRef.current && loopAudioRef.current.paused) {
-                loopAudioRef.current.play().catch(e => console.error("Force play loop", e));
-            }
-        } else {
-            // Visuals are in intro -> Force Intro Audio
-            if (introAudioRef.current && introAudioRef.current.paused) {
-                introAudioRef.current.play().catch(e => console.error("Force play intro", e));
-            }
+      if (videoFinished) {
+        // Visuals are looping -> Force Loop Video
+        if (loopVideoRef.current && loopVideoRef.current.paused) {
+          loopVideoRef.current.play().catch(e => console.error("Force play loop video", e));
         }
+      } else {
+        // Visuals are in intro -> Force Intro Video
+        if (introVideoRef.current && introVideoRef.current.paused) {
+          introVideoRef.current.play().catch(e => console.error("Force play intro video", e));
+        }
+      }
     }
   };
 
   // --- INITIALIZATION ---
   useEffect(() => {
-    // 1. Start Media
-    if (introVideoRef.current) introVideoRef.current.play().catch(e => console.log("Intro video autoplay prevented", e));
-    if (introAudioRef.current) introAudioRef.current.play().catch(e => console.log("Intro audio autoplay prevented", e));
-
-    // 2. Preload loop audio to ensure seamless transition
-    if (loopAudioRef.current) {
-      loopAudioRef.current.load();
+    // Start intro video
+    if (introVideoRef.current) {
+      introVideoRef.current.play().catch(e => console.log("Intro video autoplay prevented", e));
     }
 
-    // 3. Set Timer for TEXT/UI CHANGE only
+    // Preload loop video to ensure seamless transition
+    if (loopVideoRef.current) {
+      loopVideoRef.current.load();
+    }
+
+    // Set Timer for TEXT/UI CHANGE only
     const timer = setTimeout(() => {
-        setShowEnterUI(true);
+      setShowEnterUI(true);
     }, TIMING.uiTransitionDelay);
 
     return () => clearTimeout(timer);
@@ -119,37 +109,19 @@ export default function CompositionsPage() {
 
   // Sync mute state updates
   useEffect(() => {
-    if (introAudioRef.current) introAudioRef.current.muted = isMuted;
-    if (loopAudioRef.current) loopAudioRef.current.muted = isMuted;
+    if (introVideoRef.current) introVideoRef.current.muted = isMuted;
+    if (loopVideoRef.current) loopVideoRef.current.muted = isMuted;
   }, [isMuted]);
 
   return (
     <main className="relative w-full min-h-screen bg-[#050B14] overflow-x-hidden">
-      
-      {/* --- HIDDEN AUDIO LAYER --- */}
-      <div className="hidden">
-        <audio 
-            ref={introAudioRef} 
-            src="/Music/composition.mp3" 
-            onEnded={handleIntroAudioEnded}
-            muted={isMuted}
-            preload="auto"
-        />
-        <audio 
-            ref={loopAudioRef} 
-            src="/Music/composition-loop.mp3" 
-            loop 
-            muted={isMuted}
-            preload="auto"
-        />
-      </div>
 
       {/* --- LAYER 1: BACKGROUND LOOP --- */}
       <div className={`fixed inset-0 z-0 w-full dvh transition-opacity duration-1000 ${videoFinished ? 'opacity-100' : 'opacity-0'}`}>
         <video
           ref={loopVideoRef}
           loop
-          muted
+          muted={isMuted}
           playsInline
           className="w-full h-full object-cover"
         >
@@ -161,7 +133,6 @@ export default function CompositionsPage() {
       </div>
 
       {/* --- LAYER 2: INTRO VIDEO --- */}
-      {/* Visuals depend on 'videoFinished' (actual video end), NOT the UI timer */}
       <AnimatePresence>
         {!videoFinished && (
           <motion.div
@@ -172,7 +143,7 @@ export default function CompositionsPage() {
           >
             <video
               ref={introVideoRef}
-              muted
+              muted={isMuted}
               playsInline
               onEnded={handleIntroVideoEnded}
               className="w-full h-full object-cover"
@@ -205,105 +176,105 @@ export default function CompositionsPage() {
             aria-label={isMuted ? "Unmute music" : "Mute music"}
           >
             {isMuted ? (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M11 5L6 9H2v6h4l5 4V5z"/>
-                    <line x1="23" y1="9" x2="17" y2="15"/>
-                    <line x1="17" y1="9" x2="23" y2="15"/>
-                </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                <line x1="23" y1="9" x2="17" y2="15"/>
+                <line x1="17" y1="9" x2="23" y2="15"/>
+              </svg>
             ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
             )}
           </button>
         </div>
 
         {/* Dynamic Header Area */}
         <div className="absolute top-[4rem] md:top-6 left-0 w-full z-40 flex justify-center pointer-events-none">
-            <AnimatePresence mode="wait">
-                {!showEnterUI ? (
-                    // 1. Initial Title
-                    <motion.h1
-                        key="title-static"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0, filter: "blur(10px)" }}
-                        transition={{ duration: TIMING.titleFadeOut }}
-                        className="font-heading text-[2rem] md:text-6xl lg:text-7xl font-bold text-white tracking-widest"
-                        style={{ textShadow: "0px 0px 20px rgba(251, 191, 36, 0.8)" }}
-                    >
-                        COMPOSITIONS
-                    </motion.h1>
-                ) : (
-                    // 2. Single "ENTER" Button with Arrow
-                    <Link href="/compositions/works">
-                    <motion.button
-                        key="title-interactive"
-                        initial={{ opacity: 0, filter: "blur(10px)" }}
-                        animate={{ opacity: 1, filter: "blur(0px)" }}
-                        transition={{ duration: TIMING.enterButtonFadeIn, delay: TIMING.enterButtonDelay }}
-                        className="pointer-events-auto text-[2rem] md:text-6xl lg:text-7xl font-bold text-white tracking-wide transition-all duration-300 cursor-pointer hover:scale-105 flex items-center gap-2 md:gap-3"
-                        style={{ 
-                            textShadow: "0px 0px 20px rgba(251, 191, 36, 0.8)",
-                            fontFamily: "'Comic Sans MS', 'Comic Sans', cursive"
-                        }}
-                        onMouseEnter={(e) => e.currentTarget.style.textShadow = "0px 0px 40px rgba(251, 191, 36, 1), 0px 0px 60px rgba(251, 191, 36, 0.6)"}
-                        onMouseLeave={(e) => e.currentTarget.style.textShadow = "0px 0px 20px rgba(251, 191, 36, 0.8)"}
-                        onClick={() => console.log("Enter clicked")}
-                    >
-                        ENTER
-                        <motion.svg 
-                            width="50" 
-                            height="40" 
-                            viewBox="0 0 50 40" 
-                            fill="none" 
-                            className="w-8 h-6 md:w-12 md:h-8 lg:w-14 lg:h-10"
-                            animate={{ x: [0, 6, 0] }}
-                            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                        >
-                            <path 
-                                d="M5 20 L40 20 M30 12 L40 20 L30 28" 
-                                stroke="currentColor" 
-                                strokeWidth="2.5" 
-                                strokeLinecap="round" 
-                                strokeLinejoin="round"
-                            />
-                        </motion.svg>
-                    </motion.button>
-                    </Link>
-                )}
-            </AnimatePresence>
+          <AnimatePresence mode="wait">
+            {!showEnterUI ? (
+              // 1. Initial Title
+              <motion.h1
+                key="title-static"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, filter: "blur(10px)" }}
+                transition={{ duration: TIMING.titleFadeOut }}
+                className="font-heading text-[2rem] md:text-6xl lg:text-7xl font-bold text-white tracking-widest"
+                style={{ textShadow: "0px 0px 20px rgba(251, 191, 36, 0.8)" }}
+              >
+                COMPOSITIONS
+              </motion.h1>
+            ) : (
+              // 2. Single "ENTER" Button with Arrow
+              <Link href="/compositions/works">
+                <motion.button
+                  key="title-interactive"
+                  initial={{ opacity: 0, filter: "blur(10px)" }}
+                  animate={{ opacity: 1, filter: "blur(0px)" }}
+                  transition={{ duration: TIMING.enterButtonFadeIn, delay: TIMING.enterButtonDelay }}
+                  className="pointer-events-auto text-[2rem] md:text-6xl lg:text-7xl font-bold text-white tracking-wide transition-all duration-300 cursor-pointer hover:scale-105 flex items-center gap-2 md:gap-3"
+                  style={{ 
+                    textShadow: "0px 0px 20px rgba(251, 191, 36, 0.8)",
+                    fontFamily: "'Comic Sans MS', 'Comic Sans', cursive"
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.textShadow = "0px 0px 40px rgba(251, 191, 36, 1), 0px 0px 60px rgba(251, 191, 36, 0.6)"}
+                  onMouseLeave={(e) => e.currentTarget.style.textShadow = "0px 0px 20px rgba(251, 191, 36, 0.8)"}
+                  onClick={() => console.log("Enter clicked")}
+                >
+                  ENTER
+                  <motion.svg 
+                    width="50" 
+                    height="40" 
+                    viewBox="0 0 50 40" 
+                    fill="none" 
+                    className="w-8 h-6 md:w-12 md:h-8 lg:w-14 lg:h-10"
+                    animate={{ x: [0, 6, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <path 
+                      d="M5 20 L40 20 M30 12 L40 20 L30 28" 
+                      stroke="currentColor" 
+                      strokeWidth="2.5" 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round"
+                    />
+                  </motion.svg>
+                </motion.button>
+              </Link>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Content Reveal - Individual Paragraph Backgrounds */}
         <AnimatePresence>
-            {showEnterUI && (
+          {showEnterUI && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: TIMING.textRevealDuration, delay: TIMING.textRevealDelay, ease: "easeOut" }}
+              className="w-full max-w-4xl -mt-8 md:mt-12 space-y-4 md:space-y-6"
+            >
+              {introText.map((paragraph, i) => (
                 <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: TIMING.textRevealDuration, delay: TIMING.textRevealDelay, ease: "easeOut" }}
-                    className="w-full max-w-4xl -mt-8 md:mt-12 space-y-4 md:space-y-6"
+                  key={i}
+                  initial={{ opacity: 0, y: 30, filter: "blur(5px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  transition={{ 
+                    duration: TIMING.textRevealDuration, 
+                    delay: TIMING.textRevealDelay + (i * 0.3),
+                    ease: "easeOut" 
+                  }}
+                  className="bg-[#223c5e]/80 backdrop-blur-sm px-6 py-5 md:px-8 md:py-6 rounded-lg"
                 >
-                    {introText.map((paragraph, i) => (
-                        <motion.div
-                            key={i}
-                            initial={{ opacity: 0, y: 30, filter: "blur(5px)" }}
-                            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                            transition={{ 
-                                duration: TIMING.textRevealDuration, 
-                                delay: TIMING.textRevealDelay + (i * 0.3),
-                                ease: "easeOut" 
-                            }}
-                            className="bg-[#223c5e]/80 backdrop-blur-sm px-6 py-5 md:px-8 md:py-6 rounded-lg"
-                        >
-                            <p className="font-body text-white text-lg md:text-xl lg:text-2xl leading-relaxed md:leading-relaxed drop-shadow-lg text-left">
-                                {parseStyledText(paragraph)}
-                            </p>
-                        </motion.div>
-                    ))}
+                  <p className="font-body text-white text-lg md:text-xl lg:text-2xl leading-relaxed md:leading-relaxed drop-shadow-lg text-left">
+                    {parseStyledText(paragraph)}
+                  </p>
                 </motion.div>
-            )}
+              ))}
+            </motion.div>
+          )}
         </AnimatePresence>
 
       </div>
