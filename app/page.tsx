@@ -90,7 +90,7 @@ export default function WaterIntroPage() {
       */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        animate={{ opacity: 0 }}
         transition={{ duration: DURATIONS.blueBg, delay: TIMING.blueBg, ease: "easeOut" }}
         className="absolute inset-0 z-10"
       >
@@ -139,9 +139,9 @@ export default function WaterIntroPage() {
         */}
         <motion.div
           initial={{ opacity: 0, y: RISE.noteAndProfile }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 0.7, y: 0 }}
           transition={{ duration: DURATIONS.noteAndLogo, delay: TIMING.noteAndLogo, ease: "easeOut" }}
-          className="absolute inset-0 z-20 flex items-center justify-center px-0 py-8 md:px-[142px] md:py-0"
+          className="absolute inset-0 z-20 flex items-center justify-center px-0 py-8 md:px-[142px] md:py-0 mix-blend-screen"
         >
           <img 
             src="/note.webp" 
