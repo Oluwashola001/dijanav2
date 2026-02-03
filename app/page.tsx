@@ -267,7 +267,7 @@ export default function WaterIntroPage() {
           animate={{ opacity: 1 }}
           transition={{ duration: DURATIONS.textLines, delay: TIMING.textLine2, ease: "easeOut" }}
           style={{ fontFamily: "'Times New Roman', Times, serif" }}
-          className="hidden md:block absolute md:bottom-[30vh] md:left-[54vw] z-40 pointer-events-none text-white font-bold md:text-[52px] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+          className="hidden md:block absolute md:bottom-[30vh] md:left-[53.7vw] z-40 pointer-events-none text-white font-bold md:text-[52px] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
         >
           COMPOSER & FLUTIST
         </motion.div>
