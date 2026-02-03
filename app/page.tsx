@@ -313,7 +313,7 @@ export default function WaterIntroPage() {
                 }}
               ></div>
               <img 
-                src="/enter-img.webp" 
+                src="/enter.webp" 
                 alt="Enter" 
                 className="w-64 h-auto md:w-72 lg:w-108 drop-shadow-2xl relative z-10"
               />
