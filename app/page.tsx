@@ -172,7 +172,7 @@ export default function WaterIntroPage() {
           initial={{ opacity: 0, y: RISE.noteAndProfile }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: DURATIONS.noteAndLogo, delay: TIMING.noteAndLogo, ease: "easeOut" }}
-          className="absolute top-8 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-auto md:-top-2 md:right-22 z-30 w-[120vw] md:w-[65vw] max-w-[750px]"
+          className="absolute top-8 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-auto md:-top-8 md:right-20 z-30 w-[120vw] md:w-[65vw] max-w-[750px]"
         >
           <img 
             src="/logo.webp" 
@@ -202,7 +202,7 @@ export default function WaterIntroPage() {
           initial={{ opacity: 0, y: RISE.noteAndProfile }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: DURATIONS.profileAndEnter, delay: TIMING.profileAndEnter, ease: "easeOut" }}
-          className="absolute bottom-8 left-0 md:left-35.5 md:bottom-0 z-30 w-[65vw] h-[70vh] md:w-[70vw] md:h-auto md:max-w-[600px]"
+          className="absolute bottom-8 left-0 md:left-35.5 md:bottom-0 z-30 w-[65vw] h-[70vh] md:w-[60vw] md:h-auto md:max-w-[500px]"
           style={{
             maskImage: 'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%)',
             WebkitMaskImage: 'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%)'
@@ -241,7 +241,7 @@ export default function WaterIntroPage() {
           animate={{ opacity: 1 }}
           transition={{ duration: DURATIONS.textLines, delay: TIMING.textLine1, ease: "easeOut" }}
           style={{ fontFamily: "Verdana, Geneva, sans-serif" }}
-          className="hidden md:block absolute md:bottom-[38vh] md:left-[32vw] z-40 pointer-events-none text-white font-bold md:text-[94px] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+          className="hidden md:block absolute md:bottom-[38vh] md:left-[34vw] z-40 pointer-events-none text-white font-bold md:text-[74px] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
         >
           DIJANA BOSHKOVICH
         </motion.div>
@@ -267,7 +267,7 @@ export default function WaterIntroPage() {
           animate={{ opacity: 1 }}
           transition={{ duration: DURATIONS.textLines, delay: TIMING.textLine2, ease: "easeOut" }}
           style={{ fontFamily: "'Times New Roman', Times, serif" }}
-          className="hidden md:block absolute md:bottom-[30vh] md:left-[60vw] z-40 pointer-events-none text-white font-bold md:text-[54px] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+          className="hidden md:block absolute md:bottom-[30vh] md:left-[54vw] z-40 pointer-events-none text-white font-bold md:text-[52px] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
         >
           COMPOSER & FLUTIST
         </motion.div>
@@ -284,7 +284,7 @@ export default function WaterIntroPage() {
           - -right-12 = -48px from right (mobile, negative goes OFF screen right)
           - md:bottom-2 md:right-46 = desktop positioning
         */}
-        <div className="absolute bottom-6.5 -right-10 md:bottom-2 md:right-46 z-40 pointer-events-auto">
+        <div className="absolute bottom-6.5 -right-10 md:-bottom-4 md:right-46 z-40 pointer-events-auto">
           <Link href="/about">
             <motion.div
               initial={{ opacity: 0 }}
