@@ -13,8 +13,8 @@ const TIMING = {
   titleFadeOut: 0.4,       // Duration: "COMPOSITIONS" fade out speed
   enterButtonDelay: 5.0,   // Delay: Wait time before "ENTER" starts fading in
   enterButtonFadeIn: 2.0,  // Duration: "ENTER" fade in speed
-  textRevealDelay: 7.0,    // Delay: Wait time AFTER "ENTER" appears to show the long text
-  textRevealDuration: 2.5  // Duration: Long text fade in speed
+  textRevealDelay: 8.0,    // Delay: Wait time AFTER "ENTER" appears to show the long text
+  textRevealDuration: 3.0  // Duration: Long text fade in speed
 };
 
 // --- DATA WITH STYLED WORDS ---
