@@ -8,12 +8,12 @@ import Link from 'next/link';
 // --- ANIMATION TIMING ---
 // 🔧 ADJUST THESE VALUES TO CONTROL WHEN EACH ELEMENT APPEARS
 const TIMING = {
-  waterAlone: 2,           // Water video plays alone for 2 seconds
-  noteAndLogo: 2,          // Note + Logo start appearing (after water alone time)
-  profileAndEnter: 5.5,    // Profile pic + Enter start appearing
-  textLine1: 8.0,          // First text line "DIJANA BOSHKOVICH" appears (after profile + enter)
-  textLine2: 9.0,          // Second text line "COMPOSER & FLUTIST" appears (1 second after first line)
-  blueBg: 10,              // Blue background fades in last
+  waterAlone: 4,           // Water video plays alone for 2 seconds
+  noteAndLogo: 4,          // Note + Logo start appearing (after water alone time)
+  profileAndEnter: 7.5,    // Profile pic + Enter start appearing
+  textLine1: 10.0,          // First text line "DIJANA BOSHKOVICH" appears (after profile + enter)
+  textLine2: 11.0,          // Second text line "COMPOSER & FLUTIST" appears (1 second after first line)
+  blueBg: 13,              // Blue background fades in last
 };
 
 // --- ANIMATION DURATIONS (How long fade-in takes) ---
