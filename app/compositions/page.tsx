@@ -238,10 +238,9 @@ export default function CompositionsPage() {
                   initial={{ opacity: 0, filter: "blur(10px)" }}
                   animate={{ opacity: 1, filter: "blur(0px)" }}
                   transition={{ duration: TIMING.enterButtonFadeIn, delay: TIMING.enterButtonDelay }}
-                  className="pointer-events-auto text-[2rem] md:text-6xl lg:text-7xl font-bold text-white tracking-wide transition-all duration-300 cursor-pointer hover:scale-105 flex items-center gap-2 md:gap-3"
+                  className="enter-button pointer-events-auto text-[2rem] md:text-6xl lg:text-7xl font-bold text-white tracking-wide transition-all duration-300 cursor-pointer hover:scale-105 flex items-center gap-2 md:gap-3"
                   style={{ 
-                    textShadow: "0px 0px 20px rgba(251, 191, 36, 0.8)",
-                    fontFamily: "'Comic Sans MS', 'Comic Sans', cursive"
+                    textShadow: "0px 0px 20px rgba(251, 191, 36, 0.8)"
                   }}
                   onMouseEnter={(e) => e.currentTarget.style.textShadow = "0px 0px 40px rgba(251, 191, 36, 1), 0px 0px 60px rgba(251, 191, 36, 0.6)"}
                   onMouseLeave={(e) => e.currentTarget.style.textShadow = "0px 0px 20px rgba(251, 191, 36, 0.8)"}
