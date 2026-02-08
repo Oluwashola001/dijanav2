@@ -566,7 +566,12 @@ export default function HomePage() {
         <BioBlocks />
         
         <div className="flex justify-center mt-12">
-           <a href="/compositions">
+           <a href="/compositions" onClick={() => {
+             // Set flag to allow unmuted audio on composition page
+             if (typeof window !== 'undefined') {
+               sessionStorage.setItem('autoUnmute', 'true');
+             }
+           }}>
             <motion.button 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}

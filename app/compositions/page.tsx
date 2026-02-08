@@ -53,6 +53,29 @@ export default function CompositionsPage() {
   const introVideoRef = useRef<HTMLVideoElement>(null);
   const loopVideoRef = useRef<HTMLVideoElement>(null);
 
+  // Check if user came from "View Compositions" button and auto-unmute
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const shouldAutoUnmute = sessionStorage.getItem('autoUnmute');
+      
+      if (shouldAutoUnmute === 'true') {
+        // User clicked the button on About page - we can unmute!
+        setIsMuted(false);
+        
+        // Apply to video refs immediately
+        if (introVideoRef.current) {
+          introVideoRef.current.muted = false;
+        }
+        if (loopVideoRef.current) {
+          loopVideoRef.current.muted = false;
+        }
+        
+        // Clear the flag so it doesn't affect page refreshes
+        sessionStorage.removeItem('autoUnmute');
+      }
+    }
+  }, []);
+
   // --- VIDEO SEQUENCE ---
   // Only triggers when the actual video file finishes playing.
   const handleIntroVideoEnded = () => {

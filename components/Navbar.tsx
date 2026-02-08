@@ -46,7 +46,14 @@ export default function Navbar() {
                 ${link.href === '#' ? 'text-white/50 cursor-default hover:text-white/50' : 'text-white/80 hover:text-white hover:text-shadow-glow'}`}
               style={{ textShadow: '0px 0px 10px rgba(0,0,0,0.3)' }}
               onClick={(e) => {
-                if (link.href === '#') e.preventDefault();
+                if (link.href === '#') {
+                  e.preventDefault();
+                } else if (link.href === '/compositions') {
+                  // Set flag for auto-unmute on compositions page
+                  if (typeof window !== 'undefined') {
+                    sessionStorage.setItem('autoUnmute', 'true');
+                  }
+                }
               }}
             >
               {link.label}
@@ -104,8 +111,15 @@ export default function Navbar() {
                     className={`text-lg md:text-2xl font-serif tracking-widest uppercase transition-colors
                       ${link.href === '#' ? 'text-white/40 cursor-default' : 'text-white/90 hover:text-amber-200'}`}
                     onClick={(e) => {
-                      if (link.href === '#') e.preventDefault();
-                      else setIsMobileMenuOpen(false);
+                      if (link.href === '#') {
+                        e.preventDefault();
+                      } else {
+                        // Set flag for auto-unmute on compositions page (mobile)
+                        if (link.href === '/compositions' && typeof window !== 'undefined') {
+                          sessionStorage.setItem('autoUnmute', 'true');
+                        }
+                        setIsMobileMenuOpen(false);
+                      }
                     }}
                   >
                     {link.label}
