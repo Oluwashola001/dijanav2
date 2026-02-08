@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 // UNCOMMENT THE LINE BELOW IN YOUR LOCAL PROJECT
 import "./globals.css";
+// Import Navigation Components
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Dijana Bošković | Composer",
@@ -36,8 +39,17 @@ export default function RootLayout({
           .font-serif { font-family:var(--font-cormorant), serif !important; }
         `}</style>
       </head>
-      <body className="antialiased min-h-screen">
+      {/* Added 'relative' to body to support absolute positioning of Nav/Footer if needed */}
+      <body className="antialiased min-h-screen relative">
+        
+        {/* Navigation Bar (Hides automatically on Home) */}
+        <Navbar />
+        
         {children}
+        
+        {/* Footer (Hides automatically on Home) */}
+        <Footer />
+        
       </body>
     </html>
   );

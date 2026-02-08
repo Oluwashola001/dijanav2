@@ -3,7 +3,205 @@
 import { motion, useInView } from 'framer-motion';
 // In your local Next.js project, you can uncomment the import below and use <Link> instead of <a>
 // import Link from 'next/link';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
+import { useWavesurfer } from '@wavesurfer/react';
+
+// --- WAVESURFER AUDIO PLAYER COMPONENT WITH SKELETON LOADER ---
+function WaveSurferPlayer({ src }: { src: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [volume, setVolume] = useState(1);
+  const [isMuted, setIsMuted] = useState(false);
+  const [showVolumeSlider, setShowVolumeSlider] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { wavesurfer, isPlaying, currentTime } = useWavesurfer({
+    container: containerRef,
+    height: 60,
+    waveColor: 'rgba(255, 255, 255, 0.3)',
+    progressColor: '#fcd34d', // amber-200
+    cursorColor: '#fcd34d',
+    barWidth: 2,
+    barGap: 2,
+    barRadius: 3,
+    url: src,
+    normalize: true,
+  });
+
+  // Hide skeleton only when audio is fully loaded and can play
+  useEffect(() => {
+    if (wavesurfer) {
+      const handleCanPlay = () => {
+        // Audio is loaded and ready to play
+        setIsLoading(false);
+      };
+      
+      const handleReady = () => {
+        // Waveform is drawn, check if audio is already playable
+        if (wavesurfer.getDuration() > 0) {
+          setIsLoading(false);
+        }
+      };
+      
+      // Listen for when audio can actually play
+      wavesurfer.on('ready', handleReady);
+      wavesurfer.on('decode', handleCanPlay);
+      
+      // Fallback: hide after 5 seconds to prevent infinite loading
+      const timeout = setTimeout(() => setIsLoading(false), 5000);
+      
+      return () => {
+        wavesurfer.un('ready', handleReady);
+        wavesurfer.un('decode', handleCanPlay);
+        clearTimeout(timeout);
+      };
+    }
+  }, [wavesurfer]);
+
+  // Get duration from wavesurfer
+  const duration = wavesurfer?.getDuration() || 0;
+
+  const onPlayPause = useCallback(() => {
+    wavesurfer && wavesurfer.playPause();
+  }, [wavesurfer]);
+
+  const toggleMute = useCallback(() => {
+    if (wavesurfer) {
+      const newMutedState = !isMuted;
+      setIsMuted(newMutedState);
+      wavesurfer.setVolume(newMutedState ? 0 : volume);
+    }
+  }, [wavesurfer, isMuted, volume]);
+
+  const handleVolumeChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+    if (wavesurfer && !isMuted) {
+      wavesurfer.setVolume(newVolume);
+    }
+    if (newVolume > 0 && isMuted) {
+      setIsMuted(false);
+    }
+  }, [wavesurfer, isMuted]);
+
+  const formatTime = (seconds: number) => {
+    if (!seconds || !isFinite(seconds)) return '0:00';
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  // Calculate remaining time (countdown)
+  const remainingTime = duration > 0 ? duration - currentTime : 0;
+
+  return (
+    <div className="flex items-center gap-3">
+      {/* Play/Pause Button */}
+      <button
+        onClick={onPlayPause}
+        className="shrink-0 w-9 h-9 rounded-full bg-amber-200 hover:bg-amber-300 flex items-center justify-center transition-all duration-200 shadow-lg"
+        aria-label={isPlaying ? 'Pause' : 'Play'}
+      >
+        {isPlaying ? (
+          <svg className="w-4 h-4 text-[#0a1625]" fill="currentColor" viewBox="0 0 24 24">
+            <rect x="6" y="5" width="4" height="14" rx="1" />
+            <rect x="14" y="5" width="4" height="14" rx="1" />
+          </svg>
+        ) : (
+          <svg className="w-4 h-4 text-[#0a1625] ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        )}
+      </button>
+
+      {/* WaveSurfer Container with Skeleton Loader */}
+      <div className="flex-1 relative">
+        {/* Skeleton Loader - Shows while loading */}
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center gap-[2px] px-1 animate-pulse">
+            {/* Generate random height bars for skeleton effect */}
+            {Array.from({ length: 70 }).map((_, i) => {
+              // Create varied heights for realistic waveform look
+              const heights = [20, 30, 45, 60, 50, 35, 25, 40, 55, 48];
+              const height = heights[i % heights.length];
+              return (
+                <div
+                  key={i}
+                  className="flex-1 bg-white/20 rounded-full transition-all"
+                  style={{ 
+                    height: `${height}%`,
+                    minWidth: '2px'
+                  }}
+                />
+              );
+            })}
+          </div>
+        )}
+        
+        {/* Real WaveSurfer - Fades in when ready */}
+        <div 
+          ref={containerRef} 
+          className={`transition-opacity duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+        />
+      </div>
+
+      {/* Volume Control */}
+      <div className="relative shrink-0">
+        <button
+          onClick={toggleMute}
+          onMouseEnter={() => setShowVolumeSlider(true)}
+          onMouseLeave={() => setShowVolumeSlider(false)}
+          className="w-8 h-8 rounded-full bg-amber-200/10 hover:bg-amber-200/20 border border-amber-200/30 hover:border-amber-200/50 flex items-center justify-center transition-all duration-200"
+          aria-label={isMuted ? 'Unmute' : 'Mute'}
+        >
+          {isMuted || volume === 0 ? (
+            <svg className="w-4 h-4 text-amber-200" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+            </svg>
+          ) : volume > 0.5 ? (
+            <svg className="w-4 h-4 text-amber-200" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+            </svg>
+          ) : (
+            <svg className="w-4 h-4 text-amber-200" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M7 9v6h4l5 5V4l-5 5H7z"/>
+            </svg>
+          )}
+        </button>
+
+        {/* Volume Slider - appears on hover */}
+        {showVolumeSlider && (
+          <div 
+            className="absolute bottom-full right-0 mb-2 bg-[#0a1625] border border-amber-200/30 rounded-lg p-2 shadow-lg"
+            onMouseEnter={() => setShowVolumeSlider(true)}
+            onMouseLeave={() => setShowVolumeSlider(false)}
+          >
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={isMuted ? 0 : volume}
+              onChange={handleVolumeChange}
+              className="w-20 h-1 accent-amber-200 cursor-pointer"
+              style={{
+                writingMode: 'vertical-lr' as const,
+                WebkitAppearance: 'slider-vertical' as any,
+                height: '80px',
+                width: '6px',
+                transform: 'rotate(180deg)'
+              }}
+            />
+          </div>
+        )}
+      </div>
+
+      {/* Time Display - Countdown */}
+      <div className="text-sm font-mono text-amber-200 tabular-nums min-w-[42px] text-right">
+        {formatTime(remainingTime)}
+      </div>
+    </div>
+  );
+}
 
 // --- DATA STRUCTURE ---
 const navigationItems = [
@@ -375,174 +573,6 @@ const worksData = [
 }
 ];
 
-// Modern Minimal Music Player Component - FIXED VERSION
-function MinimalMusicPlayer({ src }: { src: string }) {
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const wasPlayingBeforeDrag = useRef(false);
-
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    const updateTime = () => {
-      if (!isDragging) {
-        setCurrentTime(audio.currentTime);
-      }
-    };
-    
-    const updateDuration = () => {
-      if (audio.duration && isFinite(audio.duration)) {
-        setDuration(audio.duration);
-      }
-    };
-    
-    const handleEnded = () => setIsPlaying(false);
-
-    // Try to get duration immediately if already loaded
-    if (audio.duration && isFinite(audio.duration)) {
-      setDuration(audio.duration);
-    }
-
-    audio.addEventListener('timeupdate', updateTime);
-    audio.addEventListener('loadedmetadata', updateDuration);
-    audio.addEventListener('durationchange', updateDuration);
-    audio.addEventListener('canplay', updateDuration);
-    audio.addEventListener('ended', handleEnded);
-
-    // Force load metadata
-    audio.load();
-
-    return () => {
-      audio.removeEventListener('timeupdate', updateTime);
-      audio.removeEventListener('loadedmetadata', updateDuration);
-      audio.removeEventListener('durationchange', updateDuration);
-      audio.removeEventListener('canplay', updateDuration);
-      audio.removeEventListener('ended', handleEnded);
-    };
-  }, [isDragging, src]);
-
-  const togglePlayPause = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (isPlaying) {
-      audio.pause();
-    } else {
-      audio.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const audio = audioRef.current;
-    if (!audio || !duration) return;
-
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const percentage = x / rect.width;
-    const newTime = percentage * duration;
-    
-    audio.currentTime = newTime;
-    setCurrentTime(newTime);
-  };
-
-  const handleMouseDown = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    
-    // Remember if audio was playing before drag
-    wasPlayingBeforeDrag.current = !audio.paused;
-    setIsDragging(true);
-  };
-
-  const handleMouseUp = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    
-    setIsDragging(false);
-    
-    // Resume playback if it was playing before drag
-    if (wasPlayingBeforeDrag.current && audio.paused) {
-      audio.play();
-    }
-  };
-
-  const formatTime = (time: number) => {
-    if (!time || !isFinite(time)) return '0:00';
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-  };
-
-  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
-
-  return (
-    <div className="flex items-center gap-3 bg-[#0a1625]/70 px-4 py-3 rounded-lg border border-white/10">
-      <audio ref={audioRef} src={src} preload="metadata" />
-      
-      {/* Play/Pause Button */}
-      <button
-        onClick={togglePlayPause}
-        className="shrink-0 w-9 h-9 rounded-full bg-amber-200/10 hover:bg-amber-200/20 border border-amber-200/30 hover:border-amber-200/50 flex items-center justify-center transition-all duration-200 group"
-        aria-label={isPlaying ? 'Pause' : 'Play'}
-      >
-        {isPlaying ? (
-          <svg className="w-4 h-4 text-amber-200" fill="currentColor" viewBox="0 0 24 24">
-            <rect x="6" y="5" width="4" height="14" rx="1" />
-            <rect x="14" y="5" width="4" height="14" rx="1" />
-          </svg>
-        ) : (
-          <svg className="w-4 h-4 text-amber-200 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M8 5v14l11-7z" />
-          </svg>
-        )}
-      </button>
-
-      {/* Progress Bar Container */}
-      <div className="flex-1 flex items-center gap-3">
-        {/* Current Time */}
-        <span className="text-[11px] font-mono text-gray-400 min-w-[38px]">
-          {formatTime(currentTime)}
-        </span>
-
-        {/* Progress Bar */}
-        <div 
-          className="flex-1 h-1.5 bg-white/10 rounded-full cursor-pointer relative group/progress"
-          onClick={handleProgressClick}
-          onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-        >
-          {/* Background track */}
-          <div className="absolute inset-0 rounded-full overflow-hidden">
-            {/* Filled progress */}
-            <motion.div 
-              className="h-full bg-gradient-to-r from-amber-200 to-amber-300 rounded-full relative"
-              style={{ width: `${progress}%` }}
-              initial={false}
-              transition={{ duration: 0.1 }}
-            >
-              {/* Progress dot/handle - REMOVED AS REQUESTED */}
-            </motion.div>
-          </div>
-          
-          {/* Hover effect */}
-          <div className="absolute inset-0 rounded-full bg-white/5 opacity-0 group-hover/progress:opacity-100 transition-opacity" />
-        </div>
-
-        {/* Duration */}
-        <span className="text-[11px] font-mono text-gray-400 min-w-[38px] text-right">
-          {formatTime(duration)}
-        </span>
-      </div>
-    </div>
-  );
-}
-
 // Scroll Reveal Wrapper Component - Fixed to prevent content shift and work bidirectionally
 function ScrollReveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef(null);
@@ -671,11 +701,7 @@ export default function MusicalWorksPage() {
       <div className="lg:hidden sticky top-0 z-50 w-full bg-[#050B14]/95 backdrop-blur-md border-b border-white/10 flex flex-col shadow-lg">
         {/* Row 1: Back Button */}
         <div className="px-4 pt-6 pb-2 w-full border-b border-white/5">
-             <a href="/compositions">
-                <button className="text-white/50 hover:text-amber-200 transition-colors uppercase tracking-widest text-xs font-bold flex items-center gap-2">
-                    ← Back
-                </button>
-            </a>
+             
         </div>
         
         {/* Row 2: Infinite Auto-scrolling Nav Buttons with Manual Override */}
@@ -683,7 +709,7 @@ export default function MusicalWorksPage() {
           ref={scrollContainerRef}
           className="overflow-x-auto overflow-y-hidden no-scrollbar w-full cursor-grab active:cursor-grabbing"
         >
-            <div className="flex whitespace-nowrap px-4 py-3 gap-3" style={{ width: 'max-content' }}>
+            <div className="flex whitespace-nowrap px-4 py-6 gap-3" style={{ width: 'max-content' }}>
             {/* Triple duplicate for smoother infinite effect */}
             {[ ...navigationItems].map((item, index) => (
                 <a 
@@ -730,11 +756,7 @@ export default function MusicalWorksPage() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <a href="/compositions">
-            <button className="text-white/50 hover:text-amber-200 transition-colors uppercase tracking-widest text-xs md:text-sm font-bold flex items-center gap-2">
-                ← Back
-            </button>
-        </a>
+        
       </motion.div>
 
       {/* --- MAIN CONTENT CONTAINER --- */}
@@ -777,13 +799,13 @@ export default function MusicalWorksPage() {
                                         ))}
                                     </div>
 
-                                    {/* Media Controls */}
+                                    {/* Media Controls - NOW USING WAVESURFER WITH SKELETON */}
                                     {hasMedia && (
                                         <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
                                             
                                             {work.audio && (
                                                 <div className="flex-1 w-full">
-                                                    <MinimalMusicPlayer src={work.audio} />
+                                                    <WaveSurferPlayer src={work.audio} />
                                                 </div>
                                             )}
 

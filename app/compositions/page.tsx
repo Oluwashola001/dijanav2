@@ -123,6 +123,7 @@ export default function CompositionsPage() {
           loop
           muted={isMuted}
           playsInline
+          preload="auto"
           className="w-full h-full object-cover"
         >
           <source src="/videos/loop-mobile.webm" type="video/webm" media="(max-width: 768px)" />
@@ -145,6 +146,8 @@ export default function CompositionsPage() {
               ref={introVideoRef}
               muted={isMuted}
               playsInline
+              preload="auto"
+              poster="/images/composition-intro-poster.webp"
               onEnded={handleIntroVideoEnded}
               className="w-full h-full object-cover"
             >
@@ -164,9 +167,7 @@ export default function CompositionsPage() {
         <div className="absolute top-6 left-0 w-full px-6 md:px-10 z-50 flex justify-between items-start pointer-events-none">
           {/* Back Button */}
           <Link href="/about" className="pointer-events-auto">
-            <button className="text-white/50 hover:text-amber-200/90 transition-colors uppercase tracking-widest text-xs md:text-sm font-bold cursor-pointer">
-              ← BACK
-            </button>
+            
           </Link>
 
           {/* Mute Button */}
