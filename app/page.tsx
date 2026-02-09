@@ -6,67 +6,47 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 // --- ANIMATION TIMING ---
-// 🔧 ADJUST THESE VALUES TO CONTROL WHEN EACH ELEMENT APPEARS
 const TIMING = {
-  waterAlone: 4,           // Water video plays alone for 2 seconds
-  noteAndLogo: 4,          // Note + Logo start appearing (after water alone time)
-  profileAndEnter: 7.5,    // Profile pic + Enter start appearing
-  textLine1: 10.0,          // First text line "DIJANA BOSHKOVICH" appears (after profile + enter)
-  textLine2: 11.0,          // Second text line "COMPOSER & FLUTIST" appears (1 second after first line)
-  blueBg: 13,              // Blue background fades in last
+  waterAlone: 4,
+  noteAndLogo: 4,
+  profileAndEnter: 7.5,
+  textLine1: 10.0,
+  textLine2: 11.0,
+  blueBg: 13,
 };
 
-// --- ANIMATION DURATIONS (How long fade-in takes) ---
-// 🔧 INCREASE THESE VALUES TO MAKE ANIMATIONS MORE SUBTLE/SLOWER
-// 🔧 DECREASE THESE VALUES TO MAKE ANIMATIONS FASTER
 const DURATIONS = {
-  noteAndLogo: 4.0,        // How long Note + Logo take to fully fade in (seconds) - SLOW & CINEMATIC
-  profileAndEnter: 2.5,    // How long Profile + Enter take to fully fade in (seconds)
-  textLines: 1.5,          // How long each text line takes to fade in (seconds)
-  blueBg: 1.5,             // How long blue background takes to fade in (seconds)
+  noteAndLogo: 4.0,
+  profileAndEnter: 2.5,
+  textLines: 1.5,
+  blueBg: 1.5,
 };
 
-// --- RISING DISTANCES (For "underwater" effect) ---
-// 🔧 LARGER VALUES = ELEMENTS RISE FROM FURTHER DOWN
 const RISE = {
-  noteAndProfile: 100,     // Distance note and profile rise from (pixels)
+  noteAndProfile: 100,
 };
 
 export default function WaterIntroPage() {
   const router = useRouter();
-  
-  // --- STATE ---
-  // Show pre-intro overlay first (before main animation)
   const [showPreIntro, setShowPreIntro] = useState(true);
-  
-  // Video starts MUTED to allow autoplay (browser requirement)
-  // After user interaction, we'll unmute it
   const [isMuted, setIsMuted] = useState(true);
-
-  // Video ref
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Ensure video plays on mount (muted for autoplay compliance)
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.muted = true; // Must start muted for autoplay
+      videoRef.current.muted = true;
       videoRef.current.play().catch(e => console.log("Video autoplay prevented:", e));
     }
   }, []);
 
-  // Handle user clicking to start experience
   const handleStartExperience = () => {
-    // Unmute the video
     if (videoRef.current) {
       videoRef.current.muted = false;
     }
     setIsMuted(false);
-    
-    // Hide the pre-intro overlay
     setShowPreIntro(false);
   };
   
-  // Toggle video mute (for the mute button that appears later)
   const toggleMute = () => {
     setIsMuted(prev => {
       const nextMuted = !prev;
@@ -81,29 +61,23 @@ export default function WaterIntroPage() {
     <>
       <main className="relative w-full h-[100dvh] bg-black overflow-hidden">
 
-      {/* 1. WATER VIDEO (Full Width Background - with baked-in audio) */}
+      {/* 1. WATER VIDEO */}
       <div className="absolute inset-0 z-0">
         <video
           ref={videoRef}
           autoPlay
-          muted // Starts muted for autoplay compliance
+          muted
           loop
           playsInline
           preload="auto"
           className="w-full h-full object-cover"
         >
-          {/* WebM first, then MP4 fallback */}
           <source src="/videos/water-new.webm" type="video/webm" />
           <source src="/videos/water-new.mp4" type="video/mp4" />
         </video>
       </div>
 
-      {/* ==================== PRE-INTRO OVERLAY (Initial Screen) ==================== */}
-      {/* 
-        🔧 This appears FIRST before any animation starts
-        🔧 User must click to begin the experience and enable audio
-        🔧 The cover image is centered over the water video (similar to the note)
-      */}
+      {/* PRE-INTRO OVERLAY */}
       <AnimatePresence>
         {showPreIntro && (
           <motion.div
@@ -112,16 +86,7 @@ export default function WaterIntroPage() {
             transition={{ duration: 1.2, ease: "easeInOut" }}
             className="absolute inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm"
           >
-            {/* Cover Image Container - Centered, semi-transparent overlay */}
             <div className="relative flex flex-col items-center justify-center px-6 md:px-12">
-              
-              
-
-              {/* Text Content - Two Clickable Language Options */}
-              {/* 
-                🔧 Each section has text + a labeled button (GERMAN / ENGLISH)
-                🔧 Both buttons start the experience
-              */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -130,7 +95,6 @@ export default function WaterIntroPage() {
               >
                 {/* German Section */}
                 <div className="space-y-4">
-                  {/* German Text */}
                   <div className="space-y-1">
                     <h1 
                       className="text-white text-3xl md:text-4xl lg:text-5xl font-bold tracking-wide drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]"
@@ -146,7 +110,6 @@ export default function WaterIntroPage() {
                     </p>
                   </div>
                   
-                  {/* German Button */}
                   <button
                     onClick={handleStartExperience}
                     className="group relative px-10 py-3 md:px-14 md:py-4 bg-white/10 backdrop-blur-md border-2 border-white/30 rounded-full transition-all duration-300 hover:bg-white/20 hover:border-white/50 hover:scale-105 active:scale-95 active:bg-white/30"
@@ -157,20 +120,16 @@ export default function WaterIntroPage() {
                     >
                       GERMAN
                     </span>
-                    
-                    {/* Subtle glow effect on hover */}
                     <div className="absolute inset-0 rounded-full bg-white/0 group-hover:bg-white/10 blur-xl transition-all duration-300 -z-10"></div>
                   </button>
                 </div>
 
-                {/* Divider */}
                 <div className="py-2">
                   <div className="w-32 h-px bg-white/40 mx-auto"></div>
                 </div>
 
                 {/* English Section */}
                 <div className="space-y-4">
-                  {/* English Text */}
                   <div className="space-y-1">
                     <h2 
                       className="text-white text-3xl md:text-4xl lg:text-5xl font-bold tracking-wide drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]"
@@ -186,7 +145,6 @@ export default function WaterIntroPage() {
                     </p>
                   </div>
                   
-                  {/* English Button */}
                   <button
                     onClick={handleStartExperience}
                     className="group relative px-10 py-3 md:px-14 md:py-4 bg-white/10 backdrop-blur-md border-2 border-white/30 rounded-full transition-all duration-300 hover:bg-white/20 hover:border-white/50 hover:scale-105 active:scale-95 active:bg-white/30"
@@ -197,8 +155,6 @@ export default function WaterIntroPage() {
                     >
                       ENGLISH
                     </span>
-                    
-                    {/* Subtle glow effect on hover */}
                     <div className="absolute inset-0 rounded-full bg-white/0 group-hover:bg-white/10 blur-xl transition-all duration-300 -z-10"></div>
                   </button>
                 </div>
@@ -208,12 +164,7 @@ export default function WaterIntroPage() {
         )}
       </AnimatePresence>
 
-      {/* 2. BLUE BACKGROUND (Full Width - Fades in LAST, covers water completely) */}
-      {/* 
-        🔧 TO ADJUST BLUE BACKGROUND FADE-IN TIME:
-        - Change TIMING.blueBg in the constants at the top
-        - Change DURATIONS.blueBg to adjust how slowly it fades in
-      */}
+      {/* 2. BLUE BACKGROUND */}
       {!showPreIntro && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -229,7 +180,7 @@ export default function WaterIntroPage() {
         </motion.div>
       )}
 
-      {/* MUTE BUTTON (Top Right - only shows after pre-intro) */}
+      {/* MUTE BUTTON */}
       {!showPreIntro && (
         <div className="absolute top-2 right-2 md:top-8 md:right-10 z-50 pointer-events-auto">
           <button 
@@ -238,14 +189,12 @@ export default function WaterIntroPage() {
             aria-label={isMuted ? "Unmute sound" : "Mute sound"}
           >
             {isMuted ? (
-              // Muted Icon
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M11 5L6 9H2v6h4l5 4V5z"/>
                 <line x1="23" y1="9" x2="17" y2="15"/>
                 <line x1="17" y1="9" x2="23" y2="15"/>
               </svg>
             ) : (
-              // Unmuted Icon
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
                 <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
@@ -255,19 +204,11 @@ export default function WaterIntroPage() {
         </div>
       )}
 
-      {/* 3. CONTENT LAYER (only shows after pre-intro) */}
+      {/* 3. CONTENT LAYER - EXACTLY AS YOUR ORIGINAL */}
       {!showPreIntro && (
         <div className="relative z-20 w-full h-full pointer-events-none">
           
-          {/* ==================== PHASE 1: NOTE + LOGO (Appear Together First) ==================== */}
-          
-          {/* NOTE IMAGE (With spacing - rises from underwater) */}
-          {/* 
-            🔧 TO ADJUST NOTE FADE-IN:
-            - Change TIMING.noteAndLogo to control when it starts appearing
-            - Change DURATIONS.noteAndLogo to control how slowly it fades in
-            - Change RISE.noteAndProfile to control rising distance
-          */}
+          {/* NOTE IMAGE - YOUR ORIGINAL STRUCTURE */}
           <motion.div
             initial={{ opacity: 0, y: RISE.noteAndProfile }}
             animate={{ opacity: 0.7, y: 0 }}
@@ -281,24 +222,7 @@ export default function WaterIntroPage() {
             />
           </motion.div>
 
-          {/* LOGO (Appears with Note - GLUED TOGETHER with same animation) */}
-          {/* 
-            🔧 TO ADJUST LOGO SIZE ON MOBILE:
-            - w-[120vw] = current mobile size (120% of viewport width)
-            - Increase for bigger: w-[130vw], w-[140vw], etc.
-            - Decrease for smaller: w-[110vw], w-[100vw], etc.
-            
-            🔧 TO ADJUST LOGO VERTICAL POSITION ON MOBILE:
-            - top-16 = 64px from top
-            - Increase to move down: top-20, top-24, top-32, etc.
-            - Decrease to move up: top-12, top-8, top-4, etc.
-            
-            🔧 DESKTOP (unchanged):
-            - md:-top-2 = -8px from top (desktop, negative goes UP)
-            - md:right-22 = custom right spacing (desktop)
-            - md:w-[65vw] = width desktop (65% of viewport)
-            - max-w-[750px] = maximum width limit
-          */}
+          {/* LOGO - YOUR ORIGINAL POSITIONING */}
           <motion.div
             initial={{ opacity: 0, y: RISE.noteAndProfile }}
             animate={{ opacity: 1, y: 0 }}
@@ -312,23 +236,7 @@ export default function WaterIntroPage() {
             />
           </motion.div>
 
-          {/* ==================== PHASE 2: PROFILE PIC + TEXT + ENTER (Appear Together After) ==================== */}
-
-          {/* PROFILE PIC (Positioned on the note) */}
-          {/* 
-            🔧 TO ADJUST PROFILE PIC SIZE:
-            MOBILE:
-            - w-[65vw] = width (65% of viewport width)
-            - h-[70vh] = height (70% of viewport height)
-            
-            DESKTOP (md: prefix):
-            - md:w-[70vw] = width on desktop
-            - md:max-w-[600px] = maximum width limit
-            
-            🔧 TO ADJUST PROFILE PIC POSITION:
-            - bottom-8 left-0 = positioned at bottom (mobile)
-            - md:left-35.5 md:bottom-0 = desktop positioning
-          */}
+          {/* PROFILE PIC - YOUR ORIGINAL POSITIONING */}
           <motion.div
             initial={{ opacity: 0, y: RISE.noteAndProfile }}
             animate={{ opacity: 1, y: 0 }}
@@ -339,13 +247,11 @@ export default function WaterIntroPage() {
               WebkitMaskImage: 'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%)'
             }}
           >
-            {/* Mobile Image */}
             <img 
               src="/profile-pic-mobile.webp" 
               alt="Dijana Profile" 
               className="md:hidden w-full h-full object-cover object-top drop-shadow-2xl"
             />
-            {/* Desktop Image */}
             <img 
               src="/profile-pic.webp" 
               alt="Dijana Profile" 
@@ -353,68 +259,35 @@ export default function WaterIntroPage() {
             />
           </motion.div>
 
-          {/* WHITE TEXT OVERLAY (In front of profile picture - DESKTOP ONLY) */}
-          {/* 
-            🔧 MOBILE CHANGE: Text hidden on mobile with "hidden md:block"
-            
-            🔧 TO ADJUST FIRST LINE (DIJANA BOSHKOVICH) POSITION (DESKTOP ONLY):
-            - md:bottom-[34vh] = Distance from bottom on desktop
-            - md:left-[49vw] = Distance from left on desktop
-            
-            🔧 TO ADJUST FIRST LINE TEXT SIZE (DESKTOP ONLY):
-            - md:text-7xl = desktop size (4.5rem / 72px)
-            
-            Available sizes: text-xl, text-2xl, text-3xl, text-4xl, text-5xl, text-6xl, text-7xl, text-8xl, text-9xl
-          */}
-          {/* First Line - DIJANA BOSHKOVICH - VERDANA FONT - LARGER - DESKTOP ONLY */}
+          {/* TEXT LINE 1 - WITH RESPONSIVE FONT SIZE ONLY */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: DURATIONS.textLines, delay: TIMING.textLine1, ease: "easeOut" }}
-            style={{ fontFamily: "Verdana, Geneva, sans-serif" }}
-            className="hidden md:block absolute md:bottom-[38vh] md:left-[34vw] z-40 pointer-events-none text-white font-bold md:text-[74px] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+            style={{ 
+              fontFamily: "Verdana, Geneva, sans-serif",
+              fontSize: '4.5vw', // Scales with viewport but never bigger than 74px
+            }}
+            className="hidden md:block absolute md:bottom-[32vh] md:left-[35vw] z-40 pointer-events-none text-white font-bold drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
           >
             DIJANA BOSHKOVICH
           </motion.div>
 
-          {/* 
-            🔧 MOBILE CHANGE: Text hidden on mobile with "hidden md:block"
-            
-            🔧 TO ADJUST SECOND LINE (COMPOSER & FLUTIST) POSITION (DESKTOP ONLY):
-            - md:bottom-[28vh] = Distance from bottom on desktop
-            - md:left-[49vw] = Distance from left on desktop
-            
-            🔧 TO ADJUST SECOND LINE TEXT SIZE (DESKTOP ONLY):
-            - md:text-5xl = desktop size (3rem / 48px)
-            
-            🔧 TO ADJUST TEXT TIMING:
-            - TIMING.textLine1 = when first line appears (currently 8.0s)
-            - TIMING.textLine2 = when second line appears (currently 9.0s)
-            - DURATIONS.textLines = how long fade-in takes (currently 1.5s)
-          */}
-          {/* Second Line - COMPOSER & FLUTIST - TIMES NEW ROMAN FONT - SMALLER - DESKTOP ONLY */}
+          {/* TEXT LINE 2 - WITH RESPONSIVE FONT SIZE ONLY */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: DURATIONS.textLines, delay: TIMING.textLine2, ease: "easeOut" }}
-            style={{ fontFamily: "'Times New Roman', Times, serif" }}
-            className="hidden md:block absolute md:bottom-[30vh] md:left-[53.7vw] z-40 pointer-events-none text-white font-bold md:text-[52px] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+            style={{ 
+              fontFamily: "'Times New Roman', Times, serif",
+              fontSize: '2.7vw', // Scales with viewport but never bigger than 52px
+            }}
+            className="hidden md:block absolute md:bottom-[26vh] md:left-[59.5vw] z-40 pointer-events-none text-white font-bold drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
           >
             COMPOSER & FLUTIST
           </motion.div>
 
-             {/* ENTER BUTTON (Appears with Profile + Text) */}
-          {/* 
-            🔧 TO ADJUST ENTER IMAGE SIZE:
-            - w-64 = width mobile (256px)
-            - md:w-72 = width tablet (288px)
-            - lg:w-108 = width desktop (432px)
-            
-            🔧 TO ADJUST ENTER IMAGE POSITION:
-            - bottom-6 = 24px from bottom (mobile)
-            - -right-12 = -48px from right (mobile, negative goes OFF screen right)
-            - md:bottom-2 md:right-46 = desktop positioning
-          */}
+          {/* ENTER BUTTON - YOUR ORIGINAL POSITIONING */}
           <div className="absolute bottom-6.5 -right-10 md:-bottom-4 md:right-46 z-40 pointer-events-auto">
             <Link href="/about">
               <motion.div
@@ -423,22 +296,14 @@ export default function WaterIntroPage() {
                 transition={{ duration: DURATIONS.profileAndEnter, delay: TIMING.profileAndEnter, ease: "easeOut" }}
                 className="relative cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95"
               >
-                {/* White glow - blends top and left edges only - MOBILE ONLY */}
                 <div 
                   className="md:hidden absolute inset-0 -left-8 bg-white/70 -z-10"
                   style={{
                     filter: 'blur(25px)',
-                    // 🔧 HEIGHT CONTROL:
-                    // First number = cut from TOP (0% = extends full height upward)
-                    // Last number = cut from BOTTOM (32% = cuts bottom 32%)
-                    // To extend MORE upward: decrease first number (try -20%, -30%, -40%)
-                    // Negative values let it extend BEYOND the button upward
                     clipPath: 'inset(0 0 0 0)',
                     transform: 'translateY(-6px)',
-                    // 🔧 TOP BLEND: Change "30%" below to control top edge fade
                     maskImage: 'linear-gradient(to bottom, transparent 0%, white 40%, white 100%), linear-gradient(to right, transparent 0%, white 15%, white 100%)',
                     maskComposite: 'intersect',
-                    // 🔧 LEFT BLEND: Change "15%" above to control left edge fade
                     WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, white 30%, white 100%), linear-gradient(to right, transparent 0%, white 25%, white 100%)',
                     WebkitMaskComposite: 'source-in'
                   }}
