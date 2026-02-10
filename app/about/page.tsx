@@ -111,8 +111,8 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
         onEnded={onComplete}
         className="w-full h-full object-cover object-center md:scale-100 scale-105"
       >
-        <source src="/videos/splashm.webm" type="video/webm" media="(max-width: 768px)" />
-        <source src="/videos/splash.webm" type="video/webm" />
+        <source src="/videos/splashm.mp4" type="video/mp4" media="(max-width: 768px)" />
+        <source src="/videos/splash.mp4" type="video/mp4" />
       </video>
     </motion.div>
   );
