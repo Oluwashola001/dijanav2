@@ -26,20 +26,74 @@ const RISE = {
   noteAndProfile: 100,
 };
 
+// Define strict types for our content to satisfy TypeScript
+type Language = 'en' | 'de';
+
+const CONTENT: Record<Language, { name: string; titles: string }> = {
+  en: {
+    name: "DIJANA BOSHKOVICH",
+    titles: "COMPOSER · FLUTIST"
+  },
+  de: {
+    name: "DIJANA BOŠKOVIĆ",
+    titles: "KOMPONISTIN · FLÖTISTIN"
+  }
+};
+
+// --- MANUAL POSITIONING CONFIGURATION ---
+// EDIT THE VALUES BELOW TO ADJUST GERMAN AND ENGLISH SEPARATELY
+const TEXT_STYLES = {
+  en: {
+    name: { 
+      bottom: '32vh', 
+      left: '35vw', 
+      fontSize: '4.5vw' 
+    },
+    titles: { 
+      bottom: '26vh', 
+      left: '54vw', 
+      fontSize: '3.0vw' 
+    }
+  },
+  de: {
+    name: { 
+      // CHANGE THESE VALUES TO MOVE THE GERMAN NAME
+      bottom: '32vh',   // Increase to move UP, Decrease to move DOWN
+      left: '37.5vw',     // Increase to move RIGHT, Decrease to move LEFT
+      fontSize: '5.0vw' // Adjust size if needed
+    },
+    titles: { 
+      // CHANGE THESE VALUES TO MOVE THE GERMAN TITLES
+      bottom: '26vh',   
+      left: '52vw',     
+      fontSize: '2.5vw' // Slightly smaller default for long German words
+    }
+  }
+};
+
 export default function WaterIntroPage() {
   const router = useRouter();
   const [showPreIntro, setShowPreIntro] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
+  
+  // TypeScript Fix: Explicitly tell React this state can only be 'en' or 'de'
+  const [language, setLanguage] = useState<Language>('en'); 
+  
+  // TypeScript Fix: Explicitly tell React this ref attaches to a Video Element
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.muted = true;
-      videoRef.current.play().catch(e => console.log("Video autoplay prevented:", e));
+      videoRef.current.play().catch((e) => console.log("Video autoplay prevented:", e));
     }
   }, []);
 
-  const handleStartExperience = () => {
+  // TypeScript Fix: Typed the argument
+  const handleStartExperience = (selectedLang: Language) => {
+    setLanguage(selectedLang);
+    localStorage.setItem('siteLanguage', selectedLang);
+
     if (videoRef.current) {
       videoRef.current.muted = false;
     }
@@ -57,6 +111,13 @@ export default function WaterIntroPage() {
     });
   };
 
+  // NEW: Handle ENTER button click - Set audio autoplay flag
+  const handleEnterClick = () => {
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('autoPlayMusic', 'true');
+    }
+  };
+
   return (
     <>
       <main className="relative w-full h-[100dvh] bg-black overflow-hidden">
@@ -72,8 +133,8 @@ export default function WaterIntroPage() {
           preload="auto"
           className="w-full h-full object-cover"
         >
-          <source src="/videos/water-new.webm" type="video/webm" />
-          <source src="/videos/water-new.mp4" type="video/mp4" />
+          <source src="/videos/water.webm" type="video/webm" />
+          <source src="/videos/water.mp4" type="video/mp4" />
         </video>
       </div>
 
@@ -111,7 +172,7 @@ export default function WaterIntroPage() {
                   </div>
                   
                   <button
-                    onClick={handleStartExperience}
+                    onClick={() => handleStartExperience('de')}
                     className="group relative px-10 py-3 md:px-14 md:py-4 bg-white/10 backdrop-blur-md border-2 border-white/30 rounded-full transition-all duration-300 hover:bg-white/20 hover:border-white/50 hover:scale-105 active:scale-95 active:bg-white/30"
                   >
                     <span 
@@ -146,7 +207,7 @@ export default function WaterIntroPage() {
                   </div>
                   
                   <button
-                    onClick={handleStartExperience}
+                    onClick={() => handleStartExperience('en')}
                     className="group relative px-10 py-3 md:px-14 md:py-4 bg-white/10 backdrop-blur-md border-2 border-white/30 rounded-full transition-all duration-300 hover:bg-white/20 hover:border-white/50 hover:scale-105 active:scale-95 active:bg-white/30"
                   >
                     <span 
@@ -204,11 +265,11 @@ export default function WaterIntroPage() {
         </div>
       )}
 
-      {/* 3. CONTENT LAYER - EXACTLY AS YOUR ORIGINAL */}
+      {/* 3. CONTENT LAYER */}
       {!showPreIntro && (
         <div className="relative z-20 w-full h-full pointer-events-none">
           
-          {/* NOTE IMAGE - YOUR ORIGINAL STRUCTURE */}
+          {/* NOTE IMAGE */}
           <motion.div
             initial={{ opacity: 0, y: RISE.noteAndProfile }}
             animate={{ opacity: 0.7, y: 0 }}
@@ -222,7 +283,7 @@ export default function WaterIntroPage() {
             />
           </motion.div>
 
-          {/* LOGO - YOUR ORIGINAL POSITIONING */}
+          {/* LOGO */}
           <motion.div
             initial={{ opacity: 0, y: RISE.noteAndProfile }}
             animate={{ opacity: 1, y: 0 }}
@@ -236,7 +297,7 @@ export default function WaterIntroPage() {
             />
           </motion.div>
 
-          {/* PROFILE PIC - YOUR ORIGINAL POSITIONING */}
+          {/* PROFILE PIC */}
           <motion.div
             initial={{ opacity: 0, y: RISE.noteAndProfile }}
             animate={{ opacity: 1, y: 0 }}
@@ -259,37 +320,45 @@ export default function WaterIntroPage() {
             />
           </motion.div>
 
-          {/* TEXT LINE 1 - WITH RESPONSIVE FONT SIZE ONLY */}
+          {/* TEXT LINE 1 - DYNAMIC POSITIONING */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: DURATIONS.textLines, delay: TIMING.textLine1, ease: "easeOut" }}
             style={{ 
               fontFamily: "Verdana, Geneva, sans-serif",
-              fontSize: '4.5vw', // Scales with viewport but never bigger than 74px
+              // Use values from config
+              fontSize: TEXT_STYLES[language].name.fontSize,
+              bottom: TEXT_STYLES[language].name.bottom,
+              left: TEXT_STYLES[language].name.left,
             }}
-            className="hidden md:block absolute md:bottom-[32vh] md:left-[35vw] z-40 pointer-events-none text-white font-bold drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+            // Removed md:bottom and md:left classes, relying on style prop now
+            className="hidden md:block absolute z-40 pointer-events-none text-white font-bold drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
           >
-            DIJANA BOSHKOVICH
+            {CONTENT[language].name}
           </motion.div>
 
-          {/* TEXT LINE 2 - WITH RESPONSIVE FONT SIZE ONLY */}
+          {/* TEXT LINE 2 - DYNAMIC POSITIONING */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: DURATIONS.textLines, delay: TIMING.textLine2, ease: "easeOut" }}
             style={{ 
-              fontFamily: "'Times New Roman', Times, serif",
-              fontSize: '2.7vw', // Scales with viewport but never bigger than 52px
+              fontFamily: "Verdana, Geneva, sans-serif",
+              // Use values from config
+              fontSize: TEXT_STYLES[language].titles.fontSize,
+              bottom: TEXT_STYLES[language].titles.bottom,
+              left: TEXT_STYLES[language].titles.left,
             }}
-            className="hidden md:block absolute md:bottom-[26vh] md:left-[59.5vw] z-40 pointer-events-none text-white font-bold drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+            // Removed md:bottom and md:left classes, relying on style prop now
+            className="hidden md:block absolute z-40 pointer-events-none text-white font-bold drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
           >
-            COMPOSER & FLUTIST
+           {CONTENT[language].titles}
           </motion.div>
 
-          {/* ENTER BUTTON - YOUR ORIGINAL POSITIONING */}
+          {/* ENTER BUTTON - UPDATED WITH AUDIO FLAG */}
           <div className="absolute bottom-6.5 -right-10 md:-bottom-4 md:right-46 z-40 pointer-events-auto">
-            <Link href="/about">
+            <Link href="/about" onClick={handleEnterClick}>
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -320,7 +389,7 @@ export default function WaterIntroPage() {
         </div>
       )}
 
-    </main>
+      </main>
     </>
   );
 }

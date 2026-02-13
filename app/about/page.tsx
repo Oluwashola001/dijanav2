@@ -4,8 +4,152 @@ import React from 'react';
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 
-// --- CONFIGURATION ---
-const overlayBlocks = [
+type Language = 'en' | 'de';
+
+// --- TRANSLATION CONTENT ---
+
+const CONTENT = {
+  en: {
+    hero: {
+      name: "Dijana Bošković",
+      role: "German-Serbian Composer & Flutist"
+    },
+    blocks: {
+      2: (
+        <>
+          Born in Belgrade, <span className="text-amber-200/90">Dijana Bošković</span> was recognized early for her extraordinary musical talent, receiving the <span className="text-amber-200/90">October Prize of the City of Belgrade</span> and multiple first prizes at national competitions. She studied <span className="text-amber-200/90">flute in Belgrade</span> and at the <span className="text-amber-200/90">University of Music in Munich</span> with <span className="text-amber-200/90">Prof. Paul Meisen</span>, earning both the Artistic Diploma and Master Class certification.
+        </>
+      ),
+      3: {
+        title: "Flute & Performances",
+        content: (
+          <>
+            As a versatile musician, Dijana performed as a soloist, in orchestras and chamber ensembles, and at renowned festivals including the <span className="text-amber-200/90">Schleswig-Holstein Music Festival</span>, the <span className="text-amber-200/90">BEMUS Festival</span> in Belgrade, and the <span className="text-amber-200/90">Hohenloher Kultursommer</span>. Collaborations with the <span className="text-amber-200/90">Kammerphilharmonie Bremen</span> and the <span className="text-amber-200/90">Bamberger Solisten</span>, along with jazz performances in venues such as the <span className="text-amber-200/90">Münchner Unterfahrt</span> and on recordings with jazz composers, shaped her multifaceted musical voice.
+          </>
+        )
+      },
+      4: {
+        title: "Versus Vox & Composition Studies",
+        content: (
+          <>
+            In 2005, she founded the <span className="text-amber-200/90">Versus Vox Ensemble</span> in Munich, which she has led ever since, blending her own compositions with works by other contemporary and historical composers into vibrant musical experiences. Her <span className="text-amber-200/90">studies in composition</span> with Prof. Manfred Stahnke and Prof. Fredrik Schwenk at the University of Music and Theatre Hamburg culminated in the orchestral project ONE, premiered by the Hamburg Symphony Orchestra.
+          </>
+        )
+      },
+      5: (
+        <>
+          The work bridges Western and Eastern classical music, exploring new forms of notation and performance practice.
+        </>
+      ),
+      6: {
+        title: "Works, Performances & Awards",
+        content: (
+          <>
+            Her compositions span <span className="text-amber-200/90">solo instruments, chamber music, orchestra, choir, voice, and theater</span>, performed by the <span className="text-amber-200/90">Chamber Orchestra Solisten from St. Petersburg</span>, members of the <span className="text-amber-200/90">Munich Philharmonic</span> and <span className="text-amber-200/90">Frankfurt Opera</span>, at the <span className="text-amber-200/90">BEMUS Music Festival</span> in Belgrade, and the <span className="text-amber-200/90">Tiroler Volksschauspiele</span>. The chamber orchestra work <span className="text-amber-200/90">"Concerto for Strings"</span> has been broadcast on leading European radio stations.
+          </>
+        )
+      },
+      7: (
+        <>
+          For <span className="text-amber-200/90">"Lichtspiele"</span>, she received support from the <span className="text-amber-200/90">Ernst von Siemens Art Foundation</span> and the <span className="text-amber-200/90">Gerhard Trede Foundation</span>, and in 2017 won <span className="text-amber-200/90">1st Prize</span> at the International Choral Music Competition organized by the <span className="text-amber-200/90">German Choir Association</span>.
+        </>
+      )
+    },
+    // Static text for BioBlocks component
+    staticBio: {
+      block1: {
+        title: "Dijana Bošković",
+        subtitle: "German-Serbian Composer & Flutist",
+        p1: "Born in Belgrade, Dijana Bošković was recognized early for her extraordinary musical talent, receiving the October Prize of the City of Belgrade and multiple first prizes at national competitions.",
+        p2: "She studied flute in Belgrade and at the University of Music in Munich with Prof. Paul Meisen, earning both the Artistic Diploma and Master Class certification. As a versatile musician, Dijana performed as a soloist, in orchestras and chamber ensembles.",
+        p3: "Collaborations with the Kammerphilharmonie Bremen and the Bamberger Solisten (from the Bamberger Symphoniker), along with jazz performances in venues such as the Münchner Unterfahrt and on recordings with jazz composers, shaped her multifaceted musical voice."
+      },
+      block2: {
+        title: "Versus Vox & Composition Studies",
+        p1: "In 2005, she founded the Versus Vox Ensemble in Munich, which she has led ever since, blending her own compositions with works by other contemporary and historical composers into vibrant musical experiences.",
+        p2: "Her compositional studies with Prof. Manfred Stahnke and Prof. Fredrik Schwenk at the University of Music and Theatre Hamburg culminated in the orchestral project \"ONE\", premiered by the Symphonikern Hamburg."
+      },
+      block3: {
+        title: "Works, Performances & Awards",
+        p1: "Her compositions span solo instruments, chamber music, orchestra, choir, voice, and theater, performed by the Chamber Orchestra Solisten from St. Petersburg, members of the Munich Philharmonic and Frankfurt Opera, at the BEMUS Music Festival in Belgrade, and the Tiroler Volksschauspiele.",
+        p2: "The chamber orchestra work \"Concerto for Strings\" has been broadcast on leading European radio stations.",
+        p3: "For \"Lichtspiele\", she received support from the Ernst von Siemens Art Foundation and the Gerhard Trede Foundation, and in 2017 won 1st Prize at the International Choral Music Competition organized by the German Choir Association."
+      }
+    },
+    button: "View Compositions"
+  },
+  de: {
+    hero: {
+      name: "Dijana Bošković",
+      role: "Deutsch-serbische Komponistin & Flötistin"
+    },
+    blocks: {
+      2: (
+        <>
+          Geboren in Belgrad, wurde <span className="text-amber-200/90">Dijana Bošković</span> bereits früh für ihre außergewöhnliche Musikalität ausgezeichnet – unter anderem mit dem <span className="text-amber-200/90">Oktober-Preis der Stadt Belgrad</span> sowie mehreren ersten Preisen bei nationalen Wettbewerben. Das Studium der <span className="text-amber-200/90">Querflöte</span> absolvierte sie zunächst in Belgrad, anschließend an der <span className="text-amber-200/90">Hochschule für Musik und Theater München</span> bei <span className="text-amber-200/90">Prof. Paul Meisen</span>, wo sowohl das Künstlerische Diplom als auch die Meisterklasse erfolgreich abgeschlossen wurden.
+        </>
+      ),
+      3: {
+        title: "Flöte & Performances",
+        content: (
+          <>
+            Als vielseitige Musikerin war sie als Solistin, Orchestermusikerin und Kammermusikerin tätig und gastierte bei renommierten Festivals wie dem <span className="text-amber-200/90">Schleswig-Holstein Musik Festival</span>, dem <span className="text-amber-200/90">BEMUS Festival</span> in Belgrad und dem <span className="text-amber-200/90">Hohenloher Kultursommer</span>. Kooperationen mit der <span className="text-amber-200/90">Kammerphilharmonie Bremen</span> und den <span className="text-amber-200/90">Bamberger Solisten</span> sowie Jazzauftritte in der <span className="text-amber-200/90">Münchner Unterfahrt</span> und CD-Produktionen mit Jazz-Komponist*innen prägten eine facettenreiche musikalische Handschrift.
+          </>
+        )
+      },
+      4: {
+        title: "Versus Vox & Kompositionsstudium",
+        content: (
+          <>
+            2005 gründete sie in München das <span className="text-amber-200/90">Versus Vox Ensemble</span>, das sie bis heute künstlerisch leitet. In dessen Arbeit verbinden sich eigene Kompositionen mit Werken zeitgenössischer und historischer Komponist*innen zu lebendigen, interdisziplinären Musikerlebnissen.
+          </>
+        )
+      },
+      5: (
+        <>
+          Das Kompositionsstudium bei Prof. Manfred Stahnke und Prof. Fredrik Schwenk an der Hochschule für Musik und Theater Hamburg schloss sie mit der Orchesterkomposition ONE ab, die von den Symphonikern Hamburg uraufgeführt wurde.
+        </>
+      ),
+      6: {
+        title: "Werke, Aufführungen & Auszeichnungen",
+        content: (
+          <>
+            Das kompositorische Spektrum umfasst Werke für <span className="text-amber-200/90">Solo-Instrumente, Kammermusik, Orchester, Chor, Gesang sowie Musiktheater</span>. Aufführungen fanden unter anderem mit dem <span className="text-amber-200/90">Kammerorchester Solisten aus St. Petersburg</span>, mit Mitgliedern der <span className="text-amber-200/90">Münchner Philharmoniker</span> und der <span className="text-amber-200/90">Frankfurter Oper</span>, beim <span className="text-amber-200/90">BEMUS Musikfestival</span> in Belgrad sowie bei den <span className="text-amber-200/90">Tiroler Volksschauspielen</span> statt.
+          </>
+        )
+      },
+      7: (
+        <>
+          Das Kammerorchesterwerk <span className="text-amber-200/90">Concerto for Strings</span> wurde von führenden europäischen Radiosendern ausgestrahlt. Für das Projekt <span className="text-amber-200/90">Lichtspiele</span> erhielt sie Förderungen der <span className="text-amber-200/90">Ernst von Siemens Kunststiftung</span> sowie der <span className="text-amber-200/90">Gerhard-Trede-Stiftung</span>. 2017 wurde sie mit dem <span className="text-amber-200/90">1. Preis</span> beim Internationalen Wettbewerb für Chormusik des <span className="text-amber-200/90">Deutschen Chorverbands</span> ausgezeichnet.
+        </>
+      )
+    },
+    staticBio: {
+      block1: {
+        title: "Dijana Bošković",
+        subtitle: "Deutsch-serbische Komponistin & Flötistin",
+        p1: "Geboren in Belgrad, wurde Dijana Bošković bereits früh für ihre außergewöhnliche Musikalität ausgezeichnet – unter anderem mit dem Oktober-Preis der Stadt Belgrad sowie mehreren ersten Preisen bei nationalen Wettbewerben.",
+        p2: "Das Studium der Querflöte absolvierte sie zunächst in Belgrad, anschließend an der Hochschule für Musik und Theater München bei Prof. Paul Meisen, wo sowohl das Künstlerische Diplom als auch die Meisterklasse erfolgreich abgeschlossen wurden. Als vielseitige Musikerin war sie als Solistin, Orchestermusikerin und Kammermusikerin tätig.",
+        p3: "Kooperationen mit der Kammerphilharmonie Bremen und den Bamberger Solisten sowie Jazzauftritte in der Münchner Unterfahrt und CD-Produktionen mit Jazz-Komponist*innen prägten eine facettenreiche musikalische Handschrift."
+      },
+      block2: {
+        title: "Versus Vox & Kompositionsstudium",
+        p1: "2005 gründete sie in München das Versus Vox Ensemble, das sie bis heute künstlerisch leitet. In dessen Arbeit verbinden sich eigene Kompositionen mit Werken zeitgenössischer und historischer Komponist*innen zu lebendigen, interdisziplinären Musikerlebnissen.",
+        p2: "Das Kompositionsstudium bei Prof. Manfred Stahnke und Prof. Fredrik Schwenk an der Hochschule für Musik und Theater Hamburg schloss sie mit der Orchesterkomposition ONE ab, die von den Symphonikern Hamburg uraufgeführt wurde."
+      },
+      block3: {
+        title: "Werke, Aufführungen & Auszeichnungen",
+        p1: "Das kompositorische Spektrum umfasst Werke für Solo-Instrumente, Kammermusik, Orchester, Chor, Gesang sowie Musiktheater. Aufführungen fanden unter anderem mit dem Kammerorchester Solisten aus St. Petersburg, mit Mitgliedern der Münchner Philharmoniker und der Frankfurter Oper, beim BEMUS Musikfestival in Belgrad sowie bei den Tiroler Volksschauspielen statt.",
+        p2: "Das Kammerorchesterwerk Concerto for Strings wurde von führenden europäischen Radiosendern ausgestrahlt.",
+        p3: "Für das Projekt Lichtspiele erhielt sie Förderungen der Ernst von Siemens Kunststiftung sowie der Gerhard-Trede-Stiftung. 2017 wurde sie mit dem 1. Preis beim Internationalen Wettbewerb für Chormusik des Deutschen Chorverbands ausgezeichnet."
+      }
+    },
+    button: "Kompositionen ansehen"
+  }
+};
+
+// --- HELPER TO GET OVERLAY BLOCKS ---
+const getOverlayBlocks = (lang: Language) => [
   {
     id: 1,
     desktop: { start: 1, end: 7 },
@@ -13,8 +157,8 @@ const overlayBlocks = [
     position: "top-left",
     mobilePosition: "top-left",
     lines: [
-      { text: "Dijana Bošković", className: "font-heading text-4xl md:text-6xl text-white font-bold" },
-      { text: "German-Serbian Composer & Flutist", className: "font-heading text-2xl md:text-3xl text-amber-200/90 italic" }
+      { text: CONTENT[lang].hero.name, className: "font-heading text-4xl md:text-6xl text-white font-bold" },
+      { text: CONTENT[lang].hero.role, className: "font-heading text-2xl md:text-3xl text-amber-200/90 italic" }
     ]
   },
   {
@@ -23,11 +167,7 @@ const overlayBlocks = [
     mobile: { start: 6.5, end: 29 },
     position: "right",
     mobilePosition: "upper-right",
-    content: (
-      <>
-        Born in Belgrade, <span className="text-amber-200/90">Dijana Bošković</span> was recognized early for her extraordinary musical talent, receiving the <span className="text-amber-200/90">October Prize of the City of Belgrade</span> and multiple first prizes at national competitions. She studied <span className="text-amber-200/90">flute in Belgrade</span> and at the <span className="text-amber-200/90">University of Music in Munich</span> with <span className="text-amber-200/90">Prof. Paul Meisen</span>, earning both the Artistic Diploma and Master Class certification.
-      </>
-    )
+    content: CONTENT[lang].blocks[2]
   },
   {
     id: 3,
@@ -35,12 +175,8 @@ const overlayBlocks = [
     mobile: { start: 29, end: 50 },
     position: "left",
     mobilePosition: "full-width",
-    title: "Flute & Performances",
-    content: (
-      <>
-        As a versatile musician, Dijana performed as a soloist, in orchestras and chamber ensembles, and at renowned festivals including the <span className="text-amber-200/90">Schleswig-Holstein Music Festival</span>, the <span className="text-amber-200/90">BEMUS Festival</span> in Belgrade, and the <span className="text-amber-200/90">Hohenloher Kultursommer</span>. Collaborations with the <span className="text-amber-200/90">Kammerphilharmonie Bremen</span> and the <span className="text-amber-200/90">Bamberger Solisten</span>, along with jazz performances in venues such as the <span className="text-amber-200/90">Münchner Unterfahrt</span> and on recordings with jazz composers, shaped her multifaceted musical voice.
-      </>
-    )
+    title: CONTENT[lang].blocks[3].title,
+    content: CONTENT[lang].blocks[3].content
   },
   {
     id: 4,
@@ -48,12 +184,8 @@ const overlayBlocks = [
     mobile: { start: 54, end: 79 },
     position: "top-center-higher",
     mobilePosition: "full-width",
-    title: "Versus Vox & Composition Studies",
-    content: (
-      <>
-        In 2005, she founded the <span className="text-amber-200/90">Versus Vox Ensemble</span> in Munich, which she has led ever since, blending her own compositions with works by other contemporary and historical composers into vibrant musical experiences. Her <span className="text-amber-200/90">studies in composition</span> with Prof. Manfred Stahnke and Prof. Fredrik Schwenk at the University of Music and Theatre Hamburg culminated in the orchestral project ONE, premiered by the Hamburg Symphony Orchestra.
-      </>
-    )
+    title: CONTENT[lang].blocks[4].title,
+    content: CONTENT[lang].blocks[4].content
   },
   {
     id: 5,
@@ -61,11 +193,7 @@ const overlayBlocks = [
     mobile: { start: 80, end: 94 },
     position: "top-center",
     mobilePosition: "mid-screen",
-    content: (
-      <>
-        The work bridges Western and Eastern classical music, exploring new forms of notation and performance practice.
-      </>
-    ),
+    content: CONTENT[lang].blocks[5],
     isQuote: true
   },
   {
@@ -74,12 +202,8 @@ const overlayBlocks = [
     mobile: { start: 94, end: 117 },
     position: "left",
     mobilePosition: "high-up",
-    title: "Works, Performances & Awards",
-    content: (
-      <>
-        Her compositions span <span className="text-amber-200/90">solo instruments, chamber music, orchestra, choir, voice, and theater</span>, performed by the <span className="text-amber-200/90">Chamber Orchestra Solisten from St. Petersburg</span>, members of the <span className="text-amber-200/90">Munich Philharmonic</span> and <span className="text-amber-200/90">Frankfurt Opera</span>, at the <span className="text-amber-200/90">BEMUS Music Festival</span> in Belgrade, and the <span className="text-amber-200/90">Tiroler Volksschauspiele</span>. The chamber orchestra work <span className="text-amber-200/90">"Concerto for Strings"</span> has been broadcast on leading European radio stations.
-      </>
-    )
+    title: CONTENT[lang].blocks[6].title,
+    content: CONTENT[lang].blocks[6].content
   },
   {
     id: 7,
@@ -87,32 +211,37 @@ const overlayBlocks = [
     mobile: { start: 127, end: 149 },
     position: "top-center",
     mobilePosition: "mid-screen",
-    content: (
-      <>
-        For <span className="text-amber-200/90">"Lichtspiele"</span>, she received support from the <span className="text-amber-200/90">Ernst von Siemens Art Foundation</span> and the <span className="text-amber-200/90">Gerhard Trede Foundation</span>, and in 2017 won <span className="text-amber-200/90">1st Prize</span> at the International Choral Music Competition organized by the <span className="text-amber-200/90">German Choir Association</span>.
-      </>
-    )
+    content: CONTENT[lang].blocks[7]
   }
 ];
 
+
 // --- COMPONENTS ---
 
-function SplashScreen({ onComplete }: { onComplete: () => void }) {
+// Updated SplashScreen to accept Language and switch videos
+function SplashScreen({ onComplete, language }: { onComplete: () => void, language: Language }) {
+  // Define video paths based on language
+  // PLEASE ENSURE THESE FILES EXIST IN YOUR PUBLIC/VIDEOS FOLDER
+  const mobileVideo = language === 'de' ? "/videos/splashm-de.mp4" : "/videos/splashm.mp4";
+  const desktopVideo = language === 'de' ? "/videos/splash-de.mp4" : "/videos/splash.mp4";
+
   return (
     <motion.div
       initial={{ opacity: 1 }}
       exit={{ opacity: 0, transition: { duration: 1.5, ease: "easeInOut" } }}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black overflow-hidden"
     >
+      {/* Key ensures video element re-mounts if language changes quickly */}
       <video
+        key={language} 
         autoPlay
         muted
         playsInline
         onEnded={onComplete}
         className="w-full h-full object-cover object-center md:scale-100 scale-105"
       >
-        <source src="/videos/splashm.mp4" type="video/mp4" media="(max-width: 768px)" />
-        <source src="/videos/splash.mp4" type="video/mp4" />
+        <source src={mobileVideo} type="video/mp4" media="(max-width: 768px)" />
+        <source src={desktopVideo} type="video/mp4" />
       </video>
     </motion.div>
   );
@@ -122,12 +251,14 @@ function TextBlockWithLineAnimation({
   block, 
   currentTime, 
   positionClasses,
-  isMobile
+  isMobile,
+  language
 }: { 
-  block: typeof overlayBlocks[0], 
+  block: any, 
   currentTime: number, 
   positionClasses: string,
-  isMobile: boolean
+  isMobile: boolean,
+  language: Language
 }) {
   const timing = isMobile ? block.mobile : block.desktop;
   const duration = timing.end - timing.start;
@@ -179,7 +310,7 @@ function TextBlockWithLineAnimation({
         transition={{ duration: 0.8, ease: "easeOut" }}
         className={`absolute z-20 p-4 md:p-6 rounded-xl ${getBackgroundClass()} border border-white/5 shadow-2xl overflow-hidden ${positionClasses}`}
       >
-        {linesToShow.map((line, lineIndex) => (
+        {linesToShow.map((line: any, lineIndex: number) => (
           <div
             key={`line-${lineIndex}`}
             className={line.className}
@@ -238,14 +369,30 @@ function TextBlockWithLineAnimation({
   // Get dynamic body text size based on block ID
   const getBodyClass = () => {
     if (isMobile) {
-      if (block.id === 2) return "text-white/95 font-body text-[1.4rem] md:text-xl leading-relaxed";
+      if (block.id === 2) {
+        // GERMAN SPECIFIC STYLING FOR BLOCK 2 (MOBILE)
+        // Edit text-[1.1rem] to change the size
+        if (language === 'de') return "text-white/95 font-body text-[1.1rem] md:text-lg leading-relaxed";
+        
+        // English Default
+        return "text-white/95 font-body text-[1.4rem] md:text-xl leading-relaxed";
+      }
       if (block.id === 3) return "text-white/95 font-body text-lg md:text-xl leading-relaxed";
       if (block.id === 4) return "text-white/95 font-body text-lg md:text-xl leading-relaxed";
       if (block.id === 5) return "text-white/95 font-body text-lg md:text-2xl leading-relaxed italic";
       if (block.id === 6) return "text-white/95 font-body text-lg md:text-xl leading-relaxed";
       if (block.id === 7) return "text-white/95 font-body text-lg md:text-xl leading-relaxed";
     }
-    if (block.id === 2) return "text-white/95 font-body text-xs md:text-[1.75rem] leading-relaxed";
+    
+    // DESKTOP STYLES
+    if (block.id === 2) {
+      // GERMAN SPECIFIC STYLING FOR BLOCK 2 (DESKTOP)
+      // Edit md:text-[1.4rem] to change the size
+      if (language === 'de') return "text-white/95 font-body text-xs md:text-[1.4rem] leading-relaxed";
+
+      // English Default
+      return "text-white/95 font-body text-xs md:text-[1.75rem] leading-relaxed";
+    }
     if (block.id === 3) return "text-white/95 font-body text-xs md:text-2xl leading-relaxed";
     if (block.id === 4) return "text-white/95 font-body text-xs md:text-[1.7rem] leading-relaxed";
     if (block.id === 6) return "text-white/95 font-body text-xs md:text-[1.7rem] leading-relaxed";
@@ -274,10 +421,13 @@ function TextBlockWithLineAnimation({
   );
 }
 
-function HeroVideo({ startPlaying }: { startPlaying: boolean }) {
+function HeroVideo({ startPlaying, language }: { startPlaying: boolean, language: Language }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+
+  // Get dynamic blocks based on language
+  const overlayBlocks = getOverlayBlocks(language);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -376,6 +526,7 @@ function HeroVideo({ startPlaying }: { startPlaying: boolean }) {
             currentTime={currentTime}
             positionClasses={getPositionClasses(activeBlock.position, activeBlock.mobilePosition)}
             isMobile={isMobile}
+            language={language} // 3. Pass language prop here
           />
         )}
       </AnimatePresence>
@@ -454,7 +605,9 @@ function AnimatedHeading({ children }: { children: React.ReactNode }) {
   );
 }
 
-function BioBlocks() {
+function BioBlocks({ language }: { language: Language }) {
+  const text = CONTENT[language].staticBio;
+
   return (
     <>
       <div className="relative z-10 w-full max-w-5xl mx-auto md:ml-[2%] md:mr-auto px-6 py-12 md:py-24 space-y-12 md:space-y-16">
@@ -463,22 +616,22 @@ function BioBlocks() {
         <section className="space-y-6">
           <AnimatedHeading>
             <div>
-              <h2 className="font-heading text-3xl md:text-5xl text-white font-bold mb-2">Dijana Bošković</h2>
-              <h3 className="font-heading text-xl md:text-3xl text-amber-200/90 italic">German-Serbian Composer & Flutist</h3>
+              <h2 className="font-heading text-3xl md:text-5xl text-white font-bold mb-2">{text.block1.title}</h2>
+              <h3 className="font-heading text-xl md:text-3xl text-amber-200/90 ">{text.block1.subtitle}</h3>
             </div>
           </AnimatedHeading>
           
           <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-xl">
             <AnimatedParagraph delay={0.1}>
-              <p>Born in Belgrade, Dijana Bošković was recognized early for her extraordinary musical talent, receiving the October Prize of the City of Belgrade and multiple first prizes at national competitions.</p>
+              <p>{text.block1.p1}</p>
             </AnimatedParagraph>
             
             <AnimatedParagraph delay={0.15}>
-              <p>She studied flute in Belgrade and at the University of Music in Munich with Prof. Paul Meisen, earning both the Artistic Diploma and Master Class certification. As a versatile musician, Dijana performed as a soloist, in orchestras and chamber ensembles.</p>
+              <p>{text.block1.p2}</p>
             </AnimatedParagraph>
             
             <AnimatedParagraph delay={0.2}>
-              <p>Collaborations with the Kammerphilharmonie Bremen and the Bamberger Solisten (from the Bamberger Symphoniker), along with jazz performances in venues such as the Münchner Unterfahrt and on recordings with jazz composers, shaped her multifaceted musical voice.</p>
+              <p>{text.block1.p3}</p>
             </AnimatedParagraph>
           </div>
         </section>
@@ -486,16 +639,16 @@ function BioBlocks() {
         {/* Block 2 */}
         <section className="space-y-6">
           <AnimatedHeading>
-            <h3 className="font-heading text-xl md:text-3xl text-amber-200/90 italic">Versus Vox & Composition Studies</h3>
+            <h3 className="font-heading text-xl md:text-3xl text-amber-200/90 ">{text.block2.title}</h3>
           </AnimatedHeading>
           
           <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-xl">
             <AnimatedParagraph delay={0.1}>
-              <p>In 2005, she founded the Versus Vox Ensemble in Munich, which she has led ever since, blending her own compositions with works by other contemporary and historical composers into vibrant musical experiences.</p>
+              <p>{text.block2.p1}</p>
             </AnimatedParagraph>
             
             <AnimatedParagraph delay={0.15}>
-              <p>Her compositional studies with Prof. Manfred Stahnke and Prof. Fredrik Schwenk at the University of Music and Theatre Hamburg culminated in the orchestral project "ONE", premiered by the Symphonikern Hamburg.</p>
+              <p>{text.block2.p2}</p>
             </AnimatedParagraph>
           </div>
         </section>
@@ -503,20 +656,20 @@ function BioBlocks() {
         {/* Block 3 */}
         <section className="space-y-6">
           <AnimatedHeading>
-            <h3 className="font-heading text-xl md:text-3xl text-amber-200/90 italic">Works, Performances & Awards</h3>
+            <h3 className="font-heading text-xl md:text-3xl text-amber-200/90 ">{text.block3.title}</h3>
           </AnimatedHeading>
           
           <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-xl">
             <AnimatedParagraph delay={0.1}>
-              <p>Her compositions span solo instruments, chamber music, orchestra, choir, voice, and theater, performed by the Chamber Orchestra Solisten from St. Petersburg, members of the Munich Philharmonic and Frankfurt Opera, at the BEMUS Music Festival in Belgrade, and the Tiroler Volksschauspiele.</p>
+              <p>{text.block3.p1}</p>
             </AnimatedParagraph>
             
             <AnimatedParagraph delay={0.15}>
-              <p>The chamber orchestra work "Concerto for Strings" has been broadcast on leading European radio stations.</p>
+              <p>{text.block3.p2}</p>
             </AnimatedParagraph>
             
             <AnimatedParagraph delay={0.2}>
-              <p>For "Lichtspiele", she received support from the Ernst von Siemens Art Foundation and the Gerhard Trede Foundation, and in 2017 won 1st Prize at the International Choral Music Competition organized by the German Choir Association.</p>
+              <p>{text.block3.p3}</p>
             </AnimatedParagraph>
           </div>
         </section>
@@ -544,8 +697,42 @@ function BioBlocks() {
 
 export default function HomePage() {
   const [splashFinished, setSplashFinished] = useState(false);
+  const [language, setLanguage] = useState<Language>('en');
+  
+  // NEW: Audio state management
+  const [isMusicMuted, setIsMusicMuted] = useState(true);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
+    // 1. Read the saved language from the Intro page
+    const savedLang = localStorage.getItem('siteLanguage') as Language;
+    if (savedLang === 'en' || savedLang === 'de') {
+      setLanguage(savedLang);
+    }
+
+    // 2. Check for auto-play music flag
+    if (typeof window !== 'undefined') {
+      const shouldAutoPlay = sessionStorage.getItem('autoPlayMusic');
+      
+      if (shouldAutoPlay === 'true') {
+        // User clicked ENTER button on home page - auto-play music!
+        setIsMusicMuted(false);
+        
+        // Wait a bit for page to load, then play
+        setTimeout(() => {
+          if (audioRef.current) {
+            audioRef.current.play().catch(e => {
+              console.log("Audio autoplay prevented:", e);
+              // If autoplay fails, user can still click the mute button
+            });
+          }
+        }, 500);
+        
+        // Clear the flag so it doesn't affect page refreshes
+        sessionStorage.removeItem('autoPlayMusic');
+      }
+    }
+
     document.documentElement.style.scrollBehavior = 'smooth';
     
     return () => {
@@ -553,17 +740,75 @@ export default function HomePage() {
     };
   }, []);
 
+  // Sync audio element mute state with React state
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.muted = isMusicMuted;
+    }
+  }, [isMusicMuted]);
+
+  // Toggle music mute
+  const toggleMusicMute = () => {
+    setIsMusicMuted(prev => {
+      const nextMuted = !prev;
+      
+      if (audioRef.current) {
+        audioRef.current.muted = nextMuted;
+        
+        // If unmuting and audio is paused, play it
+        if (!nextMuted && audioRef.current.paused) {
+          audioRef.current.play().catch(e => console.log("Audio play error:", e));
+        }
+      }
+      
+      return nextMuted;
+    });
+  };
+
   return (
     <main className="relative min-h-screen w-full bg-[#223C5E] text-white overflow-x-hidden">
       
+      {/* BACKGROUND AUDIO - Hidden, loops on repeat */}
+      <audio 
+        ref={audioRef}
+        loop
+        muted={isMusicMuted}
+        preload="auto"
+        className="hidden"
+      >
+        <source src="/music/about-me.mp3" type="audio/mpeg" />
+      </audio>
+
+      {/* MUSIC MUTE BUTTON - Top Right Corner */}
+      <div className="fixed top-4 right-4 md:top-8 md:right-10 z-50 pointer-events-auto">
+        <button 
+          onClick={toggleMusicMute}
+          className="text-white/70 hover:text-amber-200 transition-colors p-3 rounded-full bg-black/20 backdrop-blur-sm border border-white/10"
+          aria-label={isMusicMuted ? "Unmute music" : "Mute music"}
+        >
+          {isMusicMuted ? (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+              <line x1="23" y1="9" x2="17" y2="15"/>
+              <line x1="17" y1="9" x2="23" y2="15"/>
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+          )}
+        </button>
+      </div>
+      
       <AnimatePresence>
-        {!splashFinished && <SplashScreen onComplete={() => setSplashFinished(true)} />}
+        {!splashFinished && <SplashScreen onComplete={() => setSplashFinished(true)} language={language} />}
       </AnimatePresence>
 
-      <HeroVideo startPlaying={splashFinished} />
+      <HeroVideo startPlaying={splashFinished} language={language} />
 
       <div className="relative z-10 bg-linear-to-b from-[#111f33] to-[#223C5E] pb-24">
-        <BioBlocks />
+        <BioBlocks language={language} />
         
         <div className="flex justify-center mt-12">
            <a href="/compositions" onClick={() => {
@@ -580,7 +825,7 @@ export default function HomePage() {
               whileTap={{ scale: 0.95 }}
               className="px-12 py-4 border border-white/20 text-white/70 transition-all duration-300 uppercase tracking-[0.2em] text-xs font-medium bg-[#050B14]/50 backdrop-blur-md rounded-full hover:shadow-[0_0_20px_rgba(251,191,36,0.3)]"
             >
-              View Compositions
+              {CONTENT[language].button}
             </motion.button>
            </a>
         </div>

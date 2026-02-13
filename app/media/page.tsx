@@ -2,8 +2,237 @@
 
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { useEffect, useState, useRef, useMemo, useCallback } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
+// Stellen Sie sicher, dass Sie folgendes installiert haben: npm install wavesurfer.js @wavesurfer/react
 import { useWavesurfer } from '@wavesurfer/react';
+
+type Language = 'en' | 'de';
+
+// --- TRANSLATION CONTENT ---
+const CONTENT = {
+  en: {
+    title: "Media",
+    nav: [
+      { id: "photos", label: "Press Photos" },
+      { id: "audio", label: "Audio" },
+      { id: "video", label: "Video" },
+    ],
+    photos: {
+      title: "Press Photos",
+      text: "High-resolution press photos of Dijana Bošković are available for download.",
+      credit: "Please credit the photographer where indicated.",
+      download: "Download"
+    },
+    audio: {
+      title: "Audio",
+      intro: {
+        title: "Recordings of Music by Dijana Bošković",
+        textPart1: "Audio recordings of works by Bošković can be found on the ",
+        linkText: "Composition",
+        textPart2: " page."
+      },
+      sections: [
+        {
+          category: "Recordings with Dijana Bošković as Flutist",
+          subtext: "Classical and Improvisation",
+          groups: [
+            {
+              header: "Classical",
+              items: [
+                {
+                  performers: [
+                    "Carl Reinecke: Sonata for Flute and Piano",
+                    "Fikret Amirov: Six Pieces for Flute and Piano",
+                    "",
+                    "Dijana Bošković — flute",
+                    "Maja Nikolić — piano"
+                  ],
+                  file: "/Music/reinecke_amirov.mp3"
+                }
+              ]
+            },
+            {
+              header: "Debussy / Bošković – Syrinx",
+              items: [
+                {
+                  performers: ["performed by Dijana Bošković (flute, Tibetan singing bowls)"],
+                  file: "/Music/debussy_boskovic_syrinx_in_the_state_of_limbo.mp3"
+                }
+              ]
+            },
+            {
+              header: "Improvisation",
+              items: [
+                {
+                  performers: ["Dijana Bošković — flute", "Bettina Koziol — vocals", "Marika Falk — percussion", "Paulo Cardoso — double bass"],
+                  file: "/Music/impro_bosk_cardoso-koziol.mp3"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          category: "Recordings with the Versus Vox Ensemble",
+          subtext: null,
+          groups: [
+            {
+              header: "Bošković",
+              items: [
+                {
+                  performers: ["from the sextet Versus Vox Integra"],
+                  file: "/Music/vox.mp3"
+                }
+              ]
+            },
+            {
+              header: "Pogatschar",
+              items: [
+                {
+                  performers: ["Simurgh from the children's opera Mouse and Monster"],
+                  file: "/Music/pogatschar-simurgh.mp3"
+                }
+              ]
+            },
+            {
+              header: "Bogojevich",
+              items: [
+                {
+                  performers: ["Emigrée's Waltz"],
+                  file: "/Music/bogojevich-emigree.mp3"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    video: {
+      title: "Video",
+      subtitle: "On YouTube:",
+      watch: "Watch",
+      items: [
+        { title: "Concerto for String Orchestra", url: "https://www.youtube.com/watch?v=atZjR7nn5gA" },
+        { title: "Versus Vox Integra (sextet)", url: "https://www.youtube.com/watch?v=qK4EA-K2VO4" },
+        { title: "Suite for violin and cello", url: "https://www.youtube.com/watch?v=WvxSkxnr1bQ" },
+        { title: "Sundance for piano trio", url: "https://www.youtube.com/watch?v=qzC-frjrHR0" },
+        { title: "Singing Flame for solo cello", url: "https://www.youtube.com/watch?v=yWdFsA8GqxQ" },
+        { title: "Trost (after a poem by Ina Seidel)", url: "https://www.youtube.com/watch?v=Z_2WtxWsMIA" },
+        { title: "Es ist so schön … – concert piece for mezzo-soprano and piano", url: "https://www.youtube.com/watch?v=GS2njJ_VuhA" },
+      ]
+    }
+  },
+  de: {
+    title: "Medien",
+    nav: [
+      { id: "photos", label: "Pressefotos" },
+      { id: "audio", label: "Audio" },
+      { id: "video", label: "Video" },
+    ],
+    photos: {
+      title: "Pressefotos",
+      text: "Hochauflösende Pressefotos von Dijana Bošković stehen zum Download bereit.",
+      credit: "Bitte nennen Sie bei Verwendung den angegebenen Fotografen.",
+      download: "Download"
+    },
+    audio: {
+      title: "Audio",
+      intro: {
+        title: "Aufnahmen von Werken Dijana Boškovićs",
+        textPart1: "Tonaufnahmen von Werken Boškovićs finden Sie auf der Seite ",
+        linkText: "Werke",
+        textPart2: "."
+      },
+      sections: [
+        {
+          category: "Aufnahmen mit Dijana Bošković als Flötistin",
+          subtext: "Klassik und Improvisation",
+          groups: [
+            {
+              header: "Klassik",
+              items: [
+                {
+                  performers: [
+                    "Carl Reinecke: Sonate für Flöte und Klavier",
+                    "Fikret Amirov: Sechs Stücke für Flöte und Klavier",
+                    "",
+                    "Dijana Bošković — Flöte",
+                    "Maja Nikolić — Klavier"
+                  ],
+                  file: "/Music/reinecke_amirov.mp3"
+                }
+              ]
+            },
+            {
+              header: "Debussy / Bošković – Syrinx",
+              items: [
+                {
+                  performers: ["interpretiert von Dijana Bošković (Flöte, Tibetische Klangschalen)"],
+                  file: "/Music/debussy_boskovic_syrinx_in_the_state_of_limbo.mp3"
+                }
+              ]
+            },
+            {
+              header: "Improvisation",
+              items: [
+                {
+                  performers: ["Dijana Bošković — Flöte", "Bettina Koziol — Stimme", "Marika Falk — Perkussion", "Paulo Cardoso — Kontrabass"],
+                  file: "/Music/impro_bosk_cardoso-koziol.mp3"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          category: "Aufnahmen mit dem Versus Vox Ensemble",
+          subtext: null,
+          groups: [
+            {
+              header: "Bošković",
+              items: [
+                {
+                  performers: ["aus dem Sextett Versus Vox Integra"],
+                  file: "/Music/vox.mp3"
+                }
+              ]
+            },
+            {
+              header: "Pogatschar",
+              items: [
+                {
+                  performers: ["Simurgh aus der Kinderoper Maus und Monster"],
+                  file: "/Music/pogatschar-simurgh.mp3"
+                }
+              ]
+            },
+            {
+              header: "Bogojevich",
+              items: [
+                {
+                  performers: ["Emigrée's Waltz"],
+                  file: "/Music/bogojevich-emigree.mp3"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    video: {
+      title: "Video",
+      subtitle: "Auf YouTube:",
+      watch: "Ansehen",
+      items: [
+        { title: "Concerto for Strings (Streichorchester)", url: "https://www.youtube.com/watch?v=atZjR7nn5gA" },
+        { title: "Versus Vox Integra (Sextett)", url: "https://www.youtube.com/watch?v=qK4EA-K2VO4" },
+        { title: "Suite für Violine und Cello", url: "https://www.youtube.com/watch?v=WvxSkxnr1bQ" },
+        { title: "Sundance für Klaviertrio", url: "https://www.youtube.com/watch?v=qzC-frjrHR0" },
+        { title: "Singing Flame für Violoncello solo", url: "https://www.youtube.com/watch?v=yWdFsA8GqxQ" },
+        { title: "Trost (nach einem Gedicht von Ina Seidel)", url: "https://www.youtube.com/watch?v=Z_2WtxWsMIA" },
+        { title: "Es ist so schön … – Konzertstück für Mezzosopran und Klavier", url: "https://www.youtube.com/watch?v=GS2njJ_VuhA" },
+      ]
+    }
+  }
+};
 
 // --- WAVESURFER AUDIO PLAYER COMPONENT FOR NEXT.JS ---
 function WaveSurferPlayer({ src }: { src: string }) {
@@ -151,9 +380,10 @@ interface LightboxProps {
   currentIndex: number;
   onClose: () => void;
   onNavigate: (index: number) => void;
+  t: any; // Translation props
 }
 
-function ImageLightbox({ images, currentIndex, onClose, onNavigate }: LightboxProps) {
+function ImageLightbox({ images, currentIndex, onClose, onNavigate, t }: LightboxProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   // Handle keyboard navigation
@@ -248,7 +478,7 @@ function ImageLightbox({ images, currentIndex, onClose, onNavigate }: LightboxPr
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
           </svg>
-          Download
+          {t.download}
         </button>
 
         {/* Main Image Container */}
@@ -265,7 +495,7 @@ function ImageLightbox({ images, currentIndex, onClose, onNavigate }: LightboxPr
               <div className="w-12 h-12 border-4 border-amber-200 border-t-transparent rounded-full animate-spin"></div>
             </div>
           )}
-          
+            
           <img
             src={currentImage.fullSize}
             alt={currentImage.alt}
@@ -322,14 +552,6 @@ function ScrollReveal({ children, delay = 0 }: { children: React.ReactNode; dela
   );
 }
 
-// --- DATA STRUCTURES ---
-
-const navItems = [
-  { id: "photos", label: "Press Photos" },
-  { id: "audio", label: "Audio" },
-  { id: "video", label: "Video" },
-];
-
 const pressPhotos = [
   { 
     thumbnail: "/images/press/presse1.webp",
@@ -369,106 +591,28 @@ const pressPhotos = [
   },
 ];
 
-const audioData = [
-  {
-    category: "Recordings with Dijana Boshkovich as Flutist",
-    subtext: "Classical and Improvisation",
-    groups: [
-      {
-        header: "Classical",
-        items: [
-          {
-            title: null, // Combined title
-            performers: [
-              "Carl Reinecke: Sonata for Flute and Piano",
-              "Fikret Amirov: Six Pieces for Flute and Piano",
-              "",
-              "Dijana Boshkovich — flute",
-              "Maja Nikolich — piano"
-            ],
-            file: "/Music/reinecke_amirov.mp3"
-          }
-        ]
-      },
-      {
-        header: "Debussy / Boshkovich – Syrinx",
-        items: [
-          {
-            title: null, 
-            performers: ["performed by Dijana Boshkovich (upright flute, Tibetan singing bowls)"],
-            file: "/Music/debussy_boskovic_syrinx_in_the_state_of_limbo.mp3"
-          }
-        ]
-      },
-      {
-        header: "Improvisation",
-        items: [
-          {
-            title: null,
-            performers: ["Dijana Boshkovich — flute", "Bettina Koziol — vocals", "Marika Falk — percussion", "Paulo Cardoso — double bass"],
-            file: "/Music/impro_bosk_cardoso-koziol.mp3"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    category: "Recordings with the Versus Vox Ensemble",
-    subtext: null,
-    groups: [
-      {
-        header: "Boshkovich",
-        items: [
-          {
-            title: null,
-            performers: ["from the sextet Versus Vox Integra"],
-            file: "/Music/vox.mp3"
-          }
-        ]
-      },
-      {
-        header: "Pogatschar",
-        items: [
-          {
-            title: null,
-            performers: ["Simurgh from the children's opera Mouse and Monster"],
-            file: "/Music/pogatschar-simurgh.mp3"
-          }
-        ]
-      },
-      {
-        header: "Bogojevich",
-        items: [
-          {
-            title: null,
-            performers: ["Emigrée's Waltz"],
-            file: "/Music/bogojevich-emigree.mp3"
-          }
-        ]
-      }
-    ]
-  }
-];
-
-const videoLinks = [
-  { title: "Concerto for String Orchestra", url: "https://www.youtube.com/watch?v=atZjR7nn5gA" },
-  { title: "Versus Vox Integra (sextet)", url: "https://www.youtube.com/watch?v=qK4EA-K2VO4" },
-  { title: "Suite for violin and cello", url: "https://www.youtube.com/watch?v=WvxSkxnr1bQ" },
-  { title: "Sundance for piano trio", url: "https://www.youtube.com/watch?v=qzC-frjrHR0" },
-  { title: "Singing Flame for solo cello", url: "https://www.youtube.com/watch?v=yWdFsA8GqxQ" },
-  { title: "Trost (after a poem by Ina Seidel)", url: "https://www.youtube.com/watch?v=Z_2WtxWsMIA" },
-  { title: "Es ist so schön … – concert piece for mezzo-soprano and piano", url: "https://www.youtube.com/watch?v=GS2njJ_VuhA" },
-];
-
 export default function MediaPage() {
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isTouching, setIsTouching] = useState(false);
   const lastManualScrollTime = useRef<number>(0);
-  
+   
   // Lightbox state
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // 1. Language State
+  const [language, setLanguage] = useState<Language>('en');
+
+  // 2. Read Language Setting
+  useEffect(() => {
+    const savedLang = localStorage.getItem('siteLanguage') as Language;
+    if (savedLang === 'en' || savedLang === 'de') {
+      setLanguage(savedLang);
+    }
+  }, []);
+
+  const t = CONTENT[language];
 
   // Infinite auto-scroll for mobile nav
   useEffect(() => {
@@ -484,9 +628,9 @@ export default function MediaPage() {
 
       if (shouldAutoScroll) {
         container.scrollLeft += scrollSpeed;
-        
+         
         const oneThirdWidth = container.scrollWidth / 3;
-        
+         
         if (container.scrollLeft >= oneThirdWidth) {
           container.scrollLeft = 1;
         }
@@ -550,7 +694,7 @@ export default function MediaPage() {
     e.preventDefault();
     setIsAutoScrolling(false);
     lastManualScrollTime.current = Date.now();
-    
+     
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -568,8 +712,8 @@ export default function MediaPage() {
   };
 
   return (
-    <main className="min-h-screen w-full bg-[#050B14] text-white selection:bg-amber-900 selection:text-white pb-32">
-      
+    <main className="min-h-screen w-full bg-[#223C5E] text-white selection:bg-amber-900 selection:text-white pb-32">
+       
       {/* Lightbox Modal */}
       {lightboxOpen && (
         <ImageLightbox
@@ -577,28 +721,29 @@ export default function MediaPage() {
           currentIndex={currentImageIndex}
           onClose={closeLightbox}
           onNavigate={setCurrentImageIndex}
+          t={t.photos}
         />
       )}
 
       {/* --- MOBILE TOP NAV (Sticky) --- */}
-      <div className="lg:hidden sticky top-0 z-50 w-full bg-[#050B14]/95 backdrop-blur-md border-b border-white/10 flex flex-col shadow-lg">
+      <div className="lg:hidden sticky top-0 z-50 w-full bg-[#223C5E]/95 backdrop-blur-md border-b border-white/10 flex flex-col shadow-lg">
         {/* Row 1: Back Button */}
         <div className="px-4 pt-6 pb-2 w-full border-b border-white/5">
-          
+           
         </div>
-        
+         
         {/* Row 2: Auto-scrolling Nav Buttons */}
         <div 
           ref={scrollContainerRef}
           className="overflow-x-auto overflow-y-hidden no-scrollbar w-full cursor-grab active:cursor-grabbing"
         >
           <div className="flex whitespace-nowrap px-4 py-3 gap-3" style={{ width: 'max-content' }}>
-            {navItems.map((item, index) => (
+            {t.nav.map((item, index) => (
               <a 
                 key={`${item.id}-${index}`}
                 href={`#${item.id}`}
                 onClick={(e) => scrollToSection(e, item.id)}
-                className="text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-white border border-gray-700 hover:border-white px-3 py-1.5 rounded transition-all select-none"
+                className="text-[10px] font-bold uppercase tracking-widest text-white hover:text-white bg-[#172F4F]/80 hover:bg-[#223C5E] border border-[#47719E]/50 hover:border-[#47719E] px-4 py-2 rounded transition-all select-none"
               >
                 {item.label}
               </a>
@@ -614,13 +759,13 @@ export default function MediaPage() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <nav className="flex flex-col gap-2 p-4 bg-[#050B14]/50 backdrop-blur-sm rounded-lg border border-white/5">
-          {navItems.map((item, index) => (
+        <nav className="flex flex-col gap-2 p-4 bg-[#223C5E]/50 backdrop-blur-sm rounded-lg border border-white/5">
+          {t.nav.map((item, index) => (
             <motion.a 
               key={item.id} 
               href={`#${item.id}`}
               onClick={(e) => scrollToSection(e, item.id)}
-              className="text-[11px] font-bold uppercase tracking-wider text-gray-400 hover:text-white bg-[#172F4F]/50 hover:bg-[#172F4F] border border-[#47719E]/30 hover:border-[#47719E] px-3 py-2 rounded transition-all duration-300 text-center"
+              className="text-[11px] font-bold uppercase tracking-wider text-white hover:text-white bg-[#172F4F]/80 hover:bg-[#223C5E] border border-[#47719E]/50 hover:border-[#47719E] px-3 py-2 rounded transition-all duration-300 text-center"
               initial={{ opacity: 1, x: 0 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
@@ -638,44 +783,44 @@ export default function MediaPage() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6 }}
       >
-        
+          
       </motion.div>
 
       {/* --- MAIN CONTENT CONTAINER --- */}
-      <div className="max-w-[950px] mx-auto pt-6 md:pt-16 px-4 md:px-8 lg:pr-72">
-        
-        {/* PAGE TITLE */}
+      <div className="max-w-[700px] mx-auto pt-6 md:pt-12 px-4 md:px-8">
+         
+        {/* PAGE TITLE - REDUCED SPACING */}
         <ScrollReveal>
-          <div className="mb-12 text-center">
-            <h1 className="text-4xl md:text-5xl font-serif text-white mb-2 tracking-wide">Media</h1>
+          <div className="mb-6 text-center">
+            <h1 className="text-4xl md:text-5xl font-serif text-white mb-2 tracking-wide">{t.title}</h1>
             <div className="h-px w-24 bg-[#47719E] mx-auto opacity-50"></div>
           </div>
         </ScrollReveal>
 
-        <div className="space-y-16">
+        <div className="space-y-12">
 
-          {/* 1. PRESS PHOTOS */}
+          {/* 1. PRESS PHOTOS - MUCH SMALLER HEIGHT */}
           <ScrollReveal delay={0.1}>
             <section id="photos" className="scroll-mt-32">
-              <div className="text-center mb-6">
-                <h2 className="text-2xl md:text-3xl font-serif text-white tracking-widest uppercase border-b border-[#47719E]/30 pb-4 inline-block px-12">
-                  Press Photos
+              <div className="text-center mb-4">
+                <h2 className="text-2xl md:text-3xl font-serif text-white tracking-widest uppercase border-b border-[#47719E]/30 pb-3 inline-block px-12">
+                  {t.photos.title}
                 </h2>
               </div>
-              
-              <div className="bg-[#172F4F] border border-[#47719E] p-4 md:p-8 shadow-2xl">
-                <div className="mb-8 text-center border-b border-[#47719E]/30 pb-4">
-                  <p className="font-body text-blue-50 text-sm md:text-base">High-resolution press photos of Dijana Boshkovich are available for download.</p>
-                  <p className="font-body text-amber-200/80 text-sm md:text-base italic mt-1">Please credit the photographer where indicated.</p>
+               
+              <div className="bg-[#172F4F] border border-[#47719E] p-2 md:p-3 shadow-2xl">
+                <div className="mb-2 text-center border-b border-[#47719E]/30 pb-2">
+                  <p className="font-body text-blue-50 text-xs">{t.photos.text}</p>
+                  <p className="font-body text-amber-200/80 text-xs italic mt-1">{t.photos.credit}</p>
                 </div>
-                
-                {/* Updated Grid with Lightbox */}
-                <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                 
+                {/* GRID FORCES 3 COLUMNS, w-fit KEEPS IT TIGHT */}
+                <div className="grid grid-cols-3 gap-2 md:gap-4 w-fit mx-auto">
                   {pressPhotos.map((photo, i) => (
                     <ScrollReveal key={i} delay={i * 0.05}>
                       <motion.div 
-                        className="group relative aspect-[3/4] overflow-hidden bg-black/20 border border-white/10 rounded cursor-pointer"
-                        whileHover={{ scale: 1.02 }}
+                        className="group relative aspect-[4/3] w-[90px] overflow-hidden border border-white/10 rounded cursor-pointer"
+                        whileHover={{ scale: 1.15 }} // ZOOM (15%)
                         transition={{ duration: 0.3 }}
                         onClick={() => openLightbox(i)}
                       >
@@ -684,8 +829,11 @@ export default function MediaPage() {
                           alt={photo.alt}
                           className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500 vintage-photo"
                         />
+                        {/* CHANGED HOVER ICON: Magnifying glass with plus inside */}
                         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40">
-                          <span className="text-xs uppercase tracking-widest border border-white/50 px-3 py-1.5 text-white">View Full Size</span>
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 text-white">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6" />
+                          </svg>
                         </div>
                       </motion.div>
                     </ScrollReveal>
@@ -698,24 +846,28 @@ export default function MediaPage() {
           {/* 2. AUDIO */}
           <ScrollReveal delay={0.1}>
             <section id="audio" className="scroll-mt-32">
-              <div className="text-center mb-6">
-                <h2 className="text-2xl md:text-3xl font-serif text-white tracking-widest uppercase border-b border-[#47719E]/30 pb-4 inline-block px-12">
-                  Audio
+              <div className="text-center mb-4">
+                <h2 className="text-2xl md:text-3xl font-serif text-white tracking-widest uppercase border-b border-[#47719E]/30 pb-3 inline-block px-12">
+                  {t.audio.title}
                 </h2>
               </div>
 
               <div className="bg-[#172F4F] border border-[#47719E] p-4 md:p-8 shadow-2xl space-y-12">
-                
+                 
                 {/* Intro Link */}
                 <div className="bg-[#0a1625]/30 p-4 border-l-2 border-amber-200/50">
-                  <h3 className="text-lg font-serif text-white mb-1">Recordings of Music by Dijana Boshkovich</h3>
+                  <h3 className="text-lg font-serif text-white mb-1">{t.audio.intro.title}</h3>
                   <p className="text-blue-50 font-body text-sm md:text-base">
-                    Audio recordings of works by Boshkovich can be found on the <Link href="/compositions/works" className="text-amber-200 hover:text-white underline decoration-1 underline-offset-4 transition-colors font-bold">Composition</Link> page.
+                    {t.audio.intro.textPart1}
+                    <Link href="/compositions/works" className="text-amber-200 hover:text-white underline decoration-1 underline-offset-4 transition-colors font-bold">
+                      {t.audio.intro.linkText}
+                    </Link>
+                    {t.audio.intro.textPart2}
                   </p>
                 </div>
 
                 {/* Audio Group Mapping */}
-                {audioData.map((group, idx) => (
+                {t.audio.sections.map((group, idx) => (
                   <motion.div 
                     key={idx} 
                     className="space-y-8"
@@ -740,13 +892,12 @@ export default function MediaPage() {
                         <h4 className="text-lg md:text-xl font-serif font-bold text-amber-100/90 tracking-wide">
                           {subgroup.header}
                         </h4>
-                        
+                          
                         <div className="space-y-6 pl-4 border-l border-[#47719E]/30">
                           {subgroup.items.map((item, iIdx) => (
                             <div key={iIdx}>
                               {/* Text Descriptions */}
                               <div className="space-y-1 text-blue-50 font-body text-sm md:text-base mb-3">
-                                {item.title && <p className="font-bold">{item.title}</p>}
                                 {item.performers && item.performers.map((line, pIdx) => (
                                   <p key={pIdx}>{line}</p>
                                 ))}
@@ -768,16 +919,16 @@ export default function MediaPage() {
           {/* 3. VIDEO */}
           <ScrollReveal delay={0.1}>
             <section id="video" className="scroll-mt-32">
-              <div className="text-center mb-6">
-                <h2 className="text-2xl md:text-3xl font-serif text-white tracking-widest uppercase border-b border-[#47719E]/30 pb-4 inline-block px-12">
-                  Video
+              <div className="text-center mb-4">
+                <h2 className="text-2xl md:text-3xl font-serif text-white tracking-widest uppercase border-b border-[#47719E]/30 pb-3 inline-block px-12">
+                  {t.video.title}
                 </h2>
               </div>
 
               <div className="bg-[#172F4F] border border-[#47719E] p-4 md:p-8 shadow-2xl">
-                <p className="text-amber-200/90 italic mb-6 text-center font-serif text-xl">On YouTube:</p>
+                <p className="text-amber-200/90 italic mb-6 text-center font-serif text-xl">{t.video.subtitle}</p>
                 <div className="grid grid-cols-1 gap-3">
-                  {videoLinks.map((video, i) => (
+                  {t.video.items.map((video, i) => (
                     <motion.a 
                       key={i}
                       href={video.url}
@@ -794,7 +945,7 @@ export default function MediaPage() {
                         <p>{video.title}</p>
                       </div>
                       <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-red-400 group-hover:text-red-300 shrink-0">
-                        Watch
+                        {t.video.watch}
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                           <polyline points="15 3 21 3 21 9"></polyline>
@@ -819,12 +970,12 @@ export default function MediaPage() {
           -ms-overflow-style: none;
           scrollbar-width: none;
         }
-        
+          
         html {
           scroll-behavior: smooth;
         }
 
-        /* Vintage green-grey photo effect */
+        /* Vintage green-grey photo effect - UNTOUCHED */
         .vintage-photo {
           filter: 
             grayscale(100%) 

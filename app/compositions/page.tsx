@@ -4,6 +4,8 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 
+type Language = 'en' | 'de';
+
 // --- TIMING CONFIGURATION ---
 const TIMING = {
   // This ONLY controls when "COMPOSITIONS" fades out and "ENTER" appears.
@@ -17,13 +19,29 @@ const TIMING = {
   textRevealDuration: 3.0  // Duration: Long text fade in speed
 };
 
-// --- DATA WITH STYLED WORDS ---
-// Words wrapped in ** will be rendered in gray/blue-gray tones
-const introText = [
-  "In her **native country**, the former Yugoslavia—an area formed through **centuries of cultural exchange**—Dijana Bošković came into contact with music of **Slavic**, Western European, **Turkish**, and Hindustani origin.",
-  "Her works are rooted in contemporary classical music and the **European avant-garde**, drawing on elements of **traditional**, jazz, and pop music. This musical language seeks to **transcend stylistic dogmas** and to develop distinctly individual compositional responses to **spiritual and socio-political themes** that traverse cultural, religious, and linguistic boundaries.",
-  "A further characteristic of her work is its reference to **tonal centers**, as pulse, harmony, and musical line unfold in response to the **variable and often fragile rhythms** of human breathing."
-];
+// --- TRANSLATION CONTENT ---
+const CONTENT = {
+  en: {
+    title: "COMPOSITIONS",
+    enter: "ENTER",
+    // Words wrapped in ** will be rendered in gray/blue-gray tones
+    text: [
+      "In her **native country**, the former Yugoslavia—an area formed through **centuries of cultural exchange**—Dijana Bošković came into contact with music of **Slavic**, Western European, **Turkish**, and Hindustani origin.",
+      "Her works are rooted in contemporary classical music and the **European avant-garde**, drawing on elements of **traditional**, jazz, and pop music. This musical language seeks to **transcend stylistic dogmas** and to develop distinctly individual compositional responses to **spiritual and socio-political themes** that traverse cultural, religious, and linguistic boundaries.",
+      "A further characteristic of her work is its reference to **tonal centers**, as pulse, harmony, and musical line unfold in response to the **variable and often fragile rhythms** of human breathing."
+    ]
+  },
+  de: {
+    title: "WERKE",
+    enter: "EINTRETEN",
+    // German translation preserving the ** highlighting style
+    text: [
+      "In ihrer **Heimat**, dem ehemaligen Jugoslawien – einer Region, die durch **jahrhundertelangen kulturellen Austausch** geprägt wurde – kam Dijana Bošković mit Musik **slawischen**, westeuropäischen, **türkischen** und hindustanischen Ursprungs in Berührung.",
+      "Ihre Werke wurzeln in der zeitgenössischen klassischen Musik und der **europäischen Avantgarde**, wobei sie Elemente aus **traditioneller Musik**, Jazz und Pop einbezieht. Diese Musiksprache sucht **stilistische Dogmen zu überwinden** und eine unverkennbar eigene kompositorische Antwort auf **spirituelle und gesellschaftspolitische Themen** zu entwickeln, die kulturelle, religiöse und sprachliche Grenzen überschreiten.",
+      "Ein weiteres Charakteristikum ihres Schaffens ist der Bezug zu **tonalen Zentren**: Puls, Harmonie und musikalische Linie entfalten sich in Resonanz auf die **variablen und oft fragilen Rhythmen** des menschlichen Atems."
+    ]
+  }
+};
 
 // Function to parse and style text
 const parseStyledText = (text: string) => {
@@ -45,6 +63,7 @@ export default function CompositionsPage() {
   // --- STATE ---
   const [videoFinished, setVideoFinished] = useState(false); // Controls Video Layer (Intro -> Loop)
   const [showEnterUI, setShowEnterUI] = useState(false);     // Controls Text Layer (Compositions -> Enter)
+  const [language, setLanguage] = useState<Language>('en');  // Language State
   
   // UPDATED: Starts TRUE so browser allows autoplay. User must click to unmute.
   const [isMuted, setIsMuted] = useState(true);
@@ -53,8 +72,15 @@ export default function CompositionsPage() {
   const introVideoRef = useRef<HTMLVideoElement>(null);
   const loopVideoRef = useRef<HTMLVideoElement>(null);
 
-  // Check if user came from "View Compositions" button and auto-unmute
+  // Load Language & Check Auto-Unmute
   useEffect(() => {
+    // 1. Read Language
+    const savedLang = localStorage.getItem('siteLanguage') as Language;
+    if (savedLang === 'en' || savedLang === 'de') {
+      setLanguage(savedLang);
+    }
+
+    // 2. Check Unmute Flag
     if (typeof window !== 'undefined') {
       const shouldAutoUnmute = sessionStorage.getItem('autoUnmute');
       
@@ -136,6 +162,9 @@ export default function CompositionsPage() {
     if (loopVideoRef.current) loopVideoRef.current.muted = isMuted;
   }, [isMuted]);
 
+  // Shortcut for current content
+  const t = CONTENT[language];
+
   return (
     <main className="relative w-full min-h-screen bg-[#050B14] overflow-x-hidden">
 
@@ -190,7 +219,7 @@ export default function CompositionsPage() {
         <div className="absolute top-6 left-0 w-full px-6 md:px-10 z-50 flex justify-between items-start pointer-events-none">
           {/* Back Button */}
           <Link href="/about" className="pointer-events-auto">
-            
+            {/* SVG or Icon can go here if needed, formerly empty in provided code */}
           </Link>
 
           {/* Mute Button */}
@@ -220,7 +249,7 @@ export default function CompositionsPage() {
             {!showEnterUI ? (
               // 1. Initial Title
               <motion.h1
-                key="title-static"
+                key={`title-static-${language}`} // Key change forces re-render on language switch
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0, filter: "blur(10px)" }}
@@ -228,13 +257,13 @@ export default function CompositionsPage() {
                 className="font-heading text-[2rem] md:text-6xl lg:text-7xl font-bold text-white tracking-widest"
                 style={{ textShadow: "0px 0px 20px rgba(251, 191, 36, 0.8)" }}
               >
-                COMPOSITIONS
+                {t.title}
               </motion.h1>
             ) : (
               // 2. Single "ENTER" Button with Arrow
               <Link href="/compositions/works">
                 <motion.button
-                  key="title-interactive"
+                  key={`title-interactive-${language}`}
                   initial={{ opacity: 0, filter: "blur(10px)" }}
                   animate={{ opacity: 1, filter: "blur(0px)" }}
                   transition={{ duration: TIMING.enterButtonFadeIn, delay: TIMING.enterButtonDelay }}
@@ -246,7 +275,7 @@ export default function CompositionsPage() {
                   onMouseLeave={(e) => e.currentTarget.style.textShadow = "0px 0px 20px rgba(251, 191, 36, 0.8)"}
                   onClick={() => console.log("Enter clicked")}
                 >
-                  ENTER
+                  {t.enter}
                   <motion.svg 
                     width="50" 
                     height="40" 
@@ -274,12 +303,13 @@ export default function CompositionsPage() {
         <AnimatePresence>
           {showEnterUI && (
             <motion.div
+              key={`text-reveal-${language}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: TIMING.textRevealDuration, delay: TIMING.textRevealDelay, ease: "easeOut" }}
               className="w-full max-w-4xl -mt-8 md:mt-12 space-y-4 md:space-y-6"
             >
-              {introText.map((paragraph, i) => (
+              {t.text.map((paragraph, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 30, filter: "blur(5px)" }}

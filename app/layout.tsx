@@ -23,20 +23,18 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link 
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&family=Kalam:wght@700&display=swap" 
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Kalam:wght@700&display=swap" 
           rel="stylesheet" 
         />
         {/* Manual CSS Variables for Fonts */}
         <style>{`
           :root { 
-            --font-geist-sans: 'Geist', sans-serif;
-            --font-geist-mono: 'Geist Mono', monospace;
-            --font-cormorant: 'Cormorant Garamond', serif;
+            --font-inter: 'Inter', sans-serif;
+            --font-playfair: 'Playfair Display', serif;
             background-color: #000000; 
             color: #ffffff; 
           }
           body { margin: 0; padding: 0; overflow-x: hidden; background: #000000; }
-          .font-serif { font-family:var(--font-cormorant), serif !important; }
         `}</style>
       </head>
       {/* Added 'relative' to body to support absolute positioning of Nav/Footer if needed */}
