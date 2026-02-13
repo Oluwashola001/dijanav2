@@ -780,7 +780,7 @@ export default function HomePage() {
       </audio>
 
       {/* MUSIC MUTE BUTTON - Top Right Corner */}
-      <div className="fixed top-4 right-4 md:top-8 md:right-10 z-50 pointer-events-auto">
+      <div className="fixed top-1 right-14 md:top-14 md:right-4 z-50 pointer-events-auto">
         <button 
           onClick={toggleMusicMute}
           className="text-white/70 hover:text-amber-200 transition-colors p-3 rounded-full bg-black/20 backdrop-blur-sm border border-white/10"
