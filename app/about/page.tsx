@@ -776,7 +776,7 @@ export default function HomePage() {
         preload="auto"
         className="hidden"
       >
-        <source src="/music/about-me.mp3" type="audio/mpeg" />
+        <source src="/Music/about-me.mp3" type="audio/mpeg" />
       </audio>
 
       {/* MUSIC MUTE BUTTON - Top Right Corner */}
