@@ -220,10 +220,28 @@ const getOverlayBlocks = (lang: Language) => [
 
 // Updated SplashScreen to accept Language and switch videos
 function SplashScreen({ onComplete, language }: { onComplete: () => void, language: Language }) {
-  // Define video paths based on language
-  // PLEASE ENSURE THESE FILES EXIST IN YOUR PUBLIC/VIDEOS FOLDER
-  const mobileVideo = language === 'de' ? "/videos/splashm-de.mp4" : "/videos/splashm.mp4";
-  const desktopVideo = language === 'de' ? "/videos/splash-de.mp4" : "/videos/splash.mp4";
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile device on mount
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Select video based on language AND device
+  const videoSrc = isMobile 
+    ? (language === 'de' ? "/videos/splashm-de.mp4" : "/videos/splashm.mp4")
+    : (language === 'de' ? "/videos/splash-de.mp4" : "/videos/splash.mp4");
+
+  const posterSrc = isMobile 
+    ? "/images/splash-mobile-poster.webp"
+    : "/images/splash-desktop-poster.webp";
 
   return (
     <motion.div
@@ -231,17 +249,17 @@ function SplashScreen({ onComplete, language }: { onComplete: () => void, langua
       exit={{ opacity: 0, transition: { duration: 1.5, ease: "easeInOut" } }}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black overflow-hidden"
     >
-      {/* Key ensures video element re-mounts if language changes quickly */}
+      {/* Single video source - no media queries */}
       <video
-        key={language} 
+        key={`${language}-${isMobile}`} 
         autoPlay
         muted
         playsInline
         onEnded={onComplete}
+        poster={posterSrc}
         className="w-full h-full object-cover object-center md:scale-100 scale-105"
       >
-        <source src={mobileVideo} type="video/mp4" media="(max-width: 768px)" />
-        <source src={desktopVideo} type="video/mp4" />
+        <source src={videoSrc} type="video/mp4" />
       </video>
     </motion.div>
   );
@@ -421,7 +439,12 @@ function TextBlockWithLineAnimation({
   );
 }
 
-function HeroVideo({ startPlaying, language }: { startPlaying: boolean, language: Language }) {
+function HeroVideo({ startPlaying, language, isVideoMuted, onMuteToggle }: { 
+  startPlaying: boolean; 
+  language: Language;
+  isVideoMuted: boolean;
+  onMuteToggle: (toggleFn: () => void) => void;
+}) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
@@ -446,11 +469,35 @@ function HeroVideo({ startPlaying, language }: { startPlaying: boolean, language
     }
   }, [startPlaying]);
 
+  // Sync video mute state
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = isVideoMuted;
+    }
+  }, [isVideoMuted]);
+
+  // Provide toggle function to parent
+  useEffect(() => {
+    const toggleMute = () => {
+      if (videoRef.current) {
+        videoRef.current.muted = !videoRef.current.muted;
+      }
+    };
+    onMuteToggle(toggleMute);
+  }, [onMuteToggle]);
+
   const handleTimeUpdate = () => {
     if (videoRef.current) {
       setCurrentTime(videoRef.current.currentTime);
     }
   };
+
+  // Select video source based on device
+  const videoSrc = isMobile 
+    ? "/videos/about-film-mobile-new.mp4"  // Mobile uses MP4
+    : "/videos/about-film.webm";           // Desktop prefers WebM
+
+  const videoType = isMobile ? "video/mp4" : "video/webm";
 
   const activeBlock = overlayBlocks.find(block => {
     const timing = isMobile ? block.mobile : block.desktop;
@@ -463,19 +510,19 @@ function HeroVideo({ startPlaying, language }: { startPlaying: boolean, language
     if (isMobile) {
       switch (position) {
         case 'top-center': 
-          return 'top-14 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[85%] max-w-md items-center text-center';
+          return 'top-[calc(3.5rem+3px)] -translate-y-1/2 left-1/2 -translate-x-1/2 w-[85%] max-w-md items-center text-center';
         case 'top-left':
-          return 'top-[6%] left-4 w-[60%] max-w-xs items-start text-left';
+          return 'top-[calc(6%+3px)] left-4 w-[60%] max-w-xs items-start text-left';
         case 'upper-right':
-          return 'top-12 right-4 w-[80%] max-w-sm items-center text-center';
+          return 'top-[calc(3rem+3px)] right-4 w-[80%] max-w-sm items-center text-center';
         case 'full-width':
-          return 'top-[4%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center'; 
+          return 'top-[calc(4%+3px)] left-4 right-4 w-[calc(100%-2rem)] items-center text-center'; 
         case 'high-up':
-          return 'top-[4%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center';
+          return 'top-[calc(4%+3px)] left-4 right-4 w-[calc(100%-2rem)] items-center text-center';
         case 'mid-screen':
-          return 'top-[20%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center';
+          return 'top-[calc(20%+3px)] left-4 right-4 w-[calc(100%-2rem)] items-center text-center';
         default: 
-          return 'top-12 left-1/2 -translate-x-1/2 w-[85%] max-w-md items-center text-center';
+          return 'top-[calc(3rem+3px)] left-1/2 -translate-x-1/2 w-[85%] max-w-md items-center text-center';
       }
     }
     
@@ -501,8 +548,9 @@ function HeroVideo({ startPlaying, language }: { startPlaying: boolean, language
   return (
     <div className="relative w-full h-screen overflow-hidden bg-black">
       <video
+        key={isMobile ? 'mobile' : 'desktop'}
         ref={videoRef}
-        muted
+        muted={isVideoMuted}
         playsInline
         loop 
         onTimeUpdate={handleTimeUpdate}
@@ -511,9 +559,9 @@ function HeroVideo({ startPlaying, language }: { startPlaying: boolean, language
           objectPosition: isMobile ? '15% 15%' : 'center center'
         }}
       >
-        <source src="/videos/about-film-mobile-new.webm" type="video/webm" media="(max-width: 768px)" />
-        <source src="/videos/about-film.webm" type="video/webm" />
-        <source src="/videos/about-film.mp4" type="video/mp4" />
+        <source src={videoSrc} type={videoType} />
+        {/* Fallback for desktop if WebM fails */}
+        {!isMobile && <source src="/videos/about-film.mp4" type="video/mp4" />}
       </video>
 
       <div className="absolute inset-0 bg-[#223C5E]/15 pointer-events-none" />
@@ -617,7 +665,7 @@ function BioBlocks({ language }: { language: Language }) {
           <AnimatedHeading>
             <div>
               <h2 className="font-heading text-3xl md:text-5xl text-white font-bold mb-2">{text.block1.title}</h2>
-              <h3 className="font-heading text-xl md:text-3xl text-amber-200/90 ">{text.block1.subtitle}</h3>
+              <h3 className="font-heading text-xl md:text-3xl text-amber-200/90 italic">{text.block1.subtitle}</h3>
             </div>
           </AnimatedHeading>
           
@@ -639,7 +687,7 @@ function BioBlocks({ language }: { language: Language }) {
         {/* Block 2 */}
         <section className="space-y-6">
           <AnimatedHeading>
-            <h3 className="font-heading text-xl md:text-3xl text-amber-200/90 ">{text.block2.title}</h3>
+            <h3 className="font-heading text-xl md:text-3xl text-amber-200/90 italic">{text.block2.title}</h3>
           </AnimatedHeading>
           
           <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-xl">
@@ -656,7 +704,7 @@ function BioBlocks({ language }: { language: Language }) {
         {/* Block 3 */}
         <section className="space-y-6">
           <AnimatedHeading>
-            <h3 className="font-heading text-xl md:text-3xl text-amber-200/90 ">{text.block3.title}</h3>
+            <h3 className="font-heading text-xl md:text-3xl text-amber-200/90 italic">{text.block3.title}</h3>
           </AnimatedHeading>
           
           <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-xl">
@@ -699,9 +747,9 @@ export default function HomePage() {
   const [splashFinished, setSplashFinished] = useState(false);
   const [language, setLanguage] = useState<Language>('en');
   
-  // NEW: Audio state management
-  const [isMusicMuted, setIsMusicMuted] = useState(true);
-  const audioRef = useRef<HTMLAudioElement>(null);
+  // Video mute state (controls the HeroVideo's audio)
+  const [isVideoMuted, setIsVideoMuted] = useState(true);
+  const videoMuteRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     // 1. Read the saved language from the Intro page
@@ -710,23 +758,13 @@ export default function HomePage() {
       setLanguage(savedLang);
     }
 
-    // 2. Check for auto-play music flag
+    // 2. Check for auto-unmute flag (from ENTER button or navbar)
     if (typeof window !== 'undefined') {
-      const shouldAutoPlay = sessionStorage.getItem('autoPlayMusic');
+      const shouldAutoUnmute = sessionStorage.getItem('autoPlayMusic');
       
-      if (shouldAutoPlay === 'true') {
-        // User clicked ENTER button on home page - auto-play music!
-        setIsMusicMuted(false);
-        
-        // Wait a bit for page to load, then play
-        setTimeout(() => {
-          if (audioRef.current) {
-            audioRef.current.play().catch(e => {
-              console.log("Audio autoplay prevented:", e);
-              // If autoplay fails, user can still click the mute button
-            });
-          }
-        }, 500);
+      if (shouldAutoUnmute === 'true') {
+        // User clicked ENTER or BIOGRAPHY - unmute the video!
+        setIsVideoMuted(false);
         
         // Clear the flag so it doesn't affect page refreshes
         sessionStorage.removeItem('autoPlayMusic');
@@ -740,53 +778,26 @@ export default function HomePage() {
     };
   }, []);
 
-  // Sync audio element mute state with React state
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.muted = isMusicMuted;
+  // Toggle video mute
+  const toggleVideoMute = () => {
+    setIsVideoMuted(prev => !prev);
+    // This will trigger the callback in HeroVideo component
+    if (videoMuteRef.current) {
+      videoMuteRef.current();
     }
-  }, [isMusicMuted]);
-
-  // Toggle music mute
-  const toggleMusicMute = () => {
-    setIsMusicMuted(prev => {
-      const nextMuted = !prev;
-      
-      if (audioRef.current) {
-        audioRef.current.muted = nextMuted;
-        
-        // If unmuting and audio is paused, play it
-        if (!nextMuted && audioRef.current.paused) {
-          audioRef.current.play().catch(e => console.log("Audio play error:", e));
-        }
-      }
-      
-      return nextMuted;
-    });
   };
 
   return (
     <main className="relative min-h-screen w-full bg-[#223C5E] text-white overflow-x-hidden">
       
-      {/* BACKGROUND AUDIO - Hidden, loops on repeat */}
-      <audio 
-        ref={audioRef}
-        loop
-        muted={isMusicMuted}
-        preload="auto"
-        className="hidden"
-      >
-        <source src="/Music/about-me.mp3" type="audio/mpeg" />
-      </audio>
-
-      {/* MUSIC MUTE BUTTON - Top Right Corner */}
-      <div className="fixed top-1 right-14 md:top-14 md:right-4 z-50 pointer-events-auto">
+      {/* VIDEO MUTE BUTTON - Top Right Corner */}
+      <div className="fixed top-4 right-4 md:top-8 md:right-10 z-50 pointer-events-auto">
         <button 
-          onClick={toggleMusicMute}
+          onClick={toggleVideoMute}
           className="text-white/70 hover:text-amber-200 transition-colors p-3 rounded-full bg-black/20 backdrop-blur-sm border border-white/10"
-          aria-label={isMusicMuted ? "Unmute music" : "Mute music"}
+          aria-label={isVideoMuted ? "Unmute video" : "Mute video"}
         >
-          {isMusicMuted ? (
+          {isVideoMuted ? (
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M11 5L6 9H2v6h4l5 4V5z"/>
               <line x1="23" y1="9" x2="17" y2="15"/>
@@ -805,7 +816,7 @@ export default function HomePage() {
         {!splashFinished && <SplashScreen onComplete={() => setSplashFinished(true)} language={language} />}
       </AnimatePresence>
 
-      <HeroVideo startPlaying={splashFinished} language={language} />
+      <HeroVideo startPlaying={splashFinished} language={language} isVideoMuted={isVideoMuted} onMuteToggle={(toggleFn) => { videoMuteRef.current = toggleFn; }} />
 
       <div className="relative z-10 bg-linear-to-b from-[#111f33] to-[#223C5E] pb-24">
         <BioBlocks language={language} />

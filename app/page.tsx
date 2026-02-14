@@ -9,9 +9,9 @@ import Link from 'next/link';
 const TIMING = {
   waterAlone: 4,
   noteAndLogo: 4,
-  profileAndEnter: 7.5,
+  profileAndEnter: 7.0,
   textLine1: 10.0,
-  textLine2: 11.0,
+  textLine2: 13.0,
   blueBg: 13,
 };
 
@@ -59,8 +59,8 @@ const TEXT_STYLES = {
     name: { 
       // CHANGE THESE VALUES TO MOVE THE GERMAN NAME
       bottom: '32vh',   // Increase to move UP, Decrease to move DOWN
-      left: '37.5vw',     // Increase to move RIGHT, Decrease to move LEFT
-      fontSize: '5.0vw' // Adjust size if needed
+      left: '35.5vw',     // Increase to move RIGHT, Decrease to move LEFT
+      fontSize: '5.2vw' // Adjust size if needed
     },
     titles: { 
       // CHANGE THESE VALUES TO MOVE THE GERMAN TITLES
@@ -79,13 +79,15 @@ export default function WaterIntroPage() {
   // TypeScript Fix: Explicitly tell React this state can only be 'en' or 'de'
   const [language, setLanguage] = useState<Language>('en'); 
   
-  // TypeScript Fix: Explicitly tell React this ref attaches to a Video Element
-  const videoRef = useRef<HTMLVideoElement>(null);
+  // Two separate video refs: one for overlay, one for main
+  const overlayVideoRef = useRef<HTMLVideoElement>(null);
+  const mainVideoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = true;
-      videoRef.current.play().catch((e) => console.log("Video autoplay prevented:", e));
+    // Play overlay video during pre-intro
+    if (overlayVideoRef.current) {
+      overlayVideoRef.current.muted = true;
+      overlayVideoRef.current.play().catch((e) => console.log("Overlay video autoplay prevented:", e));
     }
   }, []);
 
@@ -94,8 +96,10 @@ export default function WaterIntroPage() {
     setLanguage(selectedLang);
     localStorage.setItem('siteLanguage', selectedLang);
 
-    if (videoRef.current) {
-      videoRef.current.muted = false;
+    // Switch to main water video and unmute it
+    if (mainVideoRef.current) {
+      mainVideoRef.current.muted = false;
+      mainVideoRef.current.play().catch((e) => console.log("Main water video play prevented:", e));
     }
     setIsMuted(false);
     setShowPreIntro(false);
@@ -104,8 +108,8 @@ export default function WaterIntroPage() {
   const toggleMute = () => {
     setIsMuted(prev => {
       const nextMuted = !prev;
-      if (videoRef.current) {
-        videoRef.current.muted = nextMuted;
+      if (mainVideoRef.current) {
+        mainVideoRef.current.muted = nextMuted;
       }
       return nextMuted;
     });
@@ -122,21 +126,51 @@ export default function WaterIntroPage() {
     <>
       <main className="relative w-full h-[100dvh] bg-black overflow-hidden">
 
-      {/* 1. WATER VIDEO */}
-      <div className="absolute inset-0 z-0">
+      {/* 1. WATER OVERLAY VIDEO - Fades out with overlay text */}
+      <AnimatePresence>
+        {showPreIntro && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.2, ease: "easeInOut" }}
+            className="absolute inset-0 z-0"
+          >
+            <video
+              ref={overlayVideoRef}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              poster="/images/water-overlay-poster.webp"
+              className="w-full h-full object-cover"
+            >
+              <source src="/videos/water-overlay.webm" type="video/webm" />
+              <source src="/videos/water-overlay.mp4" type="video/mp4" />
+            </video>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* 2. MAIN WATER VIDEO - Fades in underneath, only plays AFTER language selection */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: showPreIntro ? 0 : 1 }}
+        transition={{ duration: 1.2, ease: "easeInOut" }}
+        className="absolute inset-0 z-0"
+      >
         <video
-          ref={videoRef}
-          autoPlay
-          muted
+          ref={mainVideoRef}
           loop
           playsInline
           preload="auto"
+          poster="/images/water-overlay-poster.webp"
           className="w-full h-full object-cover"
         >
           <source src="/videos/water.webm" type="video/webm" />
           <source src="/videos/water.mp4" type="video/mp4" />
         </video>
-      </div>
+      </motion.div>
 
       {/* PRE-INTRO OVERLAY */}
       <AnimatePresence>
