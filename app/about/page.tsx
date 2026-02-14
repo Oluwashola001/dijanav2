@@ -510,19 +510,19 @@ function HeroVideo({ startPlaying, language, isVideoMuted, onMuteToggle }: {
     if (isMobile) {
       switch (position) {
         case 'top-center': 
-          return 'top-[calc(3.5rem+3px)] -translate-y-1/2 left-1/2 -translate-x-1/2 w-[85%] max-w-md items-center text-center';
+          return 'top-16 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[85%] max-w-md items-center text-center';
         case 'top-left':
-          return 'top-[calc(6%+3px)] left-4 w-[60%] max-w-xs items-start text-left';
+          return 'top-[7%] left-4 w-[60%] max-w-xs items-start text-left';
         case 'upper-right':
-          return 'top-[calc(3rem+3px)] right-4 w-[80%] max-w-sm items-center text-center';
+          return 'top-14 right-4 w-[80%] max-w-sm items-center text-center';
         case 'full-width':
-          return 'top-[calc(4%+3px)] left-4 right-4 w-[calc(100%-2rem)] items-center text-center'; 
+          return 'top-[5%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center'; 
         case 'high-up':
-          return 'top-[calc(4%+3px)] left-4 right-4 w-[calc(100%-2rem)] items-center text-center';
+          return 'top-[5%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center';
         case 'mid-screen':
-          return 'top-[calc(20%+3px)] left-4 right-4 w-[calc(100%-2rem)] items-center text-center';
+          return 'top-[21%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center';
         default: 
-          return 'top-[calc(3rem+3px)] left-1/2 -translate-x-1/2 w-[85%] max-w-md items-center text-center';
+          return 'top-14 left-1/2 -translate-x-1/2 w-[85%] max-w-md items-center text-center';
       }
     }
     
@@ -791,7 +791,7 @@ export default function HomePage() {
     <main className="relative min-h-screen w-full bg-[#223C5E] text-white overflow-x-hidden">
       
       {/* VIDEO MUTE BUTTON - Top Right Corner */}
-      <div className="fixed top-4 right-4 md:top-8 md:right-10 z-50 pointer-events-auto">
+      <div className="fixed top-1 right-14 md:top-12 md:right-2 z-50 pointer-events-auto">
         <button 
           onClick={toggleVideoMute}
           className="text-white/70 hover:text-amber-200 transition-colors p-3 rounded-full bg-black/20 backdrop-blur-sm border border-white/10"
