@@ -22,7 +22,7 @@ const TIMING = {
 // --- TRANSLATION CONTENT ---
 const CONTENT = {
   en: {
-    title: "COMPOSITIONS",
+    title: "WORKS",
     enter: "ENTER",
     // Words wrapped in ** will be rendered in gray/blue-gray tones
     text: [
@@ -32,7 +32,7 @@ const CONTENT = {
     ]
   },
   de: {
-    title: "KOMPOSITION",
+    title: "WERKE",
     enter: "EINTRETEN",
     // German translation preserving the ** highlighting style
     text: [

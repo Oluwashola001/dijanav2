@@ -28,7 +28,7 @@ const CONTENT = {
       { label: 'Startseite', href: '/' },
       { label: 'Über mich', href: '/about' },
       { label: 'Aktuell', href: '/news' },
-      { label: 'Werke', href: '/compositions' },
+      { label: 'Komposition', href: '/compositions' },
       { label: 'Medien', href: '/media' },
       { label: 'Diskografie', href: '#' },
       { label: 'Presse', href: '/press' },
