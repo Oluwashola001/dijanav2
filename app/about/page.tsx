@@ -439,11 +439,10 @@ function TextBlockWithLineAnimation({
   );
 }
 
-function HeroVideo({ startPlaying, language, isVideoMuted, onMuteToggle }: { 
+function HeroVideo({ startPlaying, language, isVideoMuted }: { 
   startPlaying: boolean; 
   language: Language;
   isVideoMuted: boolean;
-  onMuteToggle: (toggleFn: () => void) => void;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [currentTime, setCurrentTime] = useState(0);
@@ -476,16 +475,6 @@ function HeroVideo({ startPlaying, language, isVideoMuted, onMuteToggle }: {
     }
   }, [isVideoMuted]);
 
-  // Provide toggle function to parent
-  useEffect(() => {
-    const toggleMute = () => {
-      if (videoRef.current) {
-        videoRef.current.muted = !videoRef.current.muted;
-      }
-    };
-    onMuteToggle(toggleMute);
-  }, [onMuteToggle]);
-
   const handleTimeUpdate = () => {
     if (videoRef.current) {
       setCurrentTime(videoRef.current.currentTime);
@@ -498,6 +487,11 @@ function HeroVideo({ startPlaying, language, isVideoMuted, onMuteToggle }: {
     : "/videos/about-film.webm";           // Desktop prefers WebM
 
   const videoType = isMobile ? "video/mp4" : "video/webm";
+  
+  // Poster image for lazy loading
+  const posterSrc = isMobile
+    ? "/images/about-film-mobile-poster.webp"
+    : "/images/about-film-desktop-poster.webp";
 
   const activeBlock = overlayBlocks.find(block => {
     const timing = isMobile ? block.mobile : block.desktop;
@@ -554,6 +548,7 @@ function HeroVideo({ startPlaying, language, isVideoMuted, onMuteToggle }: {
         playsInline
         loop 
         onTimeUpdate={handleTimeUpdate}
+        poster={posterSrc}
         className="w-full h-full object-cover md:object-center"
         style={{ 
           objectPosition: isMobile ? '15% 15%' : 'center center'
@@ -747,9 +742,8 @@ export default function HomePage() {
   const [splashFinished, setSplashFinished] = useState(false);
   const [language, setLanguage] = useState<Language>('en');
   
-  // Video mute state (controls the HeroVideo's audio)
+  // Video mute state - simplified approach
   const [isVideoMuted, setIsVideoMuted] = useState(true);
-  const videoMuteRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     // 1. Read the saved language from the Intro page
@@ -759,6 +753,7 @@ export default function HomePage() {
     }
 
     // 2. Check for auto-unmute flag (from ENTER button or navbar)
+    // Video only unmutes if user clicked ENTER or BIOGRAPHY link
     if (typeof window !== 'undefined') {
       const shouldAutoUnmute = sessionStorage.getItem('autoPlayMusic');
       
@@ -766,7 +761,7 @@ export default function HomePage() {
         // User clicked ENTER or BIOGRAPHY - unmute the video!
         setIsVideoMuted(false);
         
-        // Clear the flag so it doesn't affect page refreshes
+        // Clear the flag after use
         sessionStorage.removeItem('autoPlayMusic');
       }
     }
@@ -778,20 +773,16 @@ export default function HomePage() {
     };
   }, []);
 
-  // Toggle video mute
+  // Toggle video mute - simple state toggle
   const toggleVideoMute = () => {
     setIsVideoMuted(prev => !prev);
-    // This will trigger the callback in HeroVideo component
-    if (videoMuteRef.current) {
-      videoMuteRef.current();
-    }
   };
 
   return (
     <main className="relative min-h-screen w-full bg-[#223C5E] text-white overflow-x-hidden">
       
       {/* VIDEO MUTE BUTTON - Top Right Corner */}
-      <div className="fixed top-1 right-14 md:top-12 md:right-2 z-50 pointer-events-auto">
+      <div className="fixed top-1 right-14 md:top-12 md:right-2 z-[110] pointer-events-auto">
         <button 
           onClick={toggleVideoMute}
           className="text-white/70 hover:text-amber-200 transition-colors p-3 rounded-full bg-black/20 backdrop-blur-sm border border-white/10"
@@ -816,7 +807,7 @@ export default function HomePage() {
         {!splashFinished && <SplashScreen onComplete={() => setSplashFinished(true)} language={language} />}
       </AnimatePresence>
 
-      <HeroVideo startPlaying={splashFinished} language={language} isVideoMuted={isVideoMuted} onMuteToggle={(toggleFn) => { videoMuteRef.current = toggleFn; }} />
+      <HeroVideo startPlaying={splashFinished} language={language} isVideoMuted={isVideoMuted} />
 
       <div className="relative z-10 bg-linear-to-b from-[#111f33] to-[#223C5E] pb-24">
         <BioBlocks language={language} />
