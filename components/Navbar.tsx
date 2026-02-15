@@ -82,13 +82,13 @@ export default function Navbar() {
             <Link 
               key={link.label} 
               href={link.href}
-              className={`font-medium uppercase transition-all duration-300 whitespace-nowrap
-                ${link.href === '#' ? 'text-[#f2f4f6]/40 cursor-default' : 'text-[#f2f4f6] hover:text-white hover:opacity-90'}`}
+              className={`font-semibold uppercase transition-all duration-300 whitespace-nowrap relative group
+                ${link.href === '#' ? 'text-white/90 cursor-not-allowed' : 'text-white/90 hover:text-white'}`}
               style={{ 
                 fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif",
-                fontSize: '15px',
-                fontWeight: 500,
-                letterSpacing: '0.18em',
+                fontSize: '14px',
+                fontWeight: 600,
+                letterSpacing: '0.22em',
                 lineHeight: 1
               }}
               onClick={(e) => {
@@ -108,23 +108,27 @@ export default function Navbar() {
               }}
             >
               {link.label}
+              {/* Yellow underline on hover - only for clickable links */}
+              {link.href !== '#' && (
+                <span className="absolute left-0 right-0 bottom-[-4px] h-[2px] bg-amber-300 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"></span>
+              )}
             </Link>
           ))}
         </nav>
 
         {/* --- TABLET NAVIGATION (md to xl) --- */}
-        <nav className="hidden md:flex xl:hidden justify-center items-center gap-2 px-3 h-[46px] overflow-x-auto scrollbar-hide">
+        <nav className="hidden md:flex xl:hidden justify-center items-center gap-3 px-3 h-[46px] overflow-x-auto scrollbar-hide">
           {currentLinks.map((link) => (
             <Link 
               key={link.label} 
               href={link.href}
-              className={`font-medium uppercase transition-all duration-300 whitespace-nowrap flex-shrink-0
-                ${link.href === '#' ? 'text-[#f2f4f6]/40 cursor-default' : 'text-[#f2f4f6] hover:text-white hover:opacity-90'}`}
+              className={`font-semibold uppercase transition-all duration-300 whitespace-nowrap flex-shrink-0 relative group
+                ${link.href === '#' ? 'text-white/90 cursor-not-allowed' : 'text-white/90 hover:text-white'}`}
               style={{ 
                 fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif",
-                fontSize: '15px',
-                fontWeight: 500,
-                letterSpacing: '0.18em',
+                fontSize: '14px',
+                fontWeight: 600,
+                letterSpacing: '0.22em',
                 lineHeight: 1
               }}
               onClick={(e) => {
@@ -143,6 +147,10 @@ export default function Navbar() {
               }}
             >
               {link.label}
+              {/* Yellow underline on hover - only for clickable links */}
+              {link.href !== '#' && (
+                <span className="absolute left-0 right-0 bottom-[-4px] h-[2px] bg-amber-300 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"></span>
+              )}
             </Link>
           ))}
         </nav>
@@ -179,10 +187,10 @@ export default function Navbar() {
             {/* Close Button */}
             <button 
               onClick={() => setIsMobileMenuOpen(false)}
-              className="absolute top-6 right-6 text-[#f2f4f6]/60 hover:text-[#f2f4f6]"
+              className="absolute top-3 right-4 text-[#f2f4f6]/60 hover:text-[#f2f4f6]"
               aria-label="Close menu"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
               </svg>
@@ -199,9 +207,13 @@ export default function Navbar() {
                 >
                   <Link 
                     href={link.href}
-                    className={`text-lg md:text-2xl font-medium tracking-[0.18em] uppercase transition-colors
-                      ${link.href === '#' ? 'text-[#f2f4f6]/40 cursor-default' : 'text-[#f2f4f6] hover:text-amber-200'}`}
-                    style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif" }}
+                    className={`text-lg md:text-2xl font-semibold uppercase transition-colors
+                      ${link.href === '#' ? 'text-white/90 cursor-not-allowed' : 'text-white/90 hover:text-amber-200'}`}
+                    style={{ 
+                      fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif",
+                      letterSpacing: '0.15em',
+                      fontWeight: 600
+                    }}
                     onClick={(e) => {
                       if (link.href === '#') {
                         e.preventDefault();

@@ -101,17 +101,14 @@ export default function Footer() {
                 lineHeight: 1.7
               }}
             >
-              <p 
-                className="text-white/95"
-                style={{
-                  fontWeight: 500
-                }}
-              >
-                Dijana Bošković
-              </p>
+              <p>Dijana Bošković</p>
               <p>Sibeliusstr. 25<br />81245 München</p>
-              <p className="pt-2">Mobile: <a href="tel:+491734724882" className="hover:text-amber-200 transition-colors">+49 173 4724882</a></p>
-              <p>Email: <a href="mailto:mail@dijana-boskovic.com" className="hover:text-amber-200 transition-colors">mail@dijana-boskovic.com</a></p>
+              <p className="pt-2 italic">
+                Mobile: <a href="tel:+491734724882" className="hover:text-amber-200 transition-colors">+49 173 4724882</a>
+              </p>
+              <p className="italic">
+                Email: <a href="mailto:mail@dijana-boskovic.com" className="text-amber-300 hover:text-amber-200 transition-colors">mail@dijana-boskovic.com</a>
+              </p>
             </div>
           </div>
 
@@ -129,8 +126,9 @@ export default function Footer() {
             >
               {t.quickLinks}
             </h3>
+            {/* Desktop: 2 columns layout */}
             <nav 
-              className="flex flex-col space-y-2"
+              className="hidden md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-2"
               style={{
                 fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif",
                 fontSize: '13px',
@@ -139,11 +137,44 @@ export default function Footer() {
                 lineHeight: 1.7
               }}
             >
-              <Link href="/about" className="text-white/75 hover:text-amber-200 transition-colors">{t.links.bio}</Link>
-              <Link href="/news" className="text-white/75 hover:text-amber-200 transition-colors">{t.links.news}</Link>
-              <Link href="/compositions/works" className="text-white/75 hover:text-amber-200 transition-colors">{t.links.compositions}</Link>
-              <Link href="/press" className="text-white/75 hover:text-amber-200 transition-colors">{t.links.press}</Link>
-              <Link href="/media" className="text-white/75 hover:text-amber-200 transition-colors">{t.links.media}</Link>
+              {/* Left Column - First 6 items */}
+              <div className="flex flex-col space-y-2">
+                <Link href="/" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{language === 'en' ? 'Home' : 'Startseite'}</Link>
+                <Link href="/about" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.bio}</Link>
+                <Link href="/news" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.news}</Link>
+                <Link href="/compositions/works" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.compositions}</Link>
+                <Link href="/media" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.media}</Link>
+                <span className="text-amber-300 cursor-not-allowed uppercase opacity-60">{language === 'en' ? 'Discography' : 'Diskografie'}</span>
+              </div>
+              {/* Right Column - Last 4 items */}
+              <div className="flex flex-col space-y-2">
+                <Link href="/press" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.press}</Link>
+                <span className="text-amber-300 cursor-not-allowed uppercase opacity-60">{language === 'en' ? 'Versus Vox Ensemble' : 'Versus Vox Ensemble'}</span>
+                <span className="text-amber-300 cursor-not-allowed uppercase opacity-60">{language === 'en' ? 'Teaching' : 'Unterricht'}</span>
+                <Link href="/contact" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{language === 'en' ? 'Contact' : 'Kontakt'}</Link>
+              </div>
+            </nav>
+            {/* Mobile: Single column layout */}
+            <nav 
+              className="flex md:hidden flex-col space-y-2"
+              style={{
+                fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif",
+                fontSize: '13px',
+                fontWeight: 400,
+                letterSpacing: '0.02em',
+                lineHeight: 1.7
+              }}
+            >
+              <Link href="/" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{language === 'en' ? 'Home' : 'Startseite'}</Link>
+              <Link href="/about" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.bio}</Link>
+              <Link href="/news" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.news}</Link>
+              <Link href="/compositions/works" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.compositions}</Link>
+              <Link href="/media" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.media}</Link>
+              <span className="text-amber-300 cursor-not-allowed uppercase opacity-60">{language === 'en' ? 'Discography' : 'Diskografie'}</span>
+              <Link href="/press" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.press}</Link>
+              <span className="text-amber-300 cursor-not-allowed uppercase opacity-60">{language === 'en' ? 'Versus Vox Ensemble' : 'Versus Vox Ensemble'}</span>
+              <span className="text-amber-300 cursor-not-allowed uppercase opacity-60">{language === 'en' ? 'Teaching' : 'Unterricht'}</span>
+              <Link href="/contact" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{language === 'en' ? 'Contact' : 'Kontakt'}</Link>
             </nav>
           </div>
 
@@ -172,13 +203,13 @@ export default function Footer() {
               }}
             >
               <p className="text-white/90 mb-2" style={{ fontWeight: 500 }}>{t.photography}</p>
-              <p className="leading-relaxed">
-                <a href="http://www.sabine-klem.de/" target="_blank" rel="noopener noreferrer" className="hover:text-amber-200 transition-colors">Sabine Klem</a>, {' '}
-                <a href="http://alois-schuetz.de/" target="_blank" rel="noopener noreferrer" className="hover:text-amber-200 transition-colors">Alois Schütz</a>, {' '}
-                <a href="http://www.andreashenn.com/" target="_blank" rel="noopener noreferrer" className="hover:text-amber-200 transition-colors">Andreas Henn</a>, {' '}
-                Jan Roeder, Dragan Bosnic, {' '}
-                <a href="http://evbphoto.com/" target="_blank" rel="noopener noreferrer" className="hover:text-amber-200 transition-colors">Eric van den Brulle</a>, {' '}
-                Siggi Mueller
+              <p className="leading-relaxed italic">
+                <a href="http://www.sabine-klem.de/" target="_blank" rel="noopener noreferrer" className="text-amber-300 hover:text-amber-200 transition-colors">Sabine Klem</a>, {' '}
+                <a href="http://alois-schuetz.de/" target="_blank" rel="noopener noreferrer" className="text-amber-300 hover:text-amber-200 transition-colors">Alois Schütz</a>, {' '}
+                <a href="http://www.andreashenn.com/" target="_blank" rel="noopener noreferrer" className="text-amber-300 hover:text-amber-200 transition-colors">Andreas Henn</a>, {' '}
+                <span className="text-amber-300">Jan Roeder</span>, <span className="text-amber-300">Dragan Bosnic</span>, {' '}
+                <a href="http://evbphoto.com/" target="_blank" rel="noopener noreferrer" className="text-amber-300 hover:text-amber-200 transition-colors">Eric van den Brulle</a>, {' '}
+                <span className="text-amber-300">Siggi Mueller</span>
               </p>
             </div>
           </div>

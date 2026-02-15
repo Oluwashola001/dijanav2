@@ -67,7 +67,8 @@ const CONTENT = {
       block2: {
         title: "Versus Vox & Composition Studies",
         p1: "In 2005, she founded the Versus Vox Ensemble in Munich, which she has led ever since, blending her own compositions with works by other contemporary and historical composers into vibrant musical experiences.",
-        p2: "Her compositional studies with Prof. Manfred Stahnke and Prof. Fredrik Schwenk at the University of Music and Theatre Hamburg culminated in the orchestral project \"ONE\", premiered by the Symphonikern Hamburg."
+        p2: "Her compositional studies with Prof. Manfred Stahnke and Prof. Fredrik Schwenk at the University of Music and Theatre Hamburg culminated in the orchestral project \"ONE\", premiered by the Symphonikern Hamburg.",
+        p3: "The work bridges Western and Eastern classical music, exploring new forms of notation and performance practice."
       },
       block3: {
         title: "Works, Performances & Awards",
@@ -101,26 +102,26 @@ const CONTENT = {
         title: "Versus Vox & Kompositionsstudium",
         content: (
           <>
-            2005 gründete sie in München das <span className="text-amber-200/90">Versus Vox Ensemble</span>, das sie bis heute künstlerisch leitet. In dessen Arbeit verbinden sich eigene Kompositionen mit Werken zeitgenössischer und historischer Komponist*innen zu lebendigen, interdisziplinären Musikerlebnissen.
+            2005 gründete sie in München das <span className="text-amber-200/90">Versus Vox Ensemble</span>, das sie bis heute künstlerisch leitet. In dessen Arbeit verbinden sich eigene Kompositionen mit Werken zeitgenössischer und historischer Komponist*innen zu lebendigen, interdisziplinären Musikerlebnissen. Das <span className="text-amber-200/90">Kompositionsstudium</span> bei Prof. Manfred Stahnke und Prof. Fredrik Schwenk an der Hochschule für Musik und Theater Hamburg schloss sie mit der Orchesterkomposition ONE ab, die von den Symphonikern Hamburg uraufgeführt wurde.
           </>
         )
       },
       5: (
         <>
-          Das Kompositionsstudium bei Prof. Manfred Stahnke und Prof. Fredrik Schwenk an der Hochschule für Musik und Theater Hamburg schloss sie mit der Orchesterkomposition ONE ab, die von den Symphonikern Hamburg uraufgeführt wurde.
+          Das Werk schlägt eine Brücke zwischen westlicher und östlicher Klassik und erforscht neue Formen der Notation und Aufführungspraxis.
         </>
       ),
       6: {
         title: "Werke, Aufführungen & Auszeichnungen",
         content: (
           <>
-            Das kompositorische Spektrum umfasst Werke für <span className="text-amber-200/90">Solo-Instrumente, Kammermusik, Orchester, Chor, Gesang sowie Musiktheater</span>. Aufführungen fanden unter anderem mit dem <span className="text-amber-200/90">Kammerorchester Solisten aus St. Petersburg</span>, mit Mitgliedern der <span className="text-amber-200/90">Münchner Philharmoniker</span> und der <span className="text-amber-200/90">Frankfurter Oper</span>, beim <span className="text-amber-200/90">BEMUS Musikfestival</span> in Belgrad sowie bei den <span className="text-amber-200/90">Tiroler Volksschauspielen</span> statt.
+            Das kompositorische Spektrum umfasst Werke für <span className="text-amber-200/90">Solo-Instrumente, Kammermusik, Orchester, Chor, Gesang sowie Musiktheater</span>. Aufführungen fanden unter anderem mit dem <span className="text-amber-200/90">Kammerorchester Solisten aus St. Petersburg</span>, mit Mitgliedern der <span className="text-amber-200/90">Münchner Philharmoniker</span> und der <span className="text-amber-200/90">Frankfurter Oper</span>, beim <span className="text-amber-200/90">BEMUS Musikfestival</span> in Belgrad sowie bei den <span className="text-amber-200/90">Tiroler Volksschauspielen</span> statt. Das Kammerorchesterwerk <span className="text-amber-200/90">Concerto for Strings</span> wurde von führenden europäischen Radiosendern ausgestrahlt.
           </>
         )
       },
       7: (
         <>
-          Das Kammerorchesterwerk <span className="text-amber-200/90">Concerto for Strings</span> wurde von führenden europäischen Radiosendern ausgestrahlt. Für das Projekt <span className="text-amber-200/90">Lichtspiele</span> erhielt sie Förderungen der <span className="text-amber-200/90">Ernst von Siemens Kunststiftung</span> sowie der <span className="text-amber-200/90">Gerhard-Trede-Stiftung</span>. 2017 wurde sie mit dem <span className="text-amber-200/90">1. Preis</span> beim Internationalen Wettbewerb für Chormusik des <span className="text-amber-200/90">Deutschen Chorverbands</span> ausgezeichnet.
+          Für das Projekt <span className="text-amber-200/90">Lichtspiele</span> erhielt sie Förderungen der <span className="text-amber-200/90">Ernst von Siemens Kunststiftung</span> sowie der <span className="text-amber-200/90">Gerhard-Trede-Stiftung</span>. 2017 wurde sie mit dem <span className="text-amber-200/90">1. Preis</span> beim Internationalen Wettbewerb für Chormusik des <span className="text-amber-200/90">Deutschen Chorverbands</span> ausgezeichnet.
         </>
       )
     },
@@ -135,7 +136,8 @@ const CONTENT = {
       block2: {
         title: "Versus Vox & Kompositionsstudium",
         p1: "2005 gründete sie in München das Versus Vox Ensemble, das sie bis heute künstlerisch leitet. In dessen Arbeit verbinden sich eigene Kompositionen mit Werken zeitgenössischer und historischer Komponist*innen zu lebendigen, interdisziplinären Musikerlebnissen.",
-        p2: "Das Kompositionsstudium bei Prof. Manfred Stahnke und Prof. Fredrik Schwenk an der Hochschule für Musik und Theater Hamburg schloss sie mit der Orchesterkomposition ONE ab, die von den Symphonikern Hamburg uraufgeführt wurde."
+        p2: "Das Kompositionsstudium bei Prof. Manfred Stahnke und Prof. Fredrik Schwenk an der Hochschule für Musik und Theater Hamburg schloss sie mit der Orchesterkomposition ONE ab, die von den Symphonikern Hamburg uraufgeführt wurde.",
+        p3: "Das Werk schlägt eine Brücke zwischen westlicher und östlicher Klassik und erforscht neue Formen der Notation und Aufführungspraxis."
       },
       block3: {
         title: "Werke, Aufführungen & Auszeichnungen",
@@ -504,19 +506,19 @@ function HeroVideo({ startPlaying, language, isVideoMuted }: {
     if (isMobile) {
       switch (position) {
         case 'top-center': 
-          return 'top-16 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[85%] max-w-md items-center text-center';
+          return 'top-18 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[85%] max-w-md items-center text-center';
         case 'top-left':
-          return 'top-[7%] left-4 w-[60%] max-w-xs items-start text-left';
+          return 'top-[10%] left-4 w-[60%] max-w-xs items-start text-left';
         case 'upper-right':
-          return 'top-14 right-4 w-[80%] max-w-sm items-center text-center';
+          return 'top-16 right-4 w-[80%] max-w-sm items-center text-center';
         case 'full-width':
-          return 'top-[5%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center'; 
+          return 'top-[8%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center'; 
         case 'high-up':
-          return 'top-[5%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center';
+          return 'top-[8%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center';
         case 'mid-screen':
           return 'top-[21%] left-4 right-4 w-[calc(100%-2rem)] items-center text-center';
         default: 
-          return 'top-14 left-1/2 -translate-x-1/2 w-[85%] max-w-md items-center text-center';
+          return 'top-16 left-1/2 -translate-x-1/2 w-[85%] max-w-md items-center text-center';
       }
     }
     
@@ -692,6 +694,10 @@ function BioBlocks({ language }: { language: Language }) {
             
             <AnimatedParagraph delay={0.15}>
               <p>{text.block2.p2}</p>
+            </AnimatedParagraph>
+            
+            <AnimatedParagraph delay={0.2}>
+              <p>{text.block2.p3}</p>
             </AnimatedParagraph>
           </div>
         </section>
