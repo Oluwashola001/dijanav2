@@ -142,7 +142,7 @@ export default function Footer() {
                 <Link href="/" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{language === 'en' ? 'Home' : 'Startseite'}</Link>
                 <Link href="/about" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.bio}</Link>
                 <Link href="/news" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.news}</Link>
-                <Link href="/compositions/works" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.compositions}</Link>
+                <Link href="/compositions" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.compositions}</Link>
                 <Link href="/media" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.media}</Link>
                 <span className="text-amber-300 cursor-not-allowed uppercase opacity-60">{language === 'en' ? 'Discography' : 'Diskografie'}</span>
               </div>
@@ -168,7 +168,7 @@ export default function Footer() {
               <Link href="/" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{language === 'en' ? 'Home' : 'Startseite'}</Link>
               <Link href="/about" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.bio}</Link>
               <Link href="/news" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.news}</Link>
-              <Link href="/compositions/works" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.compositions}</Link>
+              <Link href="/compositions" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.compositions}</Link>
               <Link href="/media" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.media}</Link>
               <span className="text-amber-300 cursor-not-allowed uppercase opacity-60">{language === 'en' ? 'Discography' : 'Diskografie'}</span>
               <Link href="/press" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.press}</Link>
