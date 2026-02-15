@@ -186,72 +186,64 @@ export default function WaterIntroPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.0, delay: 0.3, ease: "easeOut" }}
-                className="text-center space-y-8 md:space-y-12"
+                className="text-center space-y-20 md:space-y-32"
               >
                 {/* German Section */}
-                <div className="space-y-4">
-                  <div className="space-y-1">
-                    <h1 
-                      className="text-white text-3xl md:text-4xl lg:text-5xl font-bold tracking-wide drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]"
-                      style={{ fontFamily: "Verdana, Geneva, sans-serif" }}
-                    >
-                      Dijana Bošković
-                    </h1>
-                    <p 
-                      className="text-white/90 text-xl md:text-2xl lg:text-3xl tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
-                      style={{ fontFamily: "'Times New Roman', Times, serif" }}
-                    >
-                      Komponistin & Flötistin
-                    </p>
-                  </div>
-                  
-                  <button
-                    onClick={() => handleStartExperience('de')}
-                    className="group relative px-10 py-3 md:px-14 md:py-4 bg-white/10 backdrop-blur-md border-2 border-white/30 rounded-full transition-all duration-300 hover:bg-white/20 hover:border-white/50 hover:scale-105 active:scale-95 active:bg-white/30"
+                <div 
+                  className="space-y-2 cursor-pointer group"
+                  onClick={() => handleStartExperience('de')}
+                >
+                  {/* GERMAN NAME - Edit sizes here: text-[mobile] md:text-[tablet] lg:text-[desktop] */}
+                  <h1 
+                    className="text-white text-4xl md:text-6xl lg:text-7xl font-semibold tracking-wide drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)] transition-all duration-300 group-hover:text-amber-200"
+                    style={{ fontFamily: "'Avenir Next', -apple-system, BlinkMacSystemFont, sans-serif" }}
                   >
+                    DIJANA BOŠKOVIĆ
+                  </h1>
+                  {/* GERMAN TITLE - Edit sizes here: text-[mobile] md:text-[tablet] lg:text-[desktop] */}
+                  <p 
+                    className="text-white text-xl md:text-4xl lg:text-5xl tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] transition-all duration-300 group-hover:text-amber-200"
+                    style={{ fontFamily: "'Avenir Next', -apple-system, BlinkMacSystemFont, sans-serif" }}
+                  >
+                    KOMPONISTIN & FLÖTISTIN
+                  </p>
+                  <div className="pt-4">
                     <span 
-                      className="text-white text-lg md:text-xl font-semibold tracking-widest drop-shadow-lg transition-colors duration-300 group-hover:text-amber-200"
-                      style={{ fontFamily: "Verdana, Geneva, sans-serif" }}
+                      className="text-amber-300 text-lg md:text-xl lg:text-2xl font-medium italic tracking-wider drop-shadow-lg transition-all duration-300 group-hover:text-amber-200 group-hover:scale-110 inline-block"
+                      style={{ fontFamily: "'Avenir Next', -apple-system, BlinkMacSystemFont, sans-serif" }}
                     >
-                      GERMAN
+                      deutsch
                     </span>
-                    <div className="absolute inset-0 rounded-full bg-white/0 group-hover:bg-white/10 blur-xl transition-all duration-300 -z-10"></div>
-                  </button>
+                  </div>
                 </div>
 
-                <div className="py-2">
-                  <div className="w-32 h-px bg-white/40 mx-auto"></div>
-                </div>
-
-                {/* English Section */}
-                <div className="space-y-4">
-                  <div className="space-y-1">
-                    <h2 
-                      className="text-white text-3xl md:text-4xl lg:text-5xl font-bold tracking-wide drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]"
-                      style={{ fontFamily: "Verdana, Geneva, sans-serif" }}
-                    >
-                      Dijana Boshkovich
-                    </h2>
-                    <p 
-                      className="text-white/90 text-xl md:text-2xl lg:text-3xl tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
-                      style={{ fontFamily: "'Times New Roman', Times, serif" }}
-                    >
-                      Composer & Flutist
-                    </p>
-                  </div>
-                  
-                  <button
-                    onClick={() => handleStartExperience('en')}
-                    className="group relative px-10 py-3 md:px-14 md:py-4 bg-white/10 backdrop-blur-md border-2 border-white/30 rounded-full transition-all duration-300 hover:bg-white/20 hover:border-white/50 hover:scale-105 active:scale-95 active:bg-white/30"
-                  >
+                {/* English Section - REVERSED ORDER */}
+                <div 
+                  className="space-y-2 cursor-pointer group"
+                  onClick={() => handleStartExperience('en')}
+                >
+                  <div className="pb-4">
                     <span 
-                      className="text-white text-lg md:text-xl font-semibold tracking-widest drop-shadow-lg transition-colors duration-300 group-hover:text-amber-200"
-                      style={{ fontFamily: "Verdana, Geneva, sans-serif" }}
+                      className="text-amber-300 text-lg md:text-xl lg:text-2xl font-medium italic tracking-wider drop-shadow-lg transition-all duration-300 group-hover:text-amber-200 group-hover:scale-110 inline-block"
+                      style={{ fontFamily: "'Avenir Next', -apple-system, BlinkMacSystemFont, sans-serif" }}
                     >
-                      ENGLISH
+                      english
                     </span>
-                    <div className="absolute inset-0 rounded-full bg-white/0 group-hover:bg-white/10 blur-xl transition-all duration-300 -z-10"></div>
-                  </button>
+                  </div>
+                  {/* ENGLISH TITLE - Independent from German */}
+                  <p 
+                    className="text-white text-xl md:text-4xl lg:text-5xl tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] transition-all duration-300 group-hover:text-amber-200"
+                    style={{ fontFamily: "'Avenir Next', -apple-system, BlinkMacSystemFont, sans-serif" }}
+                  >
+                    COMPOSER & FLUTIST
+                  </p>
+                  {/* ENGLISH NAME - Independent from German */}
+                  <h2 
+                    className="text-white text-4xl md:text-6xl lg:text-7xl font-semibold tracking-wide drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)] transition-all duration-300 group-hover:text-amber-200"
+                    style={{ fontFamily: "'Avenir Next', -apple-system, BlinkMacSystemFont, sans-serif" }}
+                  >
+                    DIJANA BOSHKOVICH
+                  </h2>
                 </div>
               </motion.div>
             </div>

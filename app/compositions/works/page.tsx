@@ -1068,7 +1068,7 @@ export default function MusicalWorksPage() {
         }
         @media (min-width: 1024px) {
           main {
-            --bg-image: url(/images/works-bg.webp);
+            --bg-image: url(/images/works-bg-new.webp);
           }
         }
       `}</style>

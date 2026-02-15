@@ -32,7 +32,7 @@ const CONTENT = {
     ]
   },
   de: {
-    title: "WERKE",
+    title: "KOMPOSITION",
     enter: "EINTRETEN",
     // German translation preserving the ** highlighting style
     text: [
