@@ -77,7 +77,8 @@ const CONTENT = {
         p3: "For \"Lichtspiele\", she received support from the Ernst von Siemens Art Foundation and the Gerhard Trede Foundation, and in 2017 won 1st Prize at the International Choral Music Competition organized by the German Choir Association."
       }
     },
-    button: "View Compositions"
+    button: "View Compositions",
+    scrollIndicator: "Full Biography"
   },
   de: {
     hero: {
@@ -146,7 +147,8 @@ const CONTENT = {
         p3: "Für das Projekt Lichtspiele erhielt sie Förderungen der Ernst von Siemens Kunststiftung sowie der Gerhard-Trede-Stiftung. 2017 wurde sie mit dem 1. Preis beim Internationalen Wettbewerb für Chormusik des Deutschen Chorverbands ausgezeichnet."
       }
     },
-    button: "Kompositionen ansehen"
+    button: "Kompositionen ansehen",
+    scrollIndicator: "Vollständige Biografie"
   }
 };
 
@@ -449,9 +451,40 @@ function HeroVideo({ startPlaying, language, isVideoMuted }: {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
 
   // Get dynamic blocks based on language
   const overlayBlocks = getOverlayBlocks(language);
+  
+  // Scroll indicator text based on language
+  const scrollText = CONTENT[language].scrollIndicator;
+  
+  // Handle scroll to BioBlocks
+  const scrollToBio = () => {
+    const bioSection = document.getElementById('bio-section');
+    if (bioSection) {
+      bioSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setShowScrollIndicator(false);
+    }
+  };
+  
+  // Track scroll position to hide indicator when past hero section
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroHeight = window.innerHeight;
+      const scrollY = window.scrollY;
+      
+      // Hide indicator if scrolled past 30% of hero section
+      if (scrollY > heroHeight * 0.3) {
+        setShowScrollIndicator(false);
+      } else {
+        setShowScrollIndicator(true);
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -571,14 +604,58 @@ function HeroVideo({ startPlaying, language, isVideoMuted }: {
             currentTime={currentTime}
             positionClasses={getPositionClasses(activeBlock.position, activeBlock.mobilePosition)}
             isMobile={isMobile}
-            language={language} // 3. Pass language prop here
+            language={language}
           />
         )}
       </AnimatePresence>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/30 text-xs uppercase tracking-widest animate-pulse pointer-events-none">
-        The Journey
-      </div>
+      {/* SCROLL INDICATOR BUTTON - Bottom Right */}
+      <AnimatePresence>
+        {showScrollIndicator && (
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ 
+              opacity: 1, 
+              y: 0,
+            }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            onClick={scrollToBio}
+            className="absolute bottom-4 right-2 md:bottom-12 md:right-12 z-30 flex flex-row items-end gap-1 cursor-pointer group"
+            aria-label="Scroll to biography"
+          >
+            <span className="text-white/70 group-hover:text-amber-200/90 text-sm md:text-base uppercase tracking-wider transition-colors duration-300">
+              {scrollText}
+            </span>
+            <motion.div
+              animate={{ 
+                y: [0, 8, 0],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="text-amber-200/90 group-hover:text-amber-200 transition-colors duration-300 mb-[2px]"
+            >
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="28" 
+                height="28" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              >
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <polyline points="19 12 12 19 5 12"></polyline>
+              </svg>
+            </motion.div>
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -655,7 +732,7 @@ function BioBlocks({ language }: { language: Language }) {
 
   return (
     <>
-      <div className="relative z-10 w-full max-w-5xl mx-auto md:ml-[2%] md:mr-auto px-6 py-12 md:py-24 space-y-12 md:space-y-16">
+      <div id="bio-section" className="relative z-10 w-full max-w-5xl mx-auto md:ml-[2%] md:mr-auto px-6 py-12 md:py-24 space-y-12 md:space-y-16">
         
         {/* Block 1 */}
         <section className="space-y-6">

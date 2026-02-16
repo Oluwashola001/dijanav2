@@ -79,7 +79,7 @@ const CONTENT = {
               header: "Bošković",
               items: [
                 {
-                  performers: ["from the sextet Versus Vox Integra"],
+                  performers: ["from the sextet <em>Versus Vox Integra</em>"],
                   file: "/Music/vox.mp3"
                 }
               ]
@@ -88,7 +88,7 @@ const CONTENT = {
               header: "Pogatschar",
               items: [
                 {
-                  performers: ["Simurgh from the children's opera Mouse and Monster"],
+                  performers: ["Simurgh from the children's opera <em>Mouse and Monster</em>"],
                   file: "/Music/pogatschar-simurgh.mp3"
                 }
               ]
@@ -97,7 +97,7 @@ const CONTENT = {
               header: "Bogojevich",
               items: [
                 {
-                  performers: ["Emigrée's Waltz"],
+                  performers: ["<em>Emigrée's Waltz</em>"],
                   file: "/Music/bogojevich-emigree.mp3"
                 }
               ]
@@ -111,12 +111,12 @@ const CONTENT = {
       subtitle: "On YouTube:",
       watch: "Watch",
       items: [
-        { title: "Concerto for String Orchestra", url: "https://www.youtube.com/watch?v=atZjR7nn5gA" },
-        { title: "Versus Vox Integra (sextet)", url: "https://www.youtube.com/watch?v=qK4EA-K2VO4" },
-        { title: "Suite for violin and cello", url: "https://www.youtube.com/watch?v=WvxSkxnr1bQ" },
-        { title: "Sundance for piano trio", url: "https://www.youtube.com/watch?v=qzC-frjrHR0" },
-        { title: "Singing Flame for solo cello", url: "https://www.youtube.com/watch?v=yWdFsA8GqxQ" },
-        { title: "Trost (after a poem by Ina Seidel)", url: "https://www.youtube.com/watch?v=Z_2WtxWsMIA" },
+        { title: "<em>Concerto for String Orchestra</em>", url: "https://www.youtube.com/watch?v=atZjR7nn5gA" },
+        { title: "<em>Versus Vox Integra</em> (sextet)", url: "https://www.youtube.com/watch?v=qK4EA-K2VO4" },
+        { title: "<em>Suite</em> for violin and cello", url: "https://www.youtube.com/watch?v=WvxSkxnr1bQ" },
+        { title: "<em>Sundance</em> for piano trio", url: "https://www.youtube.com/watch?v=qzC-frjrHR0" },
+        { title: "<em>Singing Flame</em> for solo cello", url: "https://www.youtube.com/watch?v=yWdFsA8GqxQ" },
+        { title: "<em>Trost</em> (after a poem by Ina Seidel)", url: "https://www.youtube.com/watch?v=Z_2WtxWsMIA" },
         { title: "Es ist so schön … – concert piece for mezzo-soprano and piano", url: "https://www.youtube.com/watch?v=GS2njJ_VuhA" },
       ]
     }
@@ -190,7 +190,7 @@ const CONTENT = {
               header: "Bošković",
               items: [
                 {
-                  performers: ["aus dem Sextett Versus Vox Integra"],
+                  performers: ["aus dem Sextett <em>Versus Vox Integra</em>"],
                   file: "/Music/vox.mp3"
                 }
               ]
@@ -199,7 +199,7 @@ const CONTENT = {
               header: "Pogatschar",
               items: [
                 {
-                  performers: ["Simurgh aus der Kinderoper Maus und Monster"],
+                  performers: ["Simurgh aus der Kinderoper <em>Maus und Monster</em>"],
                   file: "/Music/pogatschar-simurgh.mp3"
                 }
               ]
@@ -208,7 +208,7 @@ const CONTENT = {
               header: "Bogojevich",
               items: [
                 {
-                  performers: ["Emigrée's Waltz"],
+                  performers: ["<em>Emigrée's Waltz</em>"],
                   file: "/Music/bogojevich-emigree.mp3"
                 }
               ]
@@ -222,12 +222,12 @@ const CONTENT = {
       subtitle: "Auf YouTube:",
       watch: "Ansehen",
       items: [
-        { title: "Concerto for Strings (Streichorchester)", url: "https://www.youtube.com/watch?v=atZjR7nn5gA" },
-        { title: "Versus Vox Integra (Sextett)", url: "https://www.youtube.com/watch?v=qK4EA-K2VO4" },
-        { title: "Suite für Violine und Cello", url: "https://www.youtube.com/watch?v=WvxSkxnr1bQ" },
-        { title: "Sundance für Klaviertrio", url: "https://www.youtube.com/watch?v=qzC-frjrHR0" },
-        { title: "Singing Flame für Violoncello solo", url: "https://www.youtube.com/watch?v=yWdFsA8GqxQ" },
-        { title: "Trost (nach einem Gedicht von Ina Seidel)", url: "https://www.youtube.com/watch?v=Z_2WtxWsMIA" },
+        { title: "<em>Concerto for Strings</em> (Streichorchester)", url: "https://www.youtube.com/watch?v=atZjR7nn5gA" },
+        { title: "<em>Versus Vox Integra</em> (Sextett)", url: "https://www.youtube.com/watch?v=qK4EA-K2VO4" },
+        { title: "<em>Suite</em> für Violine und Cello", url: "https://www.youtube.com/watch?v=WvxSkxnr1bQ" },
+        { title: "<em>Sundance</em> für Klaviertrio", url: "https://www.youtube.com/watch?v=qzC-frjrHR0" },
+        { title: "<em>Singing Flame</em> für Violoncello solo", url: "https://www.youtube.com/watch?v=yWdFsA8GqxQ" },
+        { title: "<em>Trost</em> (nach einem Gedicht von Ina Seidel)", url: "https://www.youtube.com/watch?v=Z_2WtxWsMIA" },
         { title: "Es ist so schön … – Konzertstück für Mezzosopran und Klavier", url: "https://www.youtube.com/watch?v=GS2njJ_VuhA" },
       ]
     }
@@ -791,7 +791,7 @@ export default function MediaPage() {
          
         {/* PAGE TITLE - REDUCED SPACING */}
         <ScrollReveal>
-          <div className="mb-6 text-center">
+          <div className="mb-6 mt-6 text-center">
             <h1 className="text-4xl md:text-5xl font-serif text-white mb-2 tracking-wide">{t.title}</h1>
             <div className="h-px w-24 bg-[#47719E] mx-auto opacity-50"></div>
           </div>
@@ -799,28 +799,28 @@ export default function MediaPage() {
 
         <div className="space-y-12">
 
-          {/* 1. PRESS PHOTOS - MUCH SMALLER HEIGHT */}
+          {/* 1. PRESS PHOTOS - LARGER IMAGES & TEXT */}
           <ScrollReveal delay={0.1}>
-            <section id="photos" className="scroll-mt-32">
-              <div className="text-center mb-4">
-                <h2 className="text-2xl md:text-3xl font-serif text-white tracking-widest uppercase border-b border-[#47719E]/30 pb-3 inline-block px-12">
+            <section id="photos" className="scroll-mt-32 mt-12">
+              <div className="text-center mb-6">
+                <h2 className="text-2xl md:text-3xl font-serif italic text-white tracking-widest uppercase border-b border-[#47719E]/30 pb-3 inline-block px-12">
                   {t.photos.title}
                 </h2>
               </div>
                
-              <div className="bg-[#172F4F] border border-[#47719E] p-2 md:p-3 shadow-2xl">
-                <div className="mb-2 text-center border-b border-[#47719E]/30 pb-2">
-                  <p className="font-body text-blue-50 text-xs">{t.photos.text}</p>
-                  <p className="font-body text-amber-200/80 text-xs italic mt-1">{t.photos.credit}</p>
+              <div className="bg-[#172F4F] border border-[#47719E] p-4 md:p-6 shadow-2xl">
+                <div className="mb-4 text-center border-b border-[#47719E]/30 pb-4">
+                  <p className="font-body text-blue-50 text-sm md:text-base">{t.photos.text}</p>
+                  <p className="font-body text-amber-200/80 text-sm md:text-base italic mt-2">{t.photos.credit}</p>
                 </div>
                  
-                {/* GRID FORCES 3 COLUMNS, w-fit KEEPS IT TIGHT */}
-                <div className="grid grid-cols-3 gap-2 md:gap-4 w-fit mx-auto">
+                {/* RESPONSIVE GRID - Mobile: 2 columns responsive, Desktop: 3 columns centered */}
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5 mx-auto w-fit px-2 md:px-0">
                   {pressPhotos.map((photo, i) => (
                     <ScrollReveal key={i} delay={i * 0.05}>
                       <motion.div 
-                        className="group relative aspect-[4/3] w-[90px] overflow-hidden border border-white/10 rounded cursor-pointer"
-                        whileHover={{ scale: 1.15 }} // ZOOM (15%)
+                        className="group relative aspect-[4/3] w-full max-w-[155px] md:w-[140px] md:max-w-none overflow-hidden border border-white/10 rounded cursor-pointer"
+                        whileHover={{ scale: 1.15 }}
                         transition={{ duration: 0.3 }}
                         onClick={() => openLightbox(i)}
                       >
@@ -829,7 +829,6 @@ export default function MediaPage() {
                           alt={photo.alt}
                           className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500 vintage-photo"
                         />
-                        {/* CHANGED HOVER ICON: Magnifying glass with plus inside */}
                         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 text-white">
                             <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6" />
@@ -846,18 +845,18 @@ export default function MediaPage() {
           {/* 2. AUDIO */}
           <ScrollReveal delay={0.1}>
             <section id="audio" className="scroll-mt-32">
-              <div className="text-center mb-4">
-                <h2 className="text-2xl md:text-3xl font-serif text-white tracking-widest uppercase border-b border-[#47719E]/30 pb-3 inline-block px-12">
+              <div className="text-center mb-6">
+                <h2 className="text-2xl md:text-3xl font-serif italic text-white tracking-widest uppercase border-b border-[#47719E]/30 pb-3 inline-block px-12">
                   {t.audio.title}
                 </h2>
               </div>
 
               <div className="bg-[#172F4F] border border-[#47719E] p-4 md:p-8 shadow-2xl space-y-12">
                  
-                {/* Intro Link */}
-                <div className="bg-[#0a1625]/30 p-4 border-l-2 border-amber-200/50">
-                  <h3 className="text-lg font-serif text-white mb-1">{t.audio.intro.title}</h3>
-                  <p className="text-blue-50 font-body text-sm md:text-base">
+                {/* Intro Link - NO LEFT BORDER, LARGER TEXT */}
+                <div className="bg-[#0a1625]/30 p-5 md:p-6">
+                  <h3 className="text-2xl md:text-3xl font-serif italic text-white mb-3">{t.audio.intro.title}</h3>
+                  <p className="text-blue-50 font-body text-base md:text-lg leading-relaxed">
                     {t.audio.intro.textPart1}
                     <Link href="/compositions/works" className="text-amber-200 hover:text-white underline decoration-1 underline-offset-4 transition-colors font-bold">
                       {t.audio.intro.linkText}
@@ -881,15 +880,15 @@ export default function MediaPage() {
                         {group.category}
                       </h3>
                       {group.subtext && (
-                        <p className="text-amber-200/80 italic text-sm mt-1">{group.subtext}</p>
+                        <p className="text-amber-200/80 italic text-lg md:text-xl mt-2">{group.subtext}</p>
                       )}
                     </div>
 
                     {/* Sub-groups */}
                     {group.groups.map((subgroup, sIdx) => (
                       <div key={sIdx} className="space-y-4">
-                        {/* Sub-Header */}
-                        <h4 className="text-lg md:text-xl font-serif font-bold text-amber-100/90 tracking-wide">
+                        {/* Sub-Header - NOW ITALIC */}
+                        <h4 className="text-lg md:text-xl font-serif italic font-bold text-amber-100/90 tracking-wide">
                           {subgroup.header}
                         </h4>
                           
@@ -899,7 +898,7 @@ export default function MediaPage() {
                               {/* Text Descriptions */}
                               <div className="space-y-1 text-blue-50 font-body text-sm md:text-base mb-3">
                                 {item.performers && item.performers.map((line, pIdx) => (
-                                  <p key={pIdx}>{line}</p>
+                                  <p key={pIdx} dangerouslySetInnerHTML={{ __html: line }} />
                                 ))}
                               </div>
 
@@ -919,14 +918,15 @@ export default function MediaPage() {
           {/* 3. VIDEO */}
           <ScrollReveal delay={0.1}>
             <section id="video" className="scroll-mt-32">
-              <div className="text-center mb-4">
-                <h2 className="text-2xl md:text-3xl font-serif text-white tracking-widest uppercase border-b border-[#47719E]/30 pb-3 inline-block px-12">
+              <div className="text-center mb-6">
+                <h2 className="text-2xl md:text-3xl font-serif italic text-white tracking-widest uppercase border-b border-[#47719E]/30 pb-3 inline-block px-12">
                   {t.video.title}
                 </h2>
               </div>
 
               <div className="bg-[#172F4F] border border-[#47719E] p-4 md:p-8 shadow-2xl">
-                <p className="text-amber-200/90 italic mb-6 text-center font-serif text-xl">{t.video.subtitle}</p>
+                {/* YOUTUBE SUBTITLE - MATCHES YELLOW HEADING WEIGHT */}
+                <p className="text-amber-200 italic mb-6 text-center font-serif text-lg md:text-xl font-bold tracking-wide">{t.video.subtitle}</p>
                 <div className="grid grid-cols-1 gap-3">
                   {t.video.items.map((video, i) => (
                     <motion.a 
@@ -941,8 +941,8 @@ export default function MediaPage() {
                       transition={{ duration: 0.4, delay: i * 0.05 }}
                       whileHover={{ x: 4 }}
                     >
-                      <div className="space-y-1 text-blue-50 font-body text-sm md:text-base pr-4">
-                        <p>{video.title}</p>
+                      <div className="space-y-1 text-blue-50 font-body text-sm md:text-base font-semibold pr-4">
+                        <p dangerouslySetInnerHTML={{ __html: video.title }} />
                       </div>
                       <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-red-400 group-hover:text-red-300 shrink-0">
                         {t.video.watch}
@@ -973,6 +973,10 @@ export default function MediaPage() {
           
         html {
           scroll-behavior: smooth;
+        }
+
+        em {
+          font-style: italic;
         }
 
         /* Vintage green-grey photo effect - UNTOUCHED */

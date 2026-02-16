@@ -24,6 +24,7 @@ const CONTENT = {
   en: {
     title: "WORKS",
     enter: "ENTER",
+    skip: "Skip",
     // Words wrapped in ** will be rendered in gray/blue-gray tones
     text: [
       "In her **native country**, the former Yugoslavia—an area formed through **centuries of cultural exchange**—Dijana Bošković came into contact with music of **Slavic**, Western European, **Turkish**, and Hindustani origin.",
@@ -34,6 +35,7 @@ const CONTENT = {
   de: {
     title: "WERKE",
     enter: "EINTRETEN",
+    skip: "Überspringen",
     // German translation preserving the ** highlighting style
     text: [
       "In ihrer **Heimat**, dem ehemaligen Jugoslawien – einer Region, die durch **jahrhundertelangen kulturellen Austausch** geprägt wurde – kam Dijana Bošković mit Musik **slawischen**, westeuropäischen, **türkischen** und hindustanischen Ursprungs in Berührung.",
@@ -242,6 +244,34 @@ export default function CompositionsPage() {
             )}
           </button>
         </div>
+
+        {/* Skip Button - Bottom Right (Only visible during intro video) */}
+        <AnimatePresence>
+          {!videoFinished && (
+            <Link href="/compositions/works">
+              <motion.button
+                initial={{ opacity: 0 }}
+                animate={{ 
+                  opacity: 1,
+                  scale: [1, 1.05, 1]
+                }}
+                exit={{ opacity: 0 }}
+                transition={{ 
+                  opacity: { duration: 0.6, delay: 1 },
+                  scale: { 
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }
+                }}
+                className="fixed bottom-4 right-4 md:bottom-4 md:right-8 z-50 pointer-events-auto text-amber-200/90 hover:text-amber-200 text-base md:text-xl uppercase tracking-wider transition-colors duration-300 cursor-pointer"
+                aria-label="Skip to works"
+              >
+                {t.skip}
+              </motion.button>
+            </Link>
+          )}
+        </AnimatePresence>
 
         {/* Dynamic Header Area */}
         <div className="absolute top-[4rem] md:top-6 left-0 w-full z-40 flex justify-center pointer-events-none">

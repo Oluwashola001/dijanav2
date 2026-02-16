@@ -29,6 +29,7 @@ const CONTENT = {
         works: [
           {
             title: "Duo – Violin & Violoncello",
+            titleItalic: true,
             details: [
               "Suite after Folk Melodies from Serbia, Macedonia and Montenegro (2005)",
               "I. Lament–Dance",
@@ -36,6 +37,7 @@ const CONTENT = {
               "Duration: ca. 10 min",
               "Premiere: Gasteig Cultural Center, Munich (2006)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/suite.mp3",
             youtube: "https://www.youtube.com/watch?v=WvxSkxnr1bQ"
           },
@@ -46,7 +48,7 @@ const CONTENT = {
               "Duration: ca. 10 min",
               "Premiere: German Embassy, Beijing (2024)"
             ],
-            audio: null,
+            audio: "/Music/Trio.mp3",
             youtube: null
           },
           {
@@ -58,7 +60,7 @@ const CONTENT = {
               "Duration: ca. 20 min",
               "Premiere: Künstlerhaus, Munich (2024)"
             ],
-            audio: null,
+            audio: "/Music/Quartet.mp3",
             youtube: null
           },
           {
@@ -404,6 +406,7 @@ const CONTENT = {
         works: [
           {
             title: "Duo – Violine & Violoncello",
+            titleItalic: true,
             details: [
               "Suite nach Volksweisen aus Serbien, Mazedonien und Montenegro (2005)",
               "I. Klage–Tanz",
@@ -411,6 +414,7 @@ const CONTENT = {
               "Dauer: ca. 10 Min.",
               "Uraufführung: Gasteig Kulturzentrum, München (2006)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/suite.mp3",
             youtube: "https://www.youtube.com/watch?v=WvxSkxnr1bQ"
           },
@@ -421,7 +425,7 @@ const CONTENT = {
               "Dauer: ca. 10 Min.",
               "Uraufführung: Deutsche Botschaft, Peking (2024)"
             ],
-            audio: null,
+            audio: "/Music/Trio.mp3",
             youtube: null
           },
           {
@@ -433,7 +437,7 @@ const CONTENT = {
               "Dauer: ca. 20 Min.",
               "Uraufführung: Künstlerhaus, München (2024)"
             ],
-            audio: null,
+            audio: "/Music/Quartet.mp3",
             youtube: null
           },
           {
@@ -865,7 +869,7 @@ function WaveSurferPlayer({ src }: { src: string }) {
       {/* WaveSurfer Container with Skeleton Loader */}
       <div className="flex-1 relative">
         {isLoading && (
-          <div className="absolute inset-0 flex items-center gap-[2px] px-1 animate-pulse">
+          <div className="absolute inset-0 flex items-center gap-0.5 px-1 animate-pulse">
             {Array.from({ length: 70 }).map((_, i) => {
               const heights = [20, 30, 45, 60, 50, 35, 25, 40, 55, 48];
               const height = heights[i % heights.length];
@@ -1151,15 +1155,19 @@ export default function MusicalWorksPage() {
                         viewport={{ once: false }}
                         transition={{ duration: 0.4, delay: idx * 0.05 }}
                       >
-                        {/* Work Title — Playfair Display */}
-                        <h3 className="font-serif text-lg md:text-xl text-amber-100 mb-3 tracking-wide">
+      {/* Work Title — Playfair Display with optional italic */}
+                        <h3 className={`font-serif text-lg md:text-xl text-amber-100 mb-3 tracking-wide ${(work as any).titleItalic ? 'italic' : ''}`}>
                           {work.title}
                         </h3>
                         
-                        {/* Work Details — first line Playfair italic, rest Inter */}
-                        <div className={`space-y-1 text-blue-50 text-xs lg:text-sm ${hasMedia ? 'mb-5' : 'mb-1'} break-words`}>
+                        {/* Work Details — first line Playfair italic with optional larger size, rest Inter */}
+                        <div className={`space-y-1 text-blue-50 text-xs lg:text-sm ${hasMedia ? 'mb-5' : 'mb-1'} wrap-break-word`}>
                           {work.details.map((line, i) => (
-                            <p key={i} className={i === 0 ? 'font-serif italic' : 'font-body'}>
+                            <p 
+                              key={i} 
+                              className={i === 0 ? 'font-serif italic' : 'font-body'}
+                              style={i === 0 && (work as any).firstDetailLarger ? { fontSize: '0.9375rem' } : {}}
+                            >
                               {line}
                             </p>
                           ))}
