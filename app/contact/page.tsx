@@ -32,7 +32,7 @@ const CONTENT = {
       photoTitle: "Photography Credits",
       photoLabel: "Photos by:", // Prefix for the list
       conceptTitle: "Concept & Web Design",
-      conceptNames: "Dijana Boskovic, Thomas Wollenweber",
+      conceptNames: "Dijana Bošković, Thomas Wollenweber",
       conceptEmailLabel: "Email:",
       conceptEmail: "dijanab@freenet.de",
       devTitle: "Development & Technical Implementation",
@@ -60,7 +60,7 @@ const CONTENT = {
       photoTitle: "Bildnachweise",
       photoLabel: "Fotos:", // Prefix for the list
       conceptTitle: "Konzeption & Webdesign",
-      conceptNames: "Dijana Boskovic & Thomas Wollenweber",
+      conceptNames: "Dijana Bošković & Thomas Wollenweber",
       conceptEmailLabel: "E-Mail:",
       conceptEmail: "dijanab@freenet.de",
       devTitle: "Entwicklung & Technische Umsetzung",
@@ -137,13 +137,13 @@ export default function ContactPage() {
           <div className="bg-[#172F4F]/95 backdrop-blur-sm border border-[#47719E] p-6 md:p-12 shadow-2xl space-y-12">
             
             {/* 1. CONTACT INFO */}
-            <div className="space-y-6 text-center md:text-left">
-              <div>
-                <h2 className="text-2xl font-serif text-white tracking-wide mb-2">
+            <div className="space-y-4 text-center md:text-left">
+              <div className="space-y-1">
+                <p className="text-blue-50 font-body text-base md:text-lg">
                   {t.contactInfo.name}
-                </h2>
+                </p>
                 {t.contactInfo.address.map((line, i) => (
-                  <p key={i} className="text-blue-50 font-body text-base md:text-lg leading-relaxed">
+                  <p key={i} className="text-blue-50 font-body text-base md:text-lg">
                     {line}
                   </p>
                 ))}
@@ -152,11 +152,11 @@ export default function ContactPage() {
               <div className="space-y-2">
                 <p className="text-blue-50 font-body text-base md:text-lg">
                   <span className="text-blue-50 font-medium mr-2">{t.contactInfo.mobileLabel}</span>
-                  <span className="text-blue-50">{t.contactInfo.mobile}</span>
+                  <span className="text-amber-200 italic">{t.contactInfo.mobile}</span>
                 </p>
                 <p className="text-blue-50 font-body text-base md:text-lg">
                   <span className="text-blue-50 font-medium mr-2">{t.contactInfo.emailLabel}</span>
-                  <a href={`mailto:${t.contactInfo.email}`} className="text-blue-50/80 hover:text-white transition-colors underline decoration-blue-50/30 underline-offset-4">
+                  <a href={`mailto:${t.contactInfo.email}`} className="text-amber-200 hover:text-amber-300 italic transition-colors underline decoration-amber-200/30 underline-offset-4">
                     {t.contactInfo.email}
                   </a>
                 </p>
@@ -172,7 +172,7 @@ export default function ContactPage() {
                 <h3 className="text-lg font-serif text-amber-200/90 mb-2 uppercase tracking-wider">
                   {t.credits.photoTitle}
                 </h3>
-                <div className="text-blue-50 font-body text-sm leading-relaxed">
+                <div className="text-blue-50 font-body text-base leading-relaxed">
                   <span className="mr-1">{t.credits.photoLabel}</span>
                   {PHOTOGRAPHERS.map((photographer, index) => (
                     <span key={index}>
@@ -181,12 +181,12 @@ export default function ContactPage() {
                           href={photographer.url} 
                           target="_blank" 
                           rel="noopener noreferrer" 
-                          className="text-blue-50/80 hover:text-white transition-colors border-b border-blue-50/20 hover:border-white/50"
+                          className="text-blue-50/80 hover:text-white italic transition-colors border-b border-blue-50/20 hover:border-white/50"
                         >
                           {photographer.name}
                         </a>
                       ) : (
-                        <span className="text-blue-50">{photographer.name}</span>
+                        <span className="text-blue-50 italic">{photographer.name}</span>
                       )}
                       {index < PHOTOGRAPHERS.length - 1 && " · "}
                     </span>
@@ -200,7 +200,7 @@ export default function ContactPage() {
                   <h3 className="text-lg font-serif text-amber-200/90 mb-2 uppercase tracking-wider">
                     {t.credits.conceptTitle}
                   </h3>
-                  <p className="text-blue-50 font-body text-sm leading-relaxed">
+                  <p className="text-blue-50 font-body text-base leading-relaxed">
                     {t.credits.conceptNames}
                   </p>
                   <p className="text-blue-50 font-body text-sm mt-1">
