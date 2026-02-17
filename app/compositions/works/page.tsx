@@ -43,16 +43,19 @@ const CONTENT = {
           },
           {
             title: "String Trio – Violin, Viola, Violoncello",
+            titleItalic: true,
             details: [
               "Con Fretta (2024) – commission by the Munich Philharmonic",
               "Duration: ca. 10 min",
               "Premiere: German Embassy, Beijing (2024)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/Trio.mp3",
             youtube: null
           },
           {
             title: "String Quartet – 2 Violins, Viola, Violoncello",
+            titleItalic: true,
             details: [
               "Memories (2024) – commission by the Munich Philharmonic",
               "I. For My Mother",
@@ -60,21 +63,25 @@ const CONTENT = {
               "Duration: ca. 20 min",
               "Premiere: Künstlerhaus, Munich (2024)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/Quartet.mp3",
             youtube: null
           },
           {
             title: "Piano Trio – Violin, Violoncello, Piano",
+            titleItalic: true,
             details: [
               "Sun Dance from the cycle Light Plays (2015)",
               "Duration: ca. 9 min",
               "Premiere: Alfred Schnittke Academy, Hamburg (2016)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/Website Sundance MP3.mp3",
             youtube: "https://www.youtube.com/watch?v=qzC-frjrHR0"
           },
           {
             title: "Violin & Piano",
+            titleItalic: true,
             details: [
               "Light Plays (2012)",
               "I. Reflections / Darkness",
@@ -82,16 +89,19 @@ const CONTENT = {
               "Duration: ca. 10 min",
               "Premiere: Gasteig Cultural Center, Munich (2013)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/lichtspiele.mp3", 
             youtube: "https://www.youtube.com/watch?v=Mtyn18iBWik"
           },
           {
             title: "Violoncello Solo",
+            titleItalic: true,
             details: [
               "Song of the Flame from Light Plays (2016)",
               "Duration: ca. 7 min",
               "Premiere: Alfred Schnittke Academy, Hamburg (2016)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/Website Singing Flame MP3.mp3",
             youtube: "https://www.youtube.com/watch?v=yWdFsA8GqxQ"
           }
@@ -103,21 +113,25 @@ const CONTENT = {
         works: [
           {
             title: "Two Pianos",
+            titleItalic: true,
             details: [
               "Black and White from Light Plays (2023/24)",
               "Duration: ca. 13 min",
               "Premiere: Theatre Erfurt, Grand Hall (2024)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           },
           {
             title: "Piano & 21 Tibetan Singing Bowls",
+            titleItalic: true,
             details: [
               "No Tinnitus (2011)",
               "Duration: ca. 17 min",
               "Premiere: Gasteig Cultural Center, Munich (2011)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/No Tinnitus Klavier Boskovic.mp3",
             youtube: null
           }
@@ -129,31 +143,37 @@ const CONTENT = {
         works: [
           {
             title: "Flute & Percussion",
+            titleItalic: true,
             details: [
               "Between East and West I (1999)",
               "Duration: ca. 5 min",
               "Premiere: Freies Musikzentrum Munich (1999)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/Website Zwischen Ost und West I MP3.mp3",
             youtube: null
           },
           {
             title: "Solo Flute",
+            titleItalic: true,
             details: [
               "Between East and West II (1999 / rev. 2016)",
               "Duration: ca. 4 min",
               "Premiere: Stadtsaal Kaufbeuren (1999)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           },
           {
             title: "Flute & Organ",
+            titleItalic: true,
             details: [
               "Conversations with Death – Prelude, Quasi una Toccata, Postlude (2014)",
               "Duration: ca. 9 min",
               "Premiere: Altach Organ Soirée (2014)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           }
@@ -165,51 +185,61 @@ const CONTENT = {
         works: [
           {
             title: "Solo Flute",
+            titleItalic: true,
             details: [
               "An Encounter with the Sea (1998)",
               "Duration: ca. 4 min",
               "Premiere: Town Hall, Kaufbeuren (1998)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           },
           {
             title: "Two Flutes",
+            titleItalic: true,
             details: [
               "Catch Me If You Can (2021)",
               "Premiere: Municipal Music School Munich (2022)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           },
           {
             title: "Three Flutes & Acting",
+            titleItalic: true,
             details: [
               "Enchanted Girls (2016)",
               "Duration: ca. 4 min",
               "Premiere: Jugend musiziert Competition, Munich (2017)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           },
           {
             title: "Flute & Piano",
+            titleItalic: true,
             details: [
               "Night Flight (2015)",
               "Dance Monkey (2015)",
               "Premiere: Jugend musiziert Competition (2016)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           },
           {
             title: "Flute & Tape",
+            titleItalic: true,
             details: [
               "Between East and West (2016)",
               "Duration: ca. 7 min",
               "First Prize & Special Award, Jugend musiziert (2017)",
               "Premiere: Carl Orff Hall, Munich"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           }
@@ -221,22 +251,26 @@ const CONTENT = {
         works: [
           {
             title: "Sextet – Flute, Violin, Clarinet, Violoncello, Piano, Percussion",
+            titleItalic: true,
             details: [
               "Versus Vox Integra (2007)",
               "Canticum – Versus – Vox – Integra",
               "Duration: ca. 12 min",
               "Premiere: BEMUS International Music Festival, Belgrade (2007)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/versus II.mp3",
             youtube: "https://www.youtube.com/watch?v=qK4EA-K2VO4"
           },
           {
             title: "Sextet – Piano, 2 Harps, 2 Flutes, Mezzo-Soprano",
+            titleItalic: true,
             details: [
               "Three Pieces after Spiritual Poets (2000/01)",
               "Duration: ca. 10 min",
               "Premiere: Graz Opera House (2001)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           }
@@ -248,19 +282,23 @@ const CONTENT = {
         works: [
           {
             title: "Divertimento (2007/08)",
+            titleItalic: true,
             details: [
               "Duration: ca. 5:30 min",
               "Premiere: Gasteig Cultural Center, Munich (2008)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/divertimento_f_strings.mp3",
             youtube: null
           },
           {
             title: "Concerto for Strings (2008/2009)",
+            titleItalic: true,
             details: [
               "Duration: ca. 15 min",
               "Premiere: Kolarac Hall, Belgrade – BEMUS Festival (2009)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/concerto_f_strings.mp3",
             youtube: null
           }
@@ -272,19 +310,23 @@ const CONTENT = {
         works: [
           {
             title: "One (2017/18) – for symphony orchestra and two archaic instruments",
+            titleItalic: true,
             details: [
               "(one wind and one string instrument from spiritual traditions of the world)",
               "Duration: ca. 17 min",
               "Premiere: Hamburg University of Music and Theatre (2018)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/ONE Orchesterstuck Boskovic.mp3",
             youtube: null
           },
           {
             title: "Danse Archaïque",
+            titleItalic: true,
             details: [
               "Duration: ca. 5 min"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           }
@@ -296,6 +338,7 @@ const CONTENT = {
         works: [
           {
             title: "Voice & Piano",
+            titleItalic: true,
             details: [
               "Two Songs (2004)",
               "I. Consolation",
@@ -304,43 +347,52 @@ const CONTENT = {
               "Versions for mezzo-soprano and soprano",
               "Premiere: Max-Joseph-Saal, Munich Residenz (2004)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/trost.mp3",
             youtube: "https://www.youtube.com/watch?v=Z_2WtxWsMIA"
           },
           {
             title: "It Is So Beautiful… (2015/16) – Concert piece from Transit",
+            titleItalic: true,
             details: [
               "Duration: ca. 6 min",
               "Premiere: Laeiszhalle, Hamburg (2016)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/Es ist so schon.mp3",
             youtube: "https://www.youtube.com/watch?v=tE3DgpMd5B8"
           },
           {
             title: "Multimedia Work",
+            titleItalic: true,
             details: [
               "Transit (2016) – mezzo-soprano, accordion & video",
               "Duration: ca. 9 min",
               "Premiere: Resonanzraum, Hamburg (2016)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           },
           {
             title: "Vocal Ensemble",
+            titleItalic: true,
             details: [
               "Eternal Question (1999/2000) – vocal ensemble & double bass",
               "Duration: ca. 5 min",
               "Premiere: Kunsthaus Kaufbeuren (2000)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           },
           {
             title: "Media Vita – Ātman Aeternus (2025) – for vocal ensemble (SSATTTBB) and 2 horns or natural horns",
+            titleItalic: true,
             details: [
               "A contemplation after Media Vita in Morte sumus and Vedic philosophy"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           }
@@ -352,27 +404,33 @@ const CONTENT = {
         works: [
           {
             title: "Dona nobis pacem – Shanti for mixed choir & percussion",
+            titleItalic: true,
             details: [
               "Duration: ca. 5 min",
               "Premiere: St. Reinoldi Church, Dortmund / Deutschlandradio (2017)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/Chor Dona nobis pacem Shanti Boskovic.mp3",
             youtube: null
           },
           {
             title: "Dona nobis pacem – Shanti for mixed choir",
+            titleItalic: true,
             details: [
               "Duration: ca. 4:30 min"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           },
           {
             title: "Ave Maria / Bogorodice djevo for mixed choir & tenor solo",
+            titleItalic: true,
             details: [
               "Duration: ca. 4:50 min",
               "Premiere: St. Sylvester's Church, Munich (2015)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           }
@@ -420,16 +478,19 @@ const CONTENT = {
           },
           {
             title: "Streichtrio – Violine, Viola, Violoncello",
+            titleItalic: true,
             details: [
               "Con Fretta (2024) – Auftragswerk der Münchner Philharmoniker",
               "Dauer: ca. 10 Min.",
               "Uraufführung: Deutsche Botschaft, Peking (2024)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/Trio.mp3",
             youtube: null
           },
           {
             title: "Streichquartett – 2 Violinen, Viola, Violoncello",
+            titleItalic: true,
             details: [
               "Memories (2024) – Auftragswerk der Münchner Philharmoniker",
               "I. For My Mother",
@@ -437,21 +498,25 @@ const CONTENT = {
               "Dauer: ca. 20 Min.",
               "Uraufführung: Künstlerhaus, München (2024)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/Quartet.mp3",
             youtube: null
           },
           {
             title: "Klaviertrio – Violine, Violoncello, Klavier",
+            titleItalic: true,
             details: [
               "Sonnentanz aus dem Zyklus Lichtspiele (2015)",
               "Dauer: ca. 9 Min.",
               "Uraufführung: Alfred-Schnittke-Akademie, Hamburg (2016)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/Website Sundance MP3.mp3",
             youtube: "https://www.youtube.com/watch?v=qzC-frjrHR0"
           },
           {
             title: "Violine & Klavier",
+            titleItalic: true,
             details: [
               "Lichtspiele (2012)",
               "I. Reflexionen / Dunkelheit",
@@ -459,16 +524,19 @@ const CONTENT = {
               "Dauer: ca. 10 Min.",
               "Uraufführung: Gasteig Kulturzentrum, München (2013)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/lichtspiele.mp3", 
             youtube: "https://www.youtube.com/watch?v=Mtyn18iBWik"
           },
           {
             title: "Violoncello Solo",
+            titleItalic: true,
             details: [
               "Lied der Flamme aus Lichtspiele (2016)",
               "Dauer: ca. 7 Min.",
               "Uraufführung: Alfred-Schnittke-Akademie, Hamburg (2016)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/Website Singing Flame MP3.mp3",
             youtube: "https://www.youtube.com/watch?v=yWdFsA8GqxQ"
           }
@@ -480,21 +548,25 @@ const CONTENT = {
         works: [
           {
             title: "Zwei Klaviere",
+            titleItalic: true,
             details: [
               "Schwarz und Weiß aus Lichtspiele (2023/24)",
               "Dauer: ca. 13 Min.",
               "Uraufführung: Theater Erfurt, Großes Haus (2024)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           },
           {
             title: "Klavier & 21 tibetische Klangschalen",
+            titleItalic: true,
             details: [
               "No Tinnitus (2011)",
               "Dauer: ca. 17 Min.",
               "Uraufführung: Gasteig Kulturzentrum, München (2011)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/No Tinnitus Klavier Boskovic.mp3",
             youtube: null
           }
@@ -506,31 +578,37 @@ const CONTENT = {
         works: [
           {
             title: "Flöte & Schlagwerk",
+            titleItalic: true,
             details: [
               "Zwischen Ost und West I (1999)",
               "Dauer: ca. 5 Min.",
               "Uraufführung: Freies Musikzentrum München (1999)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/Website Zwischen Ost und West I MP3.mp3",
             youtube: null
           },
           {
             title: "Flöte solo",
+            titleItalic: true,
             details: [
               "Zwischen Ost und West II (1999 / rev. 2016)",
               "Dauer: ca. 4 Min.",
               "Uraufführung: Stadtsaal Kaufbeuren (1999)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           },
           {
             title: "Flöte & Orgel",
+            titleItalic: true,
             details: [
               "Gespräche mit dem Tod – Präludium, Quasi una Toccata, Postludium (2014)",
               "Dauer: ca. 9 Min.",
               "Uraufführung: Altacher Orgelsoirée (2014)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           }
@@ -542,51 +620,61 @@ const CONTENT = {
         works: [
           {
             title: "Flöte solo",
+            titleItalic: true,
             details: [
               "Begegnung mit dem Meer (1998)",
               "Dauer: ca. 4 Min.",
               "Uraufführung: Rathaussaal, Kaufbeuren (1998)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           },
           {
             title: "Zwei Flöten",
+            titleItalic: true,
             details: [
               "Catch Me If You Can (2021)",
               "Uraufführung: Städtische Sing- und Musikschule München (2022)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           },
           {
             title: "Drei Flöten & Schauspiel",
+            titleItalic: true,
             details: [
               "Verzauberte Mädchen (2016)",
               "Dauer: ca. 4 Min.",
               "Uraufführung: Jugend musiziert Wettbewerb, München (2017)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           },
           {
             title: "Flöte & Klavier",
+            titleItalic: true,
             details: [
               "Night Flight (2015)",
               "Dance Monkey (2015)",
               "Uraufführung: Jugend musiziert Wettbewerb (2016)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           },
           {
             title: "Flöte & Zuspielung (Tape)",
+            titleItalic: true,
             details: [
               "Zwischen Ost und West (2016)",
               "Dauer: ca. 7 Min.",
               "Erster Preis & Sonderpreis, Jugend musiziert (2017)",
               "Uraufführung: Carl-Orff-Saal, München"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           }
@@ -598,22 +686,26 @@ const CONTENT = {
         works: [
           {
             title: "Sextett – Flöte, Violine, Klarinette, Violoncello, Klavier, Schlagwerk",
+            titleItalic: true,
             details: [
               "Versus Vox Integra (2007)",
               "Canticum – Versus – Vox – Integra",
               "Dauer: ca. 12 Min.",
               "Uraufführung: BEMUS International Music Festival, Belgrad (2007)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/versus II.mp3",
             youtube: "https://www.youtube.com/watch?v=qK4EA-K2VO4"
           },
           {
             title: "Sextett – Klavier, 2 Harfen, 2 Flöten, Mezzosopran",
+            titleItalic: true,
             details: [
               "Drei Stücke nach spirituellen Dichtern (2000/01)",
               "Dauer: ca. 10 Min.",
               "Uraufführung: Opernhaus Graz (2001)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           }
@@ -625,19 +717,23 @@ const CONTENT = {
         works: [
           {
             title: "Divertimento (2007/08)",
+            titleItalic: true,
             details: [
               "Dauer: ca. 5:30 Min.",
               "Uraufführung: Gasteig Kulturzentrum, München (2008)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/divertimento_f_strings.mp3",
             youtube: null
           },
           {
             title: "Concerto for Strings (2008/2009)",
+            titleItalic: true,
             details: [
               "Dauer: ca. 15 Min.",
               "Uraufführung: Kolarac-Saal, Belgrad – BEMUS Festival (2009)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/concerto_f_strings.mp3",
             youtube: null
           }
@@ -649,19 +745,23 @@ const CONTENT = {
         works: [
           {
             title: "One (2017/18) – für Sinfonieorchester und zwei archaische Instrumente",
+            titleItalic: true,
             details: [
               "(ein Blas- und ein Saiteninstrument aus spirituellen Traditionen der Welt)",
               "Dauer: ca. 17 Min.",
               "Uraufführung: Hochschule für Musik und Theater Hamburg (2018)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/ONE Orchesterstuck Boskovic.mp3",
             youtube: null
           },
           {
             title: "Danse Archaïque",
+            titleItalic: true,
             details: [
               "Dauer: ca. 5 Min."
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           }
@@ -673,6 +773,7 @@ const CONTENT = {
         works: [
           {
             title: "Gesang & Klavier",
+            titleItalic: true,
             details: [
               "Zwei Lieder (2004)",
               "I. Trost",
@@ -681,43 +782,52 @@ const CONTENT = {
               "Fassungen für Mezzosopran und Sopran",
               "Uraufführung: Max-Joseph-Saal, Münchner Residenz (2004)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/trost.mp3",
             youtube: "https://www.youtube.com/watch?v=Z_2WtxWsMIA"
           },
           {
             title: "Es ist so schön… (2015/16) – Konzertstück aus Transit",
+            titleItalic: true,
             details: [
               "Dauer: ca. 6 Min.",
               "Uraufführung: Laeiszhalle, Hamburg (2016)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/Es ist so schon.mp3",
             youtube: "https://www.youtube.com/watch?v=tE3DgpMd5B8"
           },
           {
             title: "Multimedia-Werk",
+            titleItalic: true,
             details: [
               "Transit (2016) – Mezzosopran, Akkordeon & Video",
               "Dauer: ca. 9 Min.",
               "Uraufführung: Resonanzraum, Hamburg (2016)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           },
           {
             title: "Vokalensemble",
+            titleItalic: true,
             details: [
               "Ewige Frage (1999/2000) – Vokalensemble & Kontrabass",
               "Dauer: ca. 5 Min.",
               "Uraufführung: Kunsthaus Kaufbeuren (2000)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           },
           {
             title: "Media Vita – Ātman Aeternus (2025) – für Vokalensemble (SSATTTBB) und 2 Hörner oder Naturhörner",
+            titleItalic: true,
             details: [
               "Eine Kontemplation nach Media Vita in Morte sumus und vedischer Philosophie"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           }
@@ -729,27 +839,33 @@ const CONTENT = {
         works: [
           {
             title: "Dona nobis pacem – Shanti für gemischten Chor & Schlagwerk",
+            titleItalic: true,
             details: [
               "Dauer: ca. 5 Min.",
               "Uraufführung: St. Reinoldi-Kirche, Dortmund / Deutschlandradio (2017)"
             ],
+            firstDetailLarger: true,
             audio: "/Music/Chor Dona nobis pacem Shanti Boskovic.mp3",
             youtube: null
           },
           {
             title: "Dona nobis pacem – Shanti für gemischten Chor",
+            titleItalic: true,
             details: [
               "Dauer: ca. 4:30 Min."
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           },
           {
             title: "Ave Maria / Bogorodice djevo für gemischten Chor & Tenorsolo",
+            titleItalic: true,
             details: [
               "Dauer: ca. 4:50 Min.",
               "Uraufführung: St. Sylvester Kirche, München (2015)"
             ],
+            firstDetailLarger: true,
             audio: null,
             youtube: null
           }
@@ -802,7 +918,7 @@ function WaveSurferPlayer({ src }: { src: string }) {
       wavesurfer.on('ready', handleReady);
       wavesurfer.on('decode', handleCanPlay);
       
-      const timeout = setTimeout(() => setIsLoading(false), 5000);
+      const timeout = setTimeout(() => setIsLoading(false), 10000);
       
       return () => {
         wavesurfer.un('ready', handleReady);
@@ -990,7 +1106,7 @@ export default function MusicalWorksPage() {
   // 3. Get Current Content
   const t = CONTENT[language];
   // Triple the navigation items for infinite scroll effect
-  const tripledNavigationItems = [...t.nav, ...t.nav, ...t.nav];
+  const tripledNavigationItems = [...t.nav];
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -1155,7 +1271,7 @@ export default function MusicalWorksPage() {
                         viewport={{ once: false }}
                         transition={{ duration: 0.4, delay: idx * 0.05 }}
                       >
-      {/* Work Title — Playfair Display with optional italic */}
+                        {/* Work Title — Playfair Display with optional italic */}
                         <h3 className={`font-serif text-lg md:text-xl text-amber-100 mb-3 tracking-wide ${(work as any).titleItalic ? 'italic' : ''}`}>
                           {work.title}
                         </h3>

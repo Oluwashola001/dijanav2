@@ -16,7 +16,7 @@ const CONTENT = {
       { label: 'NEWS', href: '/news' },
       { label: 'COMPOSITION', href: '/compositions' },
       { label: 'MEDIA', href: '/media' },
-      { label: 'DISCOGRAPHY', href: '#' },
+      { label: 'DISCOGRAPHY', href: '/discography' },
       { label: 'PRESS', href: '/press' },
       { label: 'VERSUS VOX ENSEMBLE', href: '#' },
       { label: 'TEACHING', href: '#' },
@@ -28,9 +28,9 @@ const CONTENT = {
       { label: 'Startseite', href: '/' },
       { label: 'Über mich', href: '/about' },
       { label: 'Aktuell', href: '/news' },
-      { label: 'Komposition', href: '/compositions' },
+      { label: 'Werke', href: '/compositions' },
       { label: 'Medien', href: '/media' },
-      { label: 'Diskografie', href: '#' },
+      { label: 'Diskografie', href: '/discography' },
       { label: 'Presse', href: '/press' },
       { label: 'Versus Vox Ensemble', href: '#' },
       { label: 'Unterricht', href: '#' },
@@ -63,7 +63,7 @@ export default function Navbar() {
   }
 
   // Determine if we're on the news page for glassmorphism styling
-  const isNewsPage = pathname === '/news';
+  const isNewsPage = pathname === '/news' || pathname === '/discography';
   const headerBg = isNewsPage 
     ? 'md:bg-[#506070]/60 md:backdrop-blur-md md:border-b md:border-white/20' 
     : 'md:bg-[#172F4F]';
@@ -86,9 +86,10 @@ export default function Navbar() {
                 ${link.href === '#' ? 'text-white/90 cursor-not-allowed' : 'text-white/90 hover:text-white'}`}
               style={{ 
                 fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif",
-                fontSize: '14px',
+                fontSize: '15px',
                 fontWeight: 600,
-                letterSpacing: '0.22em',
+                letterSpacing: '0.18em',
+                wordSpacing: '0.12em',
                 lineHeight: 1
               }}
               onClick={(e) => {
@@ -128,7 +129,8 @@ export default function Navbar() {
                 fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif",
                 fontSize: '14px',
                 fontWeight: 600,
-                letterSpacing: '0.22em',
+                letterSpacing: '0.18em',
+                wordSpacing: '0.12em',
                 lineHeight: 1
               }}
               onClick={(e) => {

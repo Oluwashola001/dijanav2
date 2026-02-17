@@ -451,7 +451,6 @@ function HeroVideo({ startPlaying, language, isVideoMuted }: {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
 
   // Get dynamic blocks based on language
   const overlayBlocks = getOverlayBlocks(language);
@@ -464,27 +463,8 @@ function HeroVideo({ startPlaying, language, isVideoMuted }: {
     const bioSection = document.getElementById('bio-section');
     if (bioSection) {
       bioSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setShowScrollIndicator(false);
     }
   };
-  
-  // Track scroll position to hide indicator when past hero section
-  useEffect(() => {
-    const handleScroll = () => {
-      const heroHeight = window.innerHeight;
-      const scrollY = window.scrollY;
-      
-      // Hide indicator if scrolled past 30% of hero section
-      if (scrollY > heroHeight * 0.3) {
-        setShowScrollIndicator(false);
-      } else {
-        setShowScrollIndicator(true);
-      }
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -608,57 +588,93 @@ function HeroVideo({ startPlaying, language, isVideoMuted }: {
           />
         )}
       </AnimatePresence>
-
-      {/* SCROLL INDICATOR BUTTON - Bottom Right */}
-      <AnimatePresence>
-        {showScrollIndicator && (
-          <motion.button
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ 
-              opacity: 1, 
-              y: 0,
-            }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            onClick={scrollToBio}
-            className="absolute bottom-4 right-2 md:bottom-12 md:right-12 z-30 flex flex-row items-end gap-1 cursor-pointer group"
-            aria-label="Scroll to biography"
-          >
-            <span className="text-white/70 group-hover:text-amber-200/90 text-sm md:text-base uppercase tracking-wider transition-colors duration-300">
-              {scrollText}
-            </span>
-            <motion.div
-              animate={{ 
-                y: [0, 8, 0],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              className="text-amber-200/90 group-hover:text-amber-200 transition-colors duration-300 mb-[2px]"
-            >
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                width="28" 
-                height="28" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
-              >
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <polyline points="19 12 12 19 5 12"></polyline>
-              </svg>
-            </motion.div>
-          </motion.button>
-        )}
-      </AnimatePresence>
     </div>
   );
 }
+
+// ─── FIXED SCROLL INDICATOR ──────────────────────────────────────────────────
+// Sits in a fixed position (bottom-right) regardless of screen size.
+// Fades out gradually as the user scrolls, and is fully hidden once they
+// scroll past the hero section (100vh).
+function FixedScrollIndicator({ language }: { language: Language }) {
+  const [opacity, setOpacity] = useState(1);
+  const [visible, setVisible] = useState(true);
+
+  const scrollText = CONTENT[language].scrollIndicator;
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroHeight = window.innerHeight;
+      const scrollY = window.scrollY;
+
+      if (scrollY >= heroHeight) {
+        // Fully past the hero – hide completely
+        setVisible(false);
+        setOpacity(0);
+      } else {
+        setVisible(true);
+        // Fade starts at 20% of hero height, fully gone at 100%
+        const fadeStart = heroHeight * 0.2;
+        if (scrollY <= fadeStart) {
+          setOpacity(1);
+        } else {
+          const fadeProgress = (scrollY - fadeStart) / (heroHeight - fadeStart);
+          setOpacity(Math.max(0, 1 - fadeProgress));
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToBio = () => {
+    const bioSection = document.getElementById('bio-section');
+    if (bioSection) {
+      bioSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  if (!visible) return null;
+
+  return (
+    <div
+      className="fixed bottom-4 right-2 md:bottom-4 md:right-4 z-[100] pointer-events-auto"
+      style={{ opacity, transition: 'opacity 0.1s linear' }}
+    >
+      <button
+        onClick={scrollToBio}
+        className="flex flex-row items-end gap-1 cursor-pointer group"
+        aria-label="Scroll to biography"
+      >
+        <span className="text-white/70 group-hover:text-amber-200/90 text-sm md:text-base uppercase tracking-wider transition-colors duration-300">
+          {scrollText}
+        </span>
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="text-amber-200/90 group-hover:text-amber-200 transition-colors duration-300 mb-[2px]"
+        >
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            width="28" 
+            height="28" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="2" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+          >
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <polyline points="19 12 12 19 5 12"></polyline>
+          </svg>
+        </motion.div>
+      </button>
+    </div>
+  );
+}
+// ─────────────────────────────────────────────────────────────────────────────
 
 // Animated Paragraph Component - Cinematic subtle reveal
 function AnimatedParagraph({ 
@@ -885,6 +901,9 @@ export default function HomePage() {
           )}
         </button>
       </div>
+
+      {/* FIXED SCROLL INDICATOR - always bottom-right, fades with scroll */}
+      <FixedScrollIndicator language={language} />
       
       <AnimatePresence>
         {!splashFinished && <SplashScreen onComplete={() => setSplashFinished(true)} language={language} />}

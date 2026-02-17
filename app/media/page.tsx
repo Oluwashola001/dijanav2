@@ -97,7 +97,7 @@ const CONTENT = {
               header: "Bogojevich",
               items: [
                 {
-                  performers: ["<em>Emigrée's Waltz</em>"],
+                  performers: ["from the sextet <em>Emigrée’s Waltz</em>"],
                   file: "/Music/bogojevich-emigree.mp3"
                 }
               ]
@@ -139,7 +139,7 @@ const CONTENT = {
       intro: {
         title: "Aufnahmen von Werken Dijana Boškovićs",
         textPart1: "Tonaufnahmen von Werken Boškovićs finden Sie auf der Seite ",
-        linkText: "Werke",
+        linkText: "WERKE",
         textPart2: "."
       },
       sections: [
@@ -208,7 +208,7 @@ const CONTENT = {
               header: "Bogojevich",
               items: [
                 {
-                  performers: ["<em>Emigrée's Waltz</em>"],
+                  performers: ["aus dem Sextett <em>Emigrée´s Waltz</em>"],
                   file: "/Music/bogojevich-emigree.mp3"
                 }
               ]
@@ -855,7 +855,7 @@ export default function MediaPage() {
                  
                 {/* Intro Link - NO LEFT BORDER, LARGER TEXT */}
                 <div className="bg-[#0a1625]/30 p-5 md:p-6">
-                  <h3 className="text-2xl md:text-3xl font-serif italic text-white mb-3">{t.audio.intro.title}</h3>
+                  <h3 className="text-2xl md:text-3xl font-serif tracking-wide text-white mb-3">{t.audio.intro.title}</h3>
                   <p className="text-blue-50 font-body text-base md:text-lg leading-relaxed">
                     {t.audio.intro.textPart1}
                     <Link href="/compositions/works" className="text-amber-200 hover:text-white underline decoration-1 underline-offset-4 transition-colors font-bold">

@@ -63,7 +63,7 @@ export default function Footer() {
   }
 
   // Determine if we're on the news page for glassmorphism styling
-  const isNewsPage = pathname === '/news';
+  const isNewsPage = pathname === '/news' || pathname === '/discography';
   const footerBg = isNewsPage 
     ? 'bg-[rgba(80,96,112,0.6)] backdrop-blur-md border-t border-white/20' 
     : 'bg-[#172F4F] border-t border-white/20';
@@ -92,7 +92,7 @@ export default function Footer() {
               {t.contact}
             </h3>
             <div 
-              className="text-white/75 leading-relaxed space-y-2"
+              className="text-white/75 leading-relaxed"
               style={{
                 fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif",
                 fontSize: '13px',
@@ -103,7 +103,7 @@ export default function Footer() {
             >
               <p>Dijana Bošković</p>
               <p>Sibeliusstr. 25<br />81245 München</p>
-              <p className="pt-2 italic">
+              <p className="mt-3 italic">
                 Mobile: <a href="tel:+491734724882" className="hover:text-amber-200 transition-colors">+49 173 4724882</a>
               </p>
               <p className="italic">
@@ -142,9 +142,9 @@ export default function Footer() {
                 <Link href="/" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{language === 'en' ? 'Home' : 'Startseite'}</Link>
                 <Link href="/about" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.bio}</Link>
                 <Link href="/news" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.news}</Link>
-                <Link href="/compositions" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.compositions}</Link>
+                <Link href="/compositions/works" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.compositions}</Link>
                 <Link href="/media" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.media}</Link>
-                <span className="text-amber-300 cursor-not-allowed uppercase opacity-60">{language === 'en' ? 'Discography' : 'Diskografie'}</span>
+                <Link href="/discography" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{language === 'en' ? 'Discography' : 'Diskografie'}</Link>
               </div>
               {/* Right Column - Last 4 items */}
               <div className="flex flex-col space-y-2">
@@ -168,9 +168,9 @@ export default function Footer() {
               <Link href="/" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{language === 'en' ? 'Home' : 'Startseite'}</Link>
               <Link href="/about" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.bio}</Link>
               <Link href="/news" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.news}</Link>
-              <Link href="/compositions" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.compositions}</Link>
+              <Link href="/compositions/works" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.compositions}</Link>
               <Link href="/media" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.media}</Link>
-              <span className="text-amber-300 cursor-not-allowed uppercase opacity-60">{language === 'en' ? 'Discography' : 'Diskografie'}</span>
+              <Link href="/discography" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{language === 'en' ? 'Discography' : 'Diskografie'}</Link>
               <Link href="/press" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.press}</Link>
               <span className="text-amber-300 cursor-not-allowed uppercase opacity-60">{language === 'en' ? 'Versus Vox Ensemble' : 'Versus Vox Ensemble'}</span>
               <span className="text-amber-300 cursor-not-allowed uppercase opacity-60">{language === 'en' ? 'Teaching' : 'Unterricht'}</span>

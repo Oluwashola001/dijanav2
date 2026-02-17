@@ -5,7 +5,19 @@ import { useEffect, useState, useRef } from 'react';
 
 type Language = 'en' | 'de';
 
-// --- TRANSLATION CONTENT ---
+interface Album {
+  title: string;
+  subtitle: string | null;
+  description: string[];
+  performersTitle: string;
+  performers: string[];
+  credits: string | null;
+  duration: string | null;
+  production: string | null;
+  coverImage: string | null;
+  tracks?: string | null;
+}
+
 const CONTENT = {
   en: {
     pageTitle: "Discography",
@@ -19,6 +31,7 @@ const CONTENT = {
             "As flautist and artistic director of the Versus Vox Ensemble, Dijana Bošković presents her own compositions on this recording. Classical and unconventional instrumentations — including voice and a large concert singing-bowl ensemble in dialogue with piano — open a wide spectrum of sonic colours and musical ideas.",
             "Her music unites tradition with impulses from the European avant-garde, shaping a distinctive musical language that is both contemporary and deeply rooted."
           ],
+          tracks: null,
           performersTitle: "Performers – Versus Vox Ensemble",
           performers: [
             "Dijana Bošković — composition, flute, singing bowls",
@@ -43,6 +56,7 @@ const CONTENT = {
           description: [
             "On the ensemble plus CD, recorded at ORF Vorarlberg, Dijana Bošković's Suite for Violin and Cello is featured. For twenty years, the ensemble has focused on contemporary compositions and rarely performed works, performing in flexible instrumental settings. This recording showcases the composition within the ensemble's long-standing creative work."
           ],
+          tracks: null,
           performersTitle: "Performers",
           performers: [
             "Doren Dinglinger — violin",
@@ -51,9 +65,9 @@ const CONTENT = {
           credits: null,
           duration: "Duration: 3‑CD box",
           production: "Produced by ORF V, 2016",
-          coverImage: "/images/discography/ensemble-plus.webp"
+          coverImage: "/images/discography/ensemble_plus.webp"
         }
-      ]
+      ] as Album[]
     },
     section2: {
       title: "Productions with Dijana Bošković as Flautist",
@@ -66,7 +80,7 @@ const CONTENT = {
             "Modern jazz with refined arrangements and rich sonic colours by bassist Paulo Cardoso and his band.",
             "\"I heard Dijana Bošković at a classical concert at the Gasteig in 1999. I approached her and asked whether she would be interested in improvising duo recordings with me. We did one rehearsal and entered the studio three weeks later. The duets serve as interludes between the pieces, helping to connect and shape the different musical moods.\""
           ],
-          tracks: "Tracks include: Intermezzo I–III, Faces, TGTT, Waltz Boogie, So Many Stars, A Nightingale Sang in Berkeley Square, Lush Life",
+          tracks: "Intermezzo I–III, Faces, TGTT, Waltz Boogie, So Many Stars, A Nightingale Sang in Berkeley Square, Lush Life",
           performersTitle: "Performers",
           performers: [
             "Paulo Cardoso — bass, vocals",
@@ -119,7 +133,6 @@ const CONTENT = {
             "Clara Dent — oboe",
             "Bettina Koziol — vocals",
             "Jochen Striebeck — speaker",
-            "",
             "Orchestra: Orchestra Di Medici"
           ],
           credits: null,
@@ -133,10 +146,7 @@ const CONTENT = {
           description: [
             "Mini-opera for children (ages 6+) and curious adults.",
             "What can Gil Gama's mouse do against mythological creatures such as the Sphinx, the Minotaur, the Aspis snake, or the Chimera? Much more than expected.",
-            "",
-            "Author: Rudolf Herfurtner",
-            "Music: Helga Pogatschar",
-            "Musical direction: Dijana Bošković"
+            "Author: Rudolf Herfurtner | Music: Helga Pogatschar | Musical direction: Dijana Bošković"
           ],
           tracks: null,
           performersTitle: "Performers",
@@ -170,7 +180,7 @@ const CONTENT = {
           production: "Produced 2008 by Cavalli-Records",
           coverImage: "/images/discography/landscape.webp"
         }
-      ]
+      ] as Album[]
     }
   },
   de: {
@@ -185,6 +195,7 @@ const CONTENT = {
             "Als Flötistin und künstlerische Leiterin des Versus Vox Ensembles präsentiert Dijana Bošković auf dieser CD ihre Werke. Klassische und ungewöhnliche Besetzungen – z. B. Stimme oder das große Konzertklangschalen-Ensemble in Verbindung mit Klavier – zeigen ein breites Spektrum an musikalischen Ideen und Klangkombinationen.",
             "Dijana Boškovićs Musik verbindet Traditionelles mit den Ideen der europäischen Avantgarde zu einer neuen, naturhaft verwurzelten musikalischen Sprache."
           ],
+          tracks: null,
           performersTitle: "Versus Vox Ensemble",
           performers: [
             "Dijana Bošković: Komposition, Querflöte, Klangschalen",
@@ -207,6 +218,7 @@ const CONTENT = {
           description: [
             "Auf der CD des ensemble plus, aufgenommen im ORF Vorarlberg, ist Suite für Violine und Cello von Dijana Bošković zu hören. Das Ensemble widmet sich seit zwanzig Jahren zeitgenössischen Kompositionen und selten gespielten Werken, flexibel in verschiedenen Besetzungen. Die Aufnahme präsentiert die Komposition im kreativen Kontext der langjährigen Arbeit des Ensembles."
           ],
+          tracks: null,
           performersTitle: "Performer",
           performers: [
             "Doren Dinglinger: Violine",
@@ -217,7 +229,7 @@ const CONTENT = {
           production: "Produced by ORF V, 2016",
           coverImage: "/images/discography/ensemble-plus.webp"
         }
-      ]
+      ] as Album[]
     },
     section2: {
       title: "Produktionen mit Dijana Bošković als Flötistin",
@@ -230,7 +242,7 @@ const CONTENT = {
             "Modern Jazz mit feinen Arrangements und klanglicher Vielfalt durch Bassist Paulo Cardoso und seine Band.",
             "\"Ich hörte Dijana Bošković 1999 bei einem klassischen Konzert im Gasteig. Ich sprach sie an und fragte, ob sie Interesse hätte, Duo-Aufnahmen mit mir zu improvisieren. Wir machten eine Probe und gingen drei Wochen später ins Studio. Die Duette dienen als Zwischenspiele zwischen den Stücken; sie verbinden und formen die unterschiedlichen musikalischen Stimmungen.\""
           ],
-          tracks: "Tracks: Intermezzo I–III, Faces, TGTT, Waltz Boogie, So Many Stars, A Nightingale Sang in Berkeley Square, Lush Life",
+          tracks: "Intermezzo I–III, Faces, TGTT, Waltz Boogie, So Many Stars, A Nightingale Sang in Berkeley Square, Lush Life",
           performersTitle: "Performer",
           performers: [
             "Paulo Cardoso: Bass, Gesang",
@@ -281,7 +293,6 @@ const CONTENT = {
             "Clara Dent: Oboe",
             "Bettina Koziol: Gesang",
             "Sprecher: Jochen Striebeck",
-            "",
             "Orchester: Orchestra Di Medici"
           ],
           credits: null,
@@ -295,10 +306,7 @@ const CONTENT = {
           description: [
             "Mini-Oper für Kinder ab 6 Jahren und für Neugierige aller Altersgruppen.",
             "Was kann die Maus Gil Gamaus gegen mythologische Fabelwesen wie Sphinx, Minotauros, die Aspis-Schlange oder Chimäre ausrichten? Mehr als erwartet.",
-            "",
-            "Autor: Rudolf Herfurtner",
-            "Musik: Helga Pogatschar",
-            "Musikalische Leitung: Dijana Bošković"
+            "Autor: Rudolf Herfurtner | Musik: Helga Pogatschar | Musikalische Leitung: Dijana Bošković"
           ],
           tracks: null,
           performersTitle: "Performer",
@@ -332,262 +340,208 @@ const CONTENT = {
           production: "Produced 2008 by Cavalli-Records",
           coverImage: "/images/discography/landscape.webp"
         }
-      ]
+      ] as Album[]
     }
   }
 };
 
-// --- SCROLL REVEAL COMPONENT ---
+// --- SCROLL REVEAL ---
 function ScrollReveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, margin: "-100px" });
-
+  const isInView = useInView(ref, { once: false, margin: "-80px" });
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 1, y: 0 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-      transition={{ duration: 0.6, delay, ease: "easeOut" }}
+      initial={{ opacity: 0, y: 24 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+      transition={{ duration: 0.55, delay, ease: "easeOut" }}
     >
       {children}
     </motion.div>
   );
 }
 
+// --- ALBUM CARD ---
+function AlbumCard({ album }: { album: Album }) {
+  const half = Math.ceil(album.performers.length / 2);
+  const leftPerformers = album.performers.slice(0, half);
+  const rightPerformers = album.performers.slice(half);
+
+  return (
+    <div className="bg-[#2D2D2D] border border-[#CCC] p-6 md:p-8 space-y-5">
+
+      {/* Title + subtitle — centered */}
+      <div className="text-center space-y-1">
+        {/* CHANGED: album title → text-2xl mobile, text-3xl desktop */}
+        <h3 className="text-2xl md:text-3xl font-semibold uppercase tracking-widest text-amber-200">
+          {album.title}
+        </h3>
+        {album.subtitle && (
+          /* CHANGED: subtitle → text-lg mobile, text-xl desktop */
+          <p className="text-lg md:text-xl text-white/80 italic">{album.subtitle}</p>
+        )}
+      </div>
+
+      {/* Divider */}
+      <div className="h-px w-full bg-white/20" />
+
+      {/* Description — full width */}
+      <div className="space-y-3 text-blue-50 text-sm md:text-base leading-relaxed">
+        {album.description.map((p: string, i: number) => (
+          <p key={i} className={p.startsWith('"') ? 'italic' : ''}>{p}</p>
+        ))}
+      </div>
+
+      {/* Tracks */}
+      {album.tracks && (
+        <p className="text-blue-50 text-sm md:text-base leading-relaxed">
+          <span className="font-semibold">Tracks: </span>
+          <span className="italic">{album.tracks}</span>
+        </p>
+      )}
+
+      {/* Cover Image — LEFT aligned */}
+      {album.coverImage && (
+        <div className="flex justify-start">
+          <img
+            src={album.coverImage}
+            alt={album.title}
+            className="max-w-[260px] w-auto h-auto object-contain"
+          />
+        </div>
+      )}
+
+      {/* Divider */}
+      <div className="h-px w-full bg-white/20" />
+
+      {/* Performers title — CHANGED: text-amber-200 instead of text-white */}
+      <p className="text-amber-200 font-semibold text-sm md:text-base">
+        {album.performersTitle}
+      </p>
+
+      {/* Two-column performers */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-0.5">
+        <div className="space-y-0.5 text-blue-50 text-xs md:text-sm">
+          {leftPerformers.map((p: string, i: number) => (
+            <p key={i}>{p}</p>
+          ))}
+        </div>
+        {rightPerformers.length > 0 && (
+          <div className="space-y-0.5 text-blue-50 text-xs md:text-sm">
+            {rightPerformers.map((p: string, i: number) => (
+              <p key={i}>{p}</p>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Credits */}
+      {album.credits && (
+        <p className="text-blue-50 text-xs md:text-sm italic">{album.credits}</p>
+      )}
+
+      {/* Duration & Production */}
+      <div className="text-blue-50 text-xs md:text-sm italic space-y-0.5">
+        {album.duration && <p>{album.duration}</p>}
+        {album.production && <p>{album.production}</p>}
+      </div>
+
+    </div>
+  );
+}
+
+// --- MAIN PAGE ---
 export default function DiscographyPage() {
   const [language, setLanguage] = useState<Language>('en');
 
   useEffect(() => {
     const savedLang = localStorage.getItem('siteLanguage') as Language;
-    if (savedLang === 'en' || savedLang === 'de') {
-      setLanguage(savedLang);
-    }
-
-    document.documentElement.style.scrollBehavior = 'smooth';
-    return () => {
-      document.documentElement.style.scrollBehavior = '';
-    };
+    if (savedLang === 'en' || savedLang === 'de') setLanguage(savedLang);
   }, []);
 
-  const currentContent = CONTENT[language];
+  const c = CONTENT[language];
 
   return (
-    <main className="w-full min-h-screen bg-transparent text-white selection:bg-[#ff6643] selection:text-white relative">
-      
-      {/* BACKGROUND IMAGE */}
-      <div 
-        className="absolute top-0 left-0 w-full min-h-full z-0 bg-cover bg-center bg-no-repeat"
-        style={{ 
-            backgroundImage: "url('/images/discography/bg_schwarz1.webp')",
-            minHeight: '100%',
+    <main
+      className="w-full min-h-screen text-white relative"
+      style={{
+        /* CHANGED: background image only on md+ screens via inline style removed;
+           handled via Tailwind-compatible approach below using a wrapper */
+        backgroundColor: '#575757',
+      }}
+    >
+      {/* Background image — desktop only (md and above) */}
+      <div
+        className="hidden md:block absolute inset-0 z-0"
+        style={{
+          backgroundImage: "url('/images/discography/bg_schwarz1.webp')",
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center center',
+          backgroundAttachment: 'fixed',
         }}
       />
 
-      {/* --- MAIN CONTENT CONTAINER - CENTERED --- */}
-      <div className="max-w-[950px] mx-auto pt-0 md:pt-0 px-4 md:px-8 pb-16 relative z-10">
-        
-        {/* EXPANDED #575757 BACKGROUND CONTAINER */}
-        <div className="bg-[#575757]/90 backdrop-blur-sm px-4 md:px-12 py-8 md:py-12 shadow-2xl">
-          
+      {/* CONTENT */}
+      <div className="relative z-10 max-w-[950px] mx-auto px-4 md:px-8 pb-20">
+        <div className="md:bg-[#575757]/90 md:backdrop-blur-sm px-4 md:px-12 py-10 md:py-14 md:shadow-2xl">
+
           {/* PAGE TITLE */}
-          <ScrollReveal delay={0}>
-            <div className="mb-6 md:mb-8 text-center">
+          <ScrollReveal>
+            <div className="text-center mb-8">
               <h1 className="text-4xl md:text-5xl font-serif italic text-white tracking-wide">
-                {currentContent.pageTitle}
+                {c.pageTitle}
               </h1>
+              <div className="h-px w-full bg-white/30 mt-5" />
             </div>
           </ScrollReveal>
 
           <div className="space-y-16">
 
-            {/* SECTION 1: Productions with Music by Dijana Bošković */}
-            <ScrollReveal delay={0.1}>
-              <section>
-                {/* Section Title */}
-                <div className="mb-8 text-center">
-                  <h2 className="text-2xl md:text-3xl font-serif text-[#ff6643] tracking-wide">
-                    {currentContent.section1.title}
+            {/* SECTION 1 */}
+            <section>
+              <ScrollReveal>
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl md:text-3xl font-semibold text-white underline underline-offset-4 decoration-white/70 tracking-wide">
+                    {c.section1.title}
                   </h2>
                 </div>
+              </ScrollReveal>
+              <div className="space-y-10">
+                {c.section1.albums.map((album: Album, i: number) => (
+                  <ScrollReveal key={i} delay={i * 0.06}>
+                    <AlbumCard album={album} />
+                  </ScrollReveal>
+                ))}
+              </div>
+            </section>
 
-                {/* Albums */}
-                <div className="space-y-12">
-                  {currentContent.section1.albums.map((album: any, index: number) => (
-                    <motion.div
-                      key={index}
-                      className="bg-[#2D2D2D] border border-[#CCCCCC] p-6 md:p-8 space-y-6"
-                      initial={{ opacity: 1 }}
-                      whileInView={{ opacity: 1 }}
-                      viewport={{ once: false }}
-                      transition={{ duration: 0.4, delay: index * 0.05 }}
-                    >
-                      {/* Album Title */}
-                      <div className="border-l-4 border-[#ff6643] pl-4">
-                        <h3 className="text-lg md:text-xl font-serif uppercase tracking-wide text-[#ff6643] mb-1">
-                          {album.title}
-                        </h3>
-                        {album.subtitle && (
-                          <p className="text-base md:text-lg text-white/80 italic">{album.subtitle}</p>
-                        )}
-                      </div>
-
-                      {/* Cover Image (if exists) */}
-                      {album.coverImage && album.coverImage !== null && (
-                        <div className="flex justify-center my-6">
-                          <img 
-                            src={album.coverImage} 
-                            alt={album.title}
-                            className="max-w-[300px] w-full h-auto object-contain"
-                          />
-                        </div>
-                      )}
-
-                      {/* Description */}
-                      <div className="space-y-4 text-blue-50 font-body text-sm md:text-base leading-relaxed">
-                        {album.description.map((paragraph: string, pIndex: number) => (
-                          <p key={pIndex}>{paragraph}</p>
-                        ))}
-                      </div>
-
-                      {/* Tracks (if exists) */}
-                      {'tracks' in album && album.tracks && typeof album.tracks === 'string' && (
-                        <p className="text-blue-50 font-body text-sm md:text-base leading-relaxed italic">
-                          {album.tracks}
-                        </p>
-                      )}
-
-                      {/* Performers */}
-                      <div className="space-y-2">
-                        <h4 className="text-amber-200/90 font-semibold text-sm md:text-base">
-                          {album.performersTitle}
-                        </h4>
-                        <div className="pl-4 space-y-1 text-blue-50 font-body text-xs md:text-sm">
-                          {album.performers.map((performer: string, pIdx: number) => (
-                            <p key={pIdx}>{performer}</p>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Credits */}
-                      {album.credits && (
-                        <p className="text-blue-50 font-body text-xs md:text-sm italic">
-                          {album.credits}
-                        </p>
-                      )}
-
-                      {/* Duration & Production */}
-                      <div className="space-y-1 text-blue-50 font-body text-xs md:text-sm italic">
-                        {album.duration && <p>{album.duration}</p>}
-                        {album.production && <p>{album.production}</p>}
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </section>
-            </ScrollReveal>
-
-            {/* SECTION 2: Productions with Dijana Bošković as Flautist */}
-            <ScrollReveal delay={0.15}>
-              <section>
-                {/* Section Title */}
-                <div className="mb-8 text-center">
-                  <h2 className="text-2xl md:text-3xl font-serif text-[#ff6643] tracking-wide">
-                    {currentContent.section2.title}
+            {/* SECTION 2 */}
+            <section>
+              <ScrollReveal>
+                <div className="text-center mb-4">
+                  <h2 className="text-2xl md:text-3xl font-semibold text-white underline underline-offset-4 decoration-white/70 tracking-wide">
+                    {c.section2.title}
                   </h2>
-                  <p className="text-lg md:text-xl text-white/80 italic mt-2">
-                    {currentContent.section2.subtitle}
+                  <p className="text-white/80 italic text-2xl md:text-3xl mt-2">
+                    {c.section2.subtitle}
                   </p>
+                  <div className="h-px w-full bg-white/20 mt-4" />
                 </div>
-
-                {/* Albums */}
-                <div className="space-y-12">
-                  {currentContent.section2.albums.map((album: any, index: number) => (
-                    <motion.div
-                      key={index}
-                      className="bg-[#2D2D2D] border border-[#CCCCCC] p-6 md:p-8 space-y-6"
-                      initial={{ opacity: 1 }}
-                      whileInView={{ opacity: 1 }}
-                      viewport={{ once: false }}
-                      transition={{ duration: 0.4, delay: index * 0.05 }}
-                    >
-                      {/* Album Title */}
-                      <div className="border-l-4 border-[#ff6643] pl-4">
-                        <h3 className="text-lg md:text-xl font-serif uppercase tracking-wide text-[#ff6643] mb-1">
-                          {album.title}
-                        </h3>
-                        {album.subtitle && (
-                          <p className="text-base md:text-lg text-white/80 italic">{album.subtitle}</p>
-                        )}
-                      </div>
-
-                      {/* Cover Image (if exists) */}
-                      {album.coverImage && album.coverImage !== null && (
-                        <div className="flex justify-center my-6">
-                          <img 
-                            src={album.coverImage} 
-                            alt={album.title}
-                            className="max-w-[300px] w-full h-auto object-contain"
-                          />
-                        </div>
-                      )}
-
-                      {/* Description */}
-                      <div className="space-y-4 text-blue-50 font-body text-sm md:text-base leading-relaxed">
-                        {album.description.map((paragraph: string, pIndex: number) => (
-                          <p key={pIndex} className={paragraph.startsWith('"') || paragraph.startsWith('„') ? 'italic' : ''}>
-                            {paragraph}
-                          </p>
-                        ))}
-                      </div>
-
-                      {/* Tracks (if exists) */}
-                      {'tracks' in album && album.tracks && typeof album.tracks === 'string' && (
-                        <p className="text-blue-50 font-body text-sm md:text-base leading-relaxed italic">
-                          {album.tracks}
-                        </p>
-                      )}
-
-                      {/* Performers */}
-                      <div className="space-y-2">
-                        <h4 className="text-amber-200/90 font-semibold text-sm md:text-base">
-                          {album.performersTitle}
-                        </h4>
-                        <div className="pl-4 space-y-1 text-blue-50 font-body text-xs md:text-sm">
-                          {album.performers.map((performer: string, pIdx: number) => (
-                            <p key={pIdx}>{performer}</p>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Credits */}
-                      {album.credits && (
-                        <p className="text-blue-50 font-body text-xs md:text-sm italic">
-                          {album.credits}
-                        </p>
-                      )}
-
-                      {/* Duration & Production */}
-                      <div className="space-y-1 text-blue-50 font-body text-xs md:text-sm italic">
-                        {album.duration && <p>{album.duration}</p>}
-                        {album.production && <p>{album.production}</p>}
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </section>
-            </ScrollReveal>
+              </ScrollReveal>
+              <div className="space-y-10">
+                {c.section2.albums.map((album: Album, i: number) => (
+                  <ScrollReveal key={i} delay={i * 0.06}>
+                    <AlbumCard album={album} />
+                  </ScrollReveal>
+                ))}
+              </div>
+            </section>
 
           </div>
         </div>
-        {/* END OF EXPANDED #575757 BACKGROUND CONTAINER */}
-
       </div>
 
-      <style jsx global>{`
-        html {
-          scroll-behavior: smooth;
-        }
-      `}</style>
     </main>
   );
 }

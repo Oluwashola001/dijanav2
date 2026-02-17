@@ -239,7 +239,7 @@ export default function WaterIntroPage() {
                   </p>
                   {/* ENGLISH NAME - Independent from German */}
                   <h2 
-                    className="text-white text-4xl md:text-6xl lg:text-7xl font-semibold tracking-wide drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)] transition-all duration-300 group-hover:text-amber-200"
+                    className="text-white text-[2.125rem] md:text-6xl lg:text-7xl font-semibold tracking-wide drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)] transition-all duration-300 group-hover:text-amber-200"
                     style={{ fontFamily: "'Avenir Next', -apple-system, BlinkMacSystemFont, sans-serif" }}
                   >
                     DIJANA BOSHKOVICH
