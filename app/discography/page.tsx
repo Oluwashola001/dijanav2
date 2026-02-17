@@ -372,29 +372,28 @@ function AlbumCard({ album }: { album: Album }) {
 
       {/* Title + subtitle — centered */}
       <div className="text-center space-y-1">
-        {/* CHANGED: album title → text-2xl mobile, text-3xl desktop */}
-        <h3 className="text-2xl md:text-3xl font-semibold uppercase tracking-widest text-amber-200">
+        {/* Album title → Inter SemiBold (font-heading) per client spec H2 */}
+        <h3 className="font-heading text-2xl md:text-3xl font-semibold uppercase tracking-widest text-amber-200">
           {album.title}
         </h3>
         {album.subtitle && (
-          /* CHANGED: subtitle → text-lg mobile, text-xl desktop */
-          <p className="text-lg md:text-xl text-white/80 italic">{album.subtitle}</p>
+          <p className="font-serif text-lg md:text-xl text-white/80 italic">{album.subtitle}</p>
         )}
       </div>
 
       {/* Divider */}
       <div className="h-px w-full bg-white/20" />
 
-      {/* Description — full width */}
-      <div className="space-y-3 text-blue-50 text-sm md:text-base leading-relaxed">
+      {/* Description — font-body (Inter) for body text; quotes get font-serif italic */}
+      <div className="space-y-3 font-body text-blue-50 text-sm md:text-base leading-relaxed">
         {album.description.map((p: string, i: number) => (
-          <p key={i} className={p.startsWith('"') ? 'italic' : ''}>{p}</p>
+          <p key={i} className={p.startsWith('"') ? 'font-serif italic' : ''}>{p}</p>
         ))}
       </div>
 
-      {/* Tracks */}
+      {/* Tracks — font-body (Inter) */}
       {album.tracks && (
-        <p className="text-blue-50 text-sm md:text-base leading-relaxed">
+        <p className="font-body text-blue-50 text-sm md:text-base leading-relaxed">
           <span className="font-semibold">Tracks: </span>
           <span className="italic">{album.tracks}</span>
         </p>
@@ -414,20 +413,20 @@ function AlbumCard({ album }: { album: Album }) {
       {/* Divider */}
       <div className="h-px w-full bg-white/20" />
 
-      {/* Performers title — CHANGED: text-amber-200 instead of text-white */}
-      <p className="text-amber-200 font-semibold text-sm md:text-base">
+      {/* Performers title — font-heading (Inter SemiBold) */}
+      <p className="font-heading text-amber-200 font-semibold text-sm md:text-base">
         {album.performersTitle}
       </p>
 
-      {/* Two-column performers */}
+      {/* Two-column performers — font-body (Inter) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-0.5">
-        <div className="space-y-0.5 text-blue-50 text-xs md:text-sm">
+        <div className="space-y-0.5 font-body text-blue-50 text-xs md:text-sm">
           {leftPerformers.map((p: string, i: number) => (
             <p key={i}>{p}</p>
           ))}
         </div>
         {rightPerformers.length > 0 && (
-          <div className="space-y-0.5 text-blue-50 text-xs md:text-sm">
+          <div className="space-y-0.5 font-body text-blue-50 text-xs md:text-sm">
             {rightPerformers.map((p: string, i: number) => (
               <p key={i}>{p}</p>
             ))}
@@ -435,13 +434,13 @@ function AlbumCard({ album }: { album: Album }) {
         )}
       </div>
 
-      {/* Credits */}
+      {/* Credits — font-body italic (Inter Italic) */}
       {album.credits && (
-        <p className="text-blue-50 text-xs md:text-sm italic">{album.credits}</p>
+        <p className="font-body text-blue-50 text-xs md:text-sm italic">{album.credits}</p>
       )}
 
-      {/* Duration & Production */}
-      <div className="text-blue-50 text-xs md:text-sm italic space-y-0.5">
+      {/* Duration & Production — font-body italic (Inter Italic) per client spec */}
+      <div className="font-body text-blue-50 text-xs md:text-sm italic space-y-0.5">
         {album.duration && <p>{album.duration}</p>}
         {album.production && <p>{album.production}</p>}
       </div>
@@ -465,8 +464,6 @@ export default function DiscographyPage() {
     <main
       className="w-full min-h-screen text-white relative"
       style={{
-        /* CHANGED: background image only on md+ screens via inline style removed;
-           handled via Tailwind-compatible approach below using a wrapper */
         backgroundColor: '#575757',
       }}
     >
@@ -486,10 +483,10 @@ export default function DiscographyPage() {
       <div className="relative z-10 max-w-[950px] mx-auto px-4 md:px-8 pb-20">
         <div className="md:bg-[#575757]/90 md:backdrop-blur-sm px-4 md:px-12 py-10 md:py-14 md:shadow-2xl">
 
-          {/* PAGE TITLE */}
+          {/* PAGE TITLE — Playfair Display (font-serif) per client spec H1 */}
           <ScrollReveal>
             <div className="text-center mb-8">
-              <h1 className="text-4xl md:text-5xl font-serif italic text-white tracking-wide">
+              <h1 className="font-serif text-4xl md:text-5xl italic text-white tracking-wide">
                 {c.pageTitle}
               </h1>
               <div className="h-px w-full bg-white/30 mt-5" />
@@ -502,7 +499,8 @@ export default function DiscographyPage() {
             <section>
               <ScrollReveal>
                 <div className="text-center mb-8">
-                  <h2 className="text-2xl md:text-3xl font-semibold text-white underline underline-offset-4 decoration-white/70 tracking-wide">
+                  {/* Section heading — Inter SemiBold (font-heading) */}
+                  <h2 className="font-heading text-2xl md:text-3xl font-semibold text-white underline underline-offset-4 decoration-white/70 tracking-wide">
                     {c.section1.title}
                   </h2>
                 </div>
@@ -520,10 +518,12 @@ export default function DiscographyPage() {
             <section>
               <ScrollReveal>
                 <div className="text-center mb-4">
-                  <h2 className="text-2xl md:text-3xl font-semibold text-white underline underline-offset-4 decoration-white/70 tracking-wide">
+                  {/* Section heading — Inter SemiBold (font-heading) */}
+                  <h2 className="font-heading text-2xl md:text-3xl font-semibold text-white underline underline-offset-4 decoration-white/70 tracking-wide">
                     {c.section2.title}
                   </h2>
-                  <p className="text-white/80 italic text-2xl md:text-3xl mt-2">
+                  {/* Section subtitle — Playfair Display italic (font-serif) as accent */}
+                  <p className="font-serif text-white/80 italic text-2xl md:text-3xl mt-2">
                     {c.section2.subtitle}
                   </p>
                   <div className="h-px w-full bg-white/20 mt-4" />

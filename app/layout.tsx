@@ -16,7 +16,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // REMOVED "scroll-smooth" class to fix the "hanging" sensation
     <html lang="en">
       <head>
         {/* Load Fonts */}
@@ -26,6 +25,15 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Kalam:wght@700&display=swap" 
           rel="stylesheet" 
         />
+
+        {/* Preload about page splash videos while user is on intro page */}
+        {/* Mobile */}
+        <link rel="preload" as="video" href="/videos/splashm.mp4" media="(max-width: 768px)" />
+        <link rel="preload" as="video" href="/videos/splashm-de.mp4" media="(max-width: 768px)" />
+        {/* Desktop */}
+        <link rel="preload" as="video" href="/videos/splash.mp4" media="(min-width: 769px)" />
+        <link rel="preload" as="video" href="/videos/splash-de.mp4" media="(min-width: 769px)" />
+
         {/* Manual CSS Variables for Fonts */}
         <style>{`
           :root { 
