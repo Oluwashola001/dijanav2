@@ -104,7 +104,7 @@ const CONTENT = {
           {
             title: "Concerto for Strings – Uraufführung (BEMUS Festival)",
             source: "Dnevnik / Danas, Belgrad, 2009",
-            content: "Ein Werk voller kraftvoller Kontraste und leuchtender orchestraler Farben, inspiriert von folkloristischen Spieltechniken und der russischen Streichtradition – beschrieben als „musikalisches Feuerwerk“ mit nachhaltiger künstlerischer Wirkung."
+            content: `Ein Werk voller kraftvoller Kontraste und leuchtender orchestraler Farben, inspiriert von folkloristischen Spieltechniken und der russischen Streichtradition – beschrieben als \u201emusikalisches Feuerwerk\u201c mit nachhaltiger künstlerischer Wirkung.`
           },
           {
             title: "Zeitgenössische Musik ohne Dogma",
@@ -117,7 +117,7 @@ const CONTENT = {
         title: "Als Flötistin",
         items: [
           {
-            title: "„Technisch makellos und von tiefer Ausdruckskraft“",
+            title: `\u201eTechnisch makellos und von tiefer Ausdruckskraft\u201c`,
             source: "Allgäuer Zeitung",
             content: "Dijana Bošković überzeugt mit einem vollen, warmen Flötenton und absoluter technischer Souveränität. Selbst anspruchsvollste Passagen gestaltet sie mit Leichtigkeit und hoher musikalischer Intelligenz."
           },
@@ -137,7 +137,7 @@ const CONTENT = {
             content: "Ob in der Kammermusik oder im Solorepertoire – Bošković verbindet Virtuosität mit expressiver Tiefe und bewegt sich mühelos zwischen stilistischen Kontrasten von Bach bis Jolivet und Casella."
           },
           {
-            title: "„Sie kann auf der Flöte einfach alles“",
+            title: `\u201eSie kann auf der Flöte einfach alles\u201c`,
             source: "Allgäuer Zeitung",
             content: "Furchtlose Oktavläufe, präzise Artikulation und ein unverwechselbarer, leicht angerauter Ton zeichnen Bošković als Flötistin von außergewöhnlicher technischer und musikalischer Autorität aus."
           }
@@ -165,6 +165,14 @@ const CONTENT = {
 
 // --- ANIMATED COMPONENTS ---
 
+// Shared subtle transition config
+const EASE = [0.22, 0.1, 0.36, 1] as const;
+
+const subtleTransition = {
+  duration: 1.2,
+  ease: EASE,
+};
+
 // Animated Section Header
 function AnimatedSectionHeader({ 
   children, 
@@ -175,7 +183,7 @@ function AnimatedSectionHeader({
 }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { 
-    once: false, // Updated to false for 2-way animation
+    once: false,
     amount: 0.3,
     margin: "0px 0px -50px 0px"
   });
@@ -184,18 +192,9 @@ function AnimatedSectionHeader({
     <motion.div
       ref={ref}
       className="mb-10 text-center"
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { 
-        opacity: 1, 
-        y: 0 
-      } : { 
-        opacity: 0, 
-        y: 30 
-      }}
-      transition={{
-        duration: 0.8,
-        ease: "easeOut"
-      }}
+      initial={{ opacity: 0, y: 16 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+      transition={subtleTransition}
     >
       <h2 className="text-2xl md:text-3xl font-serif font-bold text-[#172F4F] uppercase tracking-widest border-b border-[#172F4F]/20 pb-2 inline-block">
         {children}
@@ -223,29 +222,21 @@ function AnimatedArticle({
 }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { 
-    once: false, // Updated to false for 2-way animation
-    amount: 0.2,
-    margin: "0px 0px -50px 0px"
+    once: false,
+    amount: 0.15,
+    margin: "0px 0px -40px 0px"
   });
 
   return (
     <motion.article 
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { 
-        opacity: 1, 
-        y: 0 
-      } : { 
-        opacity: 0, 
-        y: 40 
-      }}
-      transition={{
-        duration: 0.7,
-        ease: "easeOut"
-      }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={subtleTransition}
       className="space-y-4"
     >
-      <h3 className="text-xl md:text-2xl font-serif font-bold text-[#172F4F] leading-tight">
+      {/* Italic title */}
+      <h3 className="text-xl md:text-2xl font-serif font-bold italic text-[#172F4F] leading-tight">
         {item.title}
       </h3>
       <p className="text-sm md:text-base font-body font-bold uppercase tracking-wider text-[#47719E]">
@@ -272,18 +263,9 @@ function AnimatedPageTitle({ children }: { children: React.ReactNode }) {
     <motion.div
       ref={ref}
       className="mb-16 text-center"
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { 
-        opacity: 1, 
-        y: 0 
-      } : { 
-        opacity: 0, 
-        y: 30 
-      }}
-      transition={{
-        duration: 0.8,
-        ease: "easeOut"
-      }}
+      initial={{ opacity: 0, y: 16 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+      transition={subtleTransition}
     >
       <h1 className="text-5xl md:text-6xl font-serif text-[#172F4F] mb-4 tracking-wide font-bold drop-shadow-sm">
         {children}

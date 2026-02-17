@@ -9,6 +9,11 @@
       "source": "/en/komposition.htm",
       "destination": "/compositions",
       "permanent": true
+    },
+    {
+      "source": "/en/kontakt.htm",
+      "destination": "/contact",
+      "permanent": true
     }
   ]
 }
