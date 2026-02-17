@@ -55,7 +55,6 @@ const CONTENT = {
         </>
       )
     },
-    // Static text for BioBlocks component
     staticBio: {
       block1: {
         title: "Dijana Bošković",
@@ -236,7 +235,6 @@ function SplashScreen({ onComplete, language }: { onComplete: () => void, langua
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Splash only uses MP4 (short videos, no iOS issues)
   const videoSrc = isMobile 
     ? (language === 'de' ? "/videos/splashm-de.mp4" : "/videos/splashm.mp4")
     : (language === 'de' ? "/videos/splash-de.mp4" : "/videos/splash.mp4");
@@ -462,12 +460,8 @@ function HeroVideo({ startPlaying, language, isVideoMuted }: {
     }
   };
 
-  // ─── VIDEO SOURCE LOGIC ───────────────────────────────────────────────────
-  // Mobile: tries WebM first → falls back to iOS-optimised MP4 (faststart)
-  // Desktop: tries WebM first → falls back to MP4
-  // ─────────────────────────────────────────────────────────────────────────
   const mobileWebm = "/videos/about-film-mobile-new.webm";
-  const mobileMp4  = "/videos/about-film-mobile-ios.mp4";   // ffmpeg faststart applied
+  const mobileMp4  = "/videos/about-film-mobile-ios.mp4";
   const desktopWebm = "/videos/about-film.webm";
   const desktopMp4  = "/videos/about-film.mp4";
 
@@ -535,11 +529,8 @@ function HeroVideo({ startPlaying, language, isVideoMuted }: {
           objectPosition: isMobile ? '15% 15%' : 'center center'
         }}
       >
-        {/* Mobile: WebM first, iOS-optimised MP4 fallback */}
         {isMobile && <source src={mobileWebm} type="video/webm" />}
         {isMobile && <source src={mobileMp4}  type="video/mp4"  />}
-
-        {/* Desktop: WebM first, MP4 fallback */}
         {!isMobile && <source src={desktopWebm} type="video/webm" />}
         {!isMobile && <source src={desktopMp4}  type="video/mp4"  />}
       </video>
@@ -563,7 +554,7 @@ function HeroVideo({ startPlaying, language, isVideoMuted }: {
 }
 
 // ─── FIXED SCROLL INDICATOR ──────────────────────────────────────────────────
-function FixedScrollIndicator({ language }: { language: Language }) {
+function FixedScrollIndicator({ language, splashFinished }: { language: Language, splashFinished: boolean }) {
   const [opacity, setOpacity] = useState(1);
   const [visible, setVisible] = useState(true);
 
@@ -600,7 +591,8 @@ function FixedScrollIndicator({ language }: { language: Language }) {
     }
   };
 
-  if (!visible) return null;
+  // Hide entirely while splash is still playing
+  if (!splashFinished || !visible) return null;
 
   return (
     <div
@@ -766,6 +758,7 @@ function BioBlocks({ language }: { language: Language }) {
 
 export default function HomePage() {
   const [splashFinished, setSplashFinished] = useState(false);
+  const [splashFullyGone, setSplashFullyGone] = useState(false);
   const [language, setLanguage] = useState<Language>('en');
   const [isVideoMuted, setIsVideoMuted] = useState(true);
 
@@ -786,6 +779,16 @@ export default function HomePage() {
     document.documentElement.style.scrollBehavior = 'smooth';
     return () => { document.documentElement.style.scrollBehavior = ''; };
   }, []);
+
+  // Wait for splash exit animation to complete (1.5s) before showing indicator
+  useEffect(() => {
+    if (splashFinished) {
+      const timer = setTimeout(() => {
+        setSplashFullyGone(true);
+      }, 1500); // Match the exit animation duration
+      return () => clearTimeout(timer);
+    }
+  }, [splashFinished]);
 
   const toggleVideoMute = () => {
     setIsVideoMuted(prev => !prev);
@@ -816,7 +819,7 @@ export default function HomePage() {
         </button>
       </div>
 
-      <FixedScrollIndicator language={language} />
+      <FixedScrollIndicator language={language} splashFinished={splashFullyGone} />
       
       <AnimatePresence>
         {!splashFinished && <SplashScreen onComplete={() => setSplashFinished(true)} language={language} />}

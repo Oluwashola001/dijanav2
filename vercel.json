@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/en/biografie.htm",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/en/komposition.htm",
+      "destination": "/compositions",
+      "permanent": true
+    }
+  ]
+}
