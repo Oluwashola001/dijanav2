@@ -222,11 +222,9 @@ const getOverlayBlocks = (lang: Language) => [
 
 // --- COMPONENTS ---
 
-// Updated SplashScreen to accept Language and switch videos
 function SplashScreen({ onComplete, language }: { onComplete: () => void, language: Language }) {
   const [isMobile, setIsMobile] = useState(false);
 
-  // Detect mobile device on mount
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -238,7 +236,7 @@ function SplashScreen({ onComplete, language }: { onComplete: () => void, langua
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Select video based on language AND device
+  // Splash only uses MP4 (short videos, no iOS issues)
   const videoSrc = isMobile 
     ? (language === 'de' ? "/videos/splashm-de.mp4" : "/videos/splashm.mp4")
     : (language === 'de' ? "/videos/splash-de.mp4" : "/videos/splash.mp4");
@@ -253,7 +251,6 @@ function SplashScreen({ onComplete, language }: { onComplete: () => void, langua
       exit={{ opacity: 0, transition: { duration: 1.5, ease: "easeInOut" } }}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black overflow-hidden"
     >
-      {/* Single video source - no media queries */}
       <video
         key={`${language}-${isMobile}`} 
         autoPlay
@@ -286,23 +283,19 @@ function TextBlockWithLineAnimation({
   const duration = timing.end - timing.start;
   const progress = (currentTime - timing.start) / duration;
   
-  // Get background opacity class based on block ID
   const getBackgroundClass = () => {
     if (block.id === 2 || block.id === 7) {
-      return 'bg-[#223C5E]/50'; // Less transparent (50% opacity)
+      return 'bg-[#223C5E]/50';
     }
-    return 'bg-[#223C5E]/15'; // Default (15% opacity)
+    return 'bg-[#223C5E]/15';
   };
   
-  // Block 1 uses simple fade-in then fade-out animation (ALL LINES TOGETHER)
   if (block.id === 1 && 'lines' in block && block.lines) {
-    // Same fade animation for both mobile and desktop
-    const waitDuration = 0.167; // ~1 second wait (1/6 of duration)
+    const waitDuration = 0.167;
     const fadeInDuration = 0.1;
     const fadeOutStart = 0.75;
     const fadeOutDuration = 0.25;
     
-    // Calculate opacity for the entire block
     let blockOpacity = 0;
     
     if (progress < waitDuration) {
@@ -320,8 +313,6 @@ function TextBlockWithLineAnimation({
     }
     
     const overlayVisible = progress < 1;
-    
-    // Show all lines for block 1
     const linesToShow = block.lines;
 
     return (
@@ -344,7 +335,6 @@ function TextBlockWithLineAnimation({
     );
   }
   
-  // Blocks 2-7: Smooth fade-in/fade-out animation
   const waitDuration = 0.08;
   const fadeInDuration = 0.08;
   const fadeOutStart = 0.85;
@@ -368,7 +358,6 @@ function TextBlockWithLineAnimation({
   
   if (opacity === 0) return null;
   
-  // Get dynamic padding based on block ID
   const getPadding = () => {
     if (isMobile) {
       if (block.id === 2) return 'py-12 px-6';
@@ -388,15 +377,10 @@ function TextBlockWithLineAnimation({
   
   const titleClass = "font-heading text-2xl md:text-4xl text-amber-200/90 italic mb-2 md:mb-4";
   
-  // Get dynamic body text size based on block ID
   const getBodyClass = () => {
     if (isMobile) {
       if (block.id === 2) {
-        // GERMAN SPECIFIC STYLING FOR BLOCK 2 (MOBILE)
-        // Edit text-[1.1rem] to change the size
         if (language === 'de') return "text-white/95 font-body text-[1.1rem] md:text-lg leading-relaxed";
-        
-        // English Default
         return "text-white/95 font-body text-[1.4rem] md:text-xl leading-relaxed";
       }
       if (block.id === 3) return "text-white/95 font-body text-lg md:text-xl leading-relaxed";
@@ -406,13 +390,8 @@ function TextBlockWithLineAnimation({
       if (block.id === 7) return "text-white/95 font-body text-lg md:text-xl leading-relaxed";
     }
     
-    // DESKTOP STYLES
     if (block.id === 2) {
-      // GERMAN SPECIFIC STYLING FOR BLOCK 2 (DESKTOP)
-      // Edit md:text-[1.4rem] to change the size
       if (language === 'de') return "text-white/95 font-body text-xs md:text-[1.4rem] leading-relaxed";
-
-      // English Default
       return "text-white/95 font-body text-xs md:text-[1.75rem] leading-relaxed";
     }
     if (block.id === 3) return "text-white/95 font-body text-xs md:text-2xl leading-relaxed";
@@ -452,19 +431,7 @@ function HeroVideo({ startPlaying, language, isVideoMuted }: {
   const [currentTime, setCurrentTime] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Get dynamic blocks based on language
   const overlayBlocks = getOverlayBlocks(language);
-  
-  // Scroll indicator text based on language
-  const scrollText = CONTENT[language].scrollIndicator;
-  
-  // Handle scroll to BioBlocks
-  const scrollToBio = () => {
-    const bioSection = document.getElementById('bio-section');
-    if (bioSection) {
-      bioSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
 
   useEffect(() => {
     const checkMobile = () => {
@@ -483,7 +450,6 @@ function HeroVideo({ startPlaying, language, isVideoMuted }: {
     }
   }, [startPlaying]);
 
-  // Sync video mute state
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.muted = isVideoMuted;
@@ -496,14 +462,15 @@ function HeroVideo({ startPlaying, language, isVideoMuted }: {
     }
   };
 
-  // Select video source based on device
-  const videoSrc = isMobile 
-    ? "/videos/about-film-mobile-new.mp4"  // Mobile uses MP4
-    : "/videos/about-film.webm";           // Desktop prefers WebM
+  // ─── VIDEO SOURCE LOGIC ───────────────────────────────────────────────────
+  // Mobile: tries WebM first → falls back to iOS-optimised MP4 (faststart)
+  // Desktop: tries WebM first → falls back to MP4
+  // ─────────────────────────────────────────────────────────────────────────
+  const mobileWebm = "/videos/about-film-mobile-new.webm";
+  const mobileMp4  = "/videos/about-film-mobile-ios.mp4";   // ffmpeg faststart applied
+  const desktopWebm = "/videos/about-film.webm";
+  const desktopMp4  = "/videos/about-film.mp4";
 
-  const videoType = isMobile ? "video/mp4" : "video/webm";
-  
-  // Poster image for lazy loading
   const posterSrc = isMobile
     ? "/images/about-film-mobile-poster.webp"
     : "/images/about-film-desktop-poster.webp";
@@ -535,7 +502,6 @@ function HeroVideo({ startPlaying, language, isVideoMuted }: {
       }
     }
     
-    // Desktop positioning
     switch (position) {
       case 'top-left': 
         return 'top-8 left-8 md:top-20 md:left-8 max-w-xs md:max-w-md items-start text-left';
@@ -561,7 +527,7 @@ function HeroVideo({ startPlaying, language, isVideoMuted }: {
         ref={videoRef}
         muted={isVideoMuted}
         playsInline
-        loop 
+        loop
         onTimeUpdate={handleTimeUpdate}
         poster={posterSrc}
         className="w-full h-full object-cover md:object-center"
@@ -569,9 +535,13 @@ function HeroVideo({ startPlaying, language, isVideoMuted }: {
           objectPosition: isMobile ? '15% 15%' : 'center center'
         }}
       >
-        <source src={videoSrc} type={videoType} />
-        {/* Fallback for desktop if WebM fails */}
-        {!isMobile && <source src="/videos/about-film.mp4" type="video/mp4" />}
+        {/* Mobile: WebM first, iOS-optimised MP4 fallback */}
+        {isMobile && <source src={mobileWebm} type="video/webm" />}
+        {isMobile && <source src={mobileMp4}  type="video/mp4"  />}
+
+        {/* Desktop: WebM first, MP4 fallback */}
+        {!isMobile && <source src={desktopWebm} type="video/webm" />}
+        {!isMobile && <source src={desktopMp4}  type="video/mp4"  />}
       </video>
 
       <div className="absolute inset-0 bg-[#223C5E]/15 pointer-events-none" />
@@ -593,9 +563,6 @@ function HeroVideo({ startPlaying, language, isVideoMuted }: {
 }
 
 // ─── FIXED SCROLL INDICATOR ──────────────────────────────────────────────────
-// Sits in a fixed position (bottom-right) regardless of screen size.
-// Fades out gradually as the user scrolls, and is fully hidden once they
-// scroll past the hero section (100vh).
 function FixedScrollIndicator({ language }: { language: Language }) {
   const [opacity, setOpacity] = useState(1);
   const [visible, setVisible] = useState(true);
@@ -608,12 +575,10 @@ function FixedScrollIndicator({ language }: { language: Language }) {
       const scrollY = window.scrollY;
 
       if (scrollY >= heroHeight) {
-        // Fully past the hero – hide completely
         setVisible(false);
         setOpacity(0);
       } else {
         setVisible(true);
-        // Fade starts at 20% of hero height, fully gone at 100%
         const fadeStart = heroHeight * 0.2;
         if (scrollY <= fadeStart) {
           setOpacity(1);
@@ -674,9 +639,8 @@ function FixedScrollIndicator({ language }: { language: Language }) {
     </div>
   );
 }
-// ─────────────────────────────────────────────────────────────────────────────
 
-// Animated Paragraph Component - Cinematic subtle reveal
+// ─── ANIMATED COMPONENTS ─────────────────────────────────────────────────────
 function AnimatedParagraph({ 
   children, 
   delay = 0 
@@ -695,13 +659,7 @@ function AnimatedParagraph({
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { 
-        opacity: 1, 
-        y: 0 
-      } : { 
-        opacity: 0, 
-        y: 30 
-      }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{
         duration: 0.8,
         delay: delay,
@@ -713,7 +671,6 @@ function AnimatedParagraph({
   );
 }
 
-// Animated Heading Component - Cinematic subtle reveal
 function AnimatedHeading({ children }: { children: React.ReactNode }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { 
@@ -726,13 +683,7 @@ function AnimatedHeading({ children }: { children: React.ReactNode }) {
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 25 }}
-      animate={isInView ? { 
-        opacity: 1, 
-        y: 0 
-      } : { 
-        opacity: 0, 
-        y: 25 
-      }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 25 }}
       transition={{
         duration: 0.9,
         ease: [0.25, 0.1, 0.25, 1]
@@ -760,17 +711,9 @@ function BioBlocks({ language }: { language: Language }) {
           </AnimatedHeading>
           
           <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-xl">
-            <AnimatedParagraph delay={0.1}>
-              <p>{text.block1.p1}</p>
-            </AnimatedParagraph>
-            
-            <AnimatedParagraph delay={0.15}>
-              <p>{text.block1.p2}</p>
-            </AnimatedParagraph>
-            
-            <AnimatedParagraph delay={0.2}>
-              <p>{text.block1.p3}</p>
-            </AnimatedParagraph>
+            <AnimatedParagraph delay={0.1}><p>{text.block1.p1}</p></AnimatedParagraph>
+            <AnimatedParagraph delay={0.15}><p>{text.block1.p2}</p></AnimatedParagraph>
+            <AnimatedParagraph delay={0.2}><p>{text.block1.p3}</p></AnimatedParagraph>
           </div>
         </section>
 
@@ -781,17 +724,9 @@ function BioBlocks({ language }: { language: Language }) {
           </AnimatedHeading>
           
           <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-xl">
-            <AnimatedParagraph delay={0.1}>
-              <p>{text.block2.p1}</p>
-            </AnimatedParagraph>
-            
-            <AnimatedParagraph delay={0.15}>
-              <p>{text.block2.p2}</p>
-            </AnimatedParagraph>
-            
-            <AnimatedParagraph delay={0.2}>
-              <p>{text.block2.p3}</p>
-            </AnimatedParagraph>
+            <AnimatedParagraph delay={0.1}><p>{text.block2.p1}</p></AnimatedParagraph>
+            <AnimatedParagraph delay={0.15}><p>{text.block2.p2}</p></AnimatedParagraph>
+            <AnimatedParagraph delay={0.2}><p>{text.block2.p3}</p></AnimatedParagraph>
           </div>
         </section>
 
@@ -802,17 +737,9 @@ function BioBlocks({ language }: { language: Language }) {
           </AnimatedHeading>
           
           <div className="space-y-4 text-blue-50 font-body leading-relaxed text-base md:text-xl">
-            <AnimatedParagraph delay={0.1}>
-              <p>{text.block3.p1}</p>
-            </AnimatedParagraph>
-            
-            <AnimatedParagraph delay={0.15}>
-              <p>{text.block3.p2}</p>
-            </AnimatedParagraph>
-            
-            <AnimatedParagraph delay={0.2}>
-              <p>{text.block3.p3}</p>
-            </AnimatedParagraph>
+            <AnimatedParagraph delay={0.1}><p>{text.block3.p1}</p></AnimatedParagraph>
+            <AnimatedParagraph delay={0.15}><p>{text.block3.p2}</p></AnimatedParagraph>
+            <AnimatedParagraph delay={0.2}><p>{text.block3.p3}</p></AnimatedParagraph>
           </div>
         </section>
       </div>
@@ -840,39 +767,26 @@ function BioBlocks({ language }: { language: Language }) {
 export default function HomePage() {
   const [splashFinished, setSplashFinished] = useState(false);
   const [language, setLanguage] = useState<Language>('en');
-  
-  // Video mute state - simplified approach
   const [isVideoMuted, setIsVideoMuted] = useState(true);
 
   useEffect(() => {
-    // 1. Read the saved language from the Intro page
     const savedLang = localStorage.getItem('siteLanguage') as Language;
     if (savedLang === 'en' || savedLang === 'de') {
       setLanguage(savedLang);
     }
 
-    // 2. Check for auto-unmute flag (from ENTER button or navbar)
-    // Video only unmutes if user clicked ENTER or BIOGRAPHY link
     if (typeof window !== 'undefined') {
       const shouldAutoUnmute = sessionStorage.getItem('autoPlayMusic');
-      
       if (shouldAutoUnmute === 'true') {
-        // User clicked ENTER or BIOGRAPHY - unmute the video!
         setIsVideoMuted(false);
-        
-        // Clear the flag after use
         sessionStorage.removeItem('autoPlayMusic');
       }
     }
 
     document.documentElement.style.scrollBehavior = 'smooth';
-    
-    return () => {
-      document.documentElement.style.scrollBehavior = '';
-    };
+    return () => { document.documentElement.style.scrollBehavior = ''; };
   }, []);
 
-  // Toggle video mute - simple state toggle
   const toggleVideoMute = () => {
     setIsVideoMuted(prev => !prev);
   };
@@ -880,7 +794,7 @@ export default function HomePage() {
   return (
     <main className="relative min-h-screen w-full bg-[#223C5E] text-white overflow-x-hidden">
       
-      {/* VIDEO MUTE BUTTON - Top Right Corner */}
+      {/* VIDEO MUTE BUTTON */}
       <div className="fixed top-1 right-14 md:top-12 md:right-2 z-[110] pointer-events-auto">
         <button 
           onClick={toggleVideoMute}
@@ -902,7 +816,6 @@ export default function HomePage() {
         </button>
       </div>
 
-      {/* FIXED SCROLL INDICATOR - always bottom-right, fades with scroll */}
       <FixedScrollIndicator language={language} />
       
       <AnimatePresence>
@@ -915,12 +828,11 @@ export default function HomePage() {
         <BioBlocks language={language} />
         
         <div className="flex justify-center mt-12">
-           <a href="/compositions" onClick={() => {
-             // Set flag to allow unmuted audio on composition page
-             if (typeof window !== 'undefined') {
-               sessionStorage.setItem('autoUnmute', 'true');
-             }
-           }}>
+          <a href="/compositions" onClick={() => {
+            if (typeof window !== 'undefined') {
+              sessionStorage.setItem('autoUnmute', 'true');
+            }
+          }}>
             <motion.button 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -931,7 +843,7 @@ export default function HomePage() {
             >
               {CONTENT[language].button}
             </motion.button>
-           </a>
+          </a>
         </div>
       </div>
 
