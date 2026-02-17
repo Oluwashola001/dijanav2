@@ -227,7 +227,7 @@ const CONTENT = {
           credits: null,
           duration: "Dauer: 3‑CD box",
           production: "Produced by ORF V, 2016",
-          coverImage: "/images/discography/ensemble-plus.webp"
+          coverImage: "/images/discography/ensemble_plus.webp"
         }
       ] as Album[]
     },
