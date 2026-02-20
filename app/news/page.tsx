@@ -166,7 +166,7 @@ export default function NewsPage() {
       
       {/* BACKGROUND IMAGE - Visible on all screen sizes */}
       <div 
-        className="absolute top-0 left-0 w-full min-h-full z-0 bg-cover bg-center bg-no-repeat"
+        className="fixed top-0 left-0 w-full min-h-full z-0 bg-cover bg-center bg-no-repeat"
         style={{ 
             backgroundImage: "url('/images/bg_dijana.webp')",
             minHeight: '100%',
