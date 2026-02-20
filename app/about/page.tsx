@@ -420,6 +420,7 @@ function TextBlockWithLineAnimation({
   );
 }
 
+// ─── FIX: iOS detection + corrected source order ─────────────────────────────
 function HeroVideo({ startPlaying, language, isVideoMuted }: { 
   startPlaying: boolean; 
   language: Language;
@@ -428,6 +429,9 @@ function HeroVideo({ startPlaying, language, isVideoMuted }: {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+
+  // FIX STEP 1: Detect iOS so we can skip WebM for those devices
+  const [isIOS, setIsIOS] = useState(false);
 
   const overlayBlocks = getOverlayBlocks(language);
 
@@ -442,11 +446,21 @@ function HeroVideo({ startPlaying, language, isVideoMuted }: {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // FIX STEP 1: Run iOS detection once on mount (client-side only)
+  useEffect(() => {
+    const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+    setIsIOS(ios);
+  }, []);
+
+  // FIX STEP 2: Call .load() before .play() so iOS cleanly reads the correct
+  // sources before attempting playback. Also depends on isIOS so it re-runs
+  // if iOS is detected after the sources have already been set in the DOM.
   useEffect(() => {
     if (startPlaying && videoRef.current) {
+      videoRef.current.load();
       videoRef.current.play().catch(e => console.error("Video play error:", e));
     }
-  }, [startPlaying]);
+  }, [startPlaying, isIOS]);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -461,7 +475,7 @@ function HeroVideo({ startPlaying, language, isVideoMuted }: {
   };
 
   const mobileWebm = "/videos/about-film-mobile-new.webm";
-  const mobileMp4  = "/videos/about-film-mobile-ios.mp4";
+  const mobileMp4  = "/videos/about-film-mobile-new.mp4";
   const desktopWebm = "/videos/about-film.webm";
   const desktopMp4  = "/videos/about-film.mp4";
 
@@ -529,10 +543,13 @@ function HeroVideo({ startPlaying, language, isVideoMuted }: {
           objectPosition: isMobile ? '15% 15%' : 'center center'
         }}
       >
-        {isMobile && <source src={mobileWebm} type="video/webm" />}
-        {isMobile && <source src={mobileMp4}  type="video/mp4"  />}
+        {/* FIX STEP 1: Skip WebM entirely on iOS — it cannot play it.
+            Android keeps WebM as first choice (faster/better quality).
+            Desktop always gets WebM first, MP4 as fallback. */}
+        {isMobile && !isIOS && <source src={mobileWebm} type="video/webm" />}
+        {isMobile && <source src={mobileMp4} type="video/mp4" />}
         {!isMobile && <source src={desktopWebm} type="video/webm" />}
-        {!isMobile && <source src={desktopMp4}  type="video/mp4"  />}
+        {!isMobile && <source src={desktopMp4} type="video/mp4" />}
       </video>
 
       <div className="absolute inset-0 bg-[#223C5E]/15 pointer-events-none" />
