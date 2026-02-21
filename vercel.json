@@ -24,6 +24,26 @@
       "source": "/en/disk.htm",
       "destination": "/discography",
       "permanent": true
-    }
+    },
+    {
+  "source": "/en/download.htm",
+  "destination": "/media",
+  "permanent": true
+},
+{
+  "source": "/en/presse.htm",
+  "destination": "/press",
+  "permanent": true
+},
+{
+  "source": "/en/aktuell.htm",
+  "destination": "/news",
+  "permanent": true
+},
+{
+  "source": "/ensembles.htm",
+  "destination": "/",
+  "permanent": true
+}
   ]
 }
