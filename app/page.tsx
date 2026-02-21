@@ -219,7 +219,7 @@ export default function WaterIntroPage() {
 
                 {/* English Section - REVERSED ORDER */}
                 <div 
-                  className="space-y-2 cursor-pointer group"
+                  className="space-y-0.5 cursor-pointer group"
                   onClick={() => handleStartExperience('en')}
                 >
                   <div className="pb-4">

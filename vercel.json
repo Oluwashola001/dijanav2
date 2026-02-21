@@ -1,6 +1,11 @@
 {
   "redirects": [
     {
+  "source": "/index.htm",
+  "destination": "/",
+  "permanent": true
+},
+    {
       "source": "/en/biografie.htm",
       "destination": "/about",
       "permanent": true
