@@ -16,7 +16,7 @@
       "permanent": true
     },
     {
-      "source": "/en/kontakt.htm",
+      "source": "/kontakt.htm",
       "destination": "/contact",
       "permanent": true
     },
