@@ -21,6 +21,11 @@
       "permanent": true
     },
     {
+      "source": "/en/kontakt.htm",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
       "source": "/en/disk.htm",
       "destination": "/discography",
       "permanent": true
