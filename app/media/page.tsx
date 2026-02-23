@@ -585,7 +585,7 @@ const pressPhotos = [
   },
   { 
     thumbnail: "/images/press/presse6.webp",
-    fullSize: "/images/press/press6.jpg",
+    fullSize: "/images/press/presse6-new.jpg",
     alt: "Dijana Boshkovich Press Photo 6",
     downloadName: "dijana-boshkovich-press-photo-6.jpg"
   },
