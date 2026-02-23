@@ -98,7 +98,7 @@ const CONTENT = {
           title: "INANNA",
           subtitle: null,
           description: [
-            "Listening cinema based on the Sumerian myth Inanna's Descent to the Underworld.",
+            "Listening cinema based on the Sumerian myth <em>Inanna's Descent to the Underworld</em>.",
             "Text: Karoly Koller",
             "Music: Helga Pogatschar"
           ],
@@ -260,7 +260,7 @@ const CONTENT = {
           title: "INANNA",
           subtitle: null,
           description: [
-            "Hörkino basierend auf dem sumerischen Mythos Inannas Gang in die Unterwelt.",
+            "Hörkino basierend auf dem sumerischen Mythos <em>Inannas Gang in die Unterwelt</em>.",
             "Text: Karoly Koller",
             "Musik: Helga Pogatschar"
           ],
