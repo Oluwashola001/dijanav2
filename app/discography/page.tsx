@@ -98,7 +98,7 @@ const CONTENT = {
           title: "INANNA",
           subtitle: null,
           description: [
-            "Listening cinema based on the Sumerian myth <em>Inanna's Descent to the Underworld</em>.",
+            "Listening cinema based on the Sumerian myth <em> Inanna's Descent to the Underworld </em>.",
             "Text: Karoly Koller",
             "Music: Helga Pogatschar"
           ],
@@ -387,8 +387,12 @@ function AlbumCard({ album }: { album: Album }) {
       {/* Description — font-body (Inter) for body text; quotes get font-serif italic */}
       <div className="space-y-3 font-body text-blue-50 text-sm md:text-base leading-relaxed">
         {album.description.map((p: string, i: number) => (
-          <p key={i} className={p.startsWith('"') ? 'font-serif italic' : ''}>{p}</p>
-        ))}
+        <p
+          key={i}
+          className={p.startsWith('"') ? 'font-serif italic' : ''}
+          dangerouslySetInnerHTML={{ __html: p }}
+        />
+      ))}
       </div>
 
       {/* Tracks — font-body (Inter) */}
