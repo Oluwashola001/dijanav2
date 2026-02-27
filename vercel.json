@@ -11,7 +11,17 @@
       "permanent": true
     },
     {
+      "source": "/biografie.htm",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
       "source": "/en/komposition.htm",
+      "destination": "/compositions",
+      "permanent": true
+    },
+    {
+      "source": "/komposition.htm",
       "destination": "/compositions",
       "permanent": true
     },
@@ -31,7 +41,17 @@
       "permanent": true
     },
     {
+      "source": "/disk.htm",
+      "destination": "/discography",
+      "permanent": true
+    },
+    {
   "source": "/en/download.htm",
+  "destination": "/media",
+  "permanent": true
+},
+{
+  "source": "/download.htm",
   "destination": "/media",
   "permanent": true
 },
@@ -41,12 +61,27 @@
   "permanent": true
 },
 {
+  "source": "/presse.htm",
+  "destination": "/press",
+  "permanent": true
+},
+{
   "source": "/en/aktuell.htm",
   "destination": "/news",
   "permanent": true
 },
 {
+  "source": "/aktuell.htm",
+  "destination": "/news",
+  "permanent": true
+},
+{
   "source": "/ensembles.htm",
+  "destination": "/",
+  "permanent": true
+},
+{
+  "source": "/en/ensembles.htm",
   "destination": "/",
   "permanent": true
 }
