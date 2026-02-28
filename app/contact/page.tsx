@@ -36,7 +36,7 @@ const CONTENT = {
       conceptEmailLabel: "Email:",
       conceptEmail: "dijanab@freenet.de",
       devTitle: "Development & Technical Implementation",
-      devText: "to be announced"
+      devText: "Gabriel Oyagbinrin"
     },
     legal: {
       title: "Liability & Copyright",
@@ -64,7 +64,7 @@ const CONTENT = {
       conceptEmailLabel: "E-Mail:",
       conceptEmail: "dijanab@freenet.de",
       devTitle: "Entwicklung & Technische Umsetzung",
-      devText: "Wird noch bekannt gegeben"
+      devText: "Gabriel Oyagbinrin"
     },
     legal: {
       title: "Haftung & Urheberrecht",
@@ -215,7 +215,7 @@ export default function ContactPage() {
                   <h3 className="text-lg font-serif text-amber-200/90 mb-2 uppercase tracking-wider">
                     {t.credits.devTitle}
                   </h3>
-                  <p className="text-blue-50 font-body text-sm leading-relaxed italic">
+                  <p className="text-blue-50 font-body text-base leading-relaxed">
                     {t.credits.devText}
                   </p>
                 </div>

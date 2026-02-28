@@ -5,6 +5,11 @@
   "destination": "/",
   "permanent": true
 },
+{
+  "source": "/en/index.htm",
+  "destination": "/",
+  "permanent": true
+},
     {
       "source": "/en/biografie.htm",
       "destination": "/about",
