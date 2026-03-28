@@ -18,7 +18,7 @@ const CONTENT = {
       { label: 'MEDIA', href: '/media' },
       { label: 'DISCOGRAPHY', href: '/discography' },
       { label: 'PRESS', href: '/press' },
-      { label: 'VERSUS VOX ENSEMBLE', href: '#' },
+      { label: 'VERSUS VOX ENSEMBLE', href: '/ensembles' },
       { label: 'TEACHING', href: '#' },
       { label: 'CONTACT', href: '/contact' },
     ]
@@ -32,7 +32,7 @@ const CONTENT = {
       { label: 'Medien', href: '/media' },
       { label: 'Diskografie', href: '/discography' },
       { label: 'Presse', href: '/press' },
-      { label: 'Versus Vox Ensemble', href: '#' },
+      { label: 'Versus Vox Ensemble', href: '/ensembles' },
       { label: 'Unterricht', href: '#' },
       { label: 'Kontakt', href: '/contact' },
     ]
@@ -63,7 +63,7 @@ export default function Navbar() {
   }
 
   // Determine if we're on the news page for glassmorphism styling
-  const isNewsPage = pathname === '/news' || pathname === '/discography';
+  const isNewsPage = pathname === '/news' || pathname === '/discography' || pathname === '/ensembles';
   const headerBg = isNewsPage 
     ? 'md:bg-[#506070]/60 md:backdrop-blur-md md:border-b md:border-white/20' 
     : 'md:bg-[#172F4F]';
