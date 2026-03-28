@@ -18,7 +18,9 @@ const CONTENT = {
         The <strong>Versus Vox Ensemble</strong>, founded in 2000 by <strong>Dijana Bošković</strong>, performs in flexible formations ranging from duo to nonet. At the core of its artistic work lies an ongoing engagement with modern music and a close dialogue with contemporary composers. Within the ensemble’s programs, original compositions meet works of the present and selected repertoire from music history, creating multifaceted musical experiences that often open toward interdisciplinary perspectives.
       </>,
       <>
-        A particular focus of the ensemble lies in thematically conceived concert projects, in which music enters into dialogue with diverse forms of artistic expression. From this interaction emerges a shared language that reaches beyond the purely musical and gives shape to the conceptual ideas behind the programs.<br/><br/>
+        A particular focus of the ensemble lies in thematically conceived concert projects, in which music enters into dialogue with diverse forms of artistic expression. From this interaction emerges a shared language that reaches beyond the purely musical and gives shape to the conceptual ideas behind the programs.
+      </>,
+      <>
         The ensemble has appeared in international intercultural festivals and has also contributed to numerous music projects in Munich.
       </>
     ],
@@ -47,7 +49,9 @@ const CONTENT = {
         Das <strong>Versus Vox Ensemble</strong>, gegründet im Jahr 2000 von <strong>Dijana Bošković</strong>, tritt in variablen Besetzungen vom Duo bis zum Nonett auf. Im Mittelpunkt seiner Arbeit steht die lebendige Auseinandersetzung mit der Musik der Moderne sowie der intensive Dialog mit zeitgenössischen Komponistinnen und Komponisten. In den Programmen des Ensembles begegnen sich eigene Kompositionen, Werke der Gegenwart und ausgewählte Positionen der Musikgeschichte und verbinden sich zu vielschichtigen musikalischen Erfahrungsräumen, die häufig auch interdisziplinäre Perspektiven einbeziehen.
       </>,
       <>
-        Ein besonderer Fokus liegt auf thematisch konzipierten Konzertprojekten, in denen Musik mit unterschiedlichen künstlerischen Ausdrucksformen in Beziehung tritt. Aus diesem Dialog entsteht eine gemeinsame Sprache, die über das rein Musikalische hinausweist und die inhaltliche Idee der Programme erfahrbar macht.<br/><br/>
+        Ein besonderer Fokus liegt auf thematisch konzipierten Konzertprojekten, in denen Musik mit unterschiedlichen künstlerischen Ausdrucksformen in Beziehung tritt. Aus diesem Dialog entsteht eine gemeinsame Sprache, die über das rein Musikalische hinausweist und die inhaltliche Idee der Programme erfahrbar macht.
+      </>,
+      <>
         Mit seinen Projekten war das Ensemble bei internationalen interkulturellen Festivals vertreten und prägte darüber hinaus zahlreiche Musikprojekte in München.
       </>
     ],
@@ -180,7 +184,7 @@ export default function VersusVoxPage() {
         {/* EXPANDED #CCCCCC BACKGROUND CONTAINER */}
         <div className="bg-[#CCCCCC]/95 backdrop-blur-sm px-4 md:px-12 py-8 md:py-12 shadow-2xl border-t-4 border-[#172F4F]">
           
-          <div className="space-y-16">
+          <div className="space-y-12 md:space-y-16">
 
             {/* 1. ABOUT SECTION */}
             <section id="about" className="scroll-mt-32">
@@ -197,14 +201,14 @@ export default function VersusVoxPage() {
 
               {/* PARAGRAPH 1 */}
               <ScrollReveal delay={0.1}>
-                <p className="font-body text-base md:text-lg leading-relaxed text-[#172F4F] mb-8 text-justify md:text-left">
+                <p className="font-body text-sm md:text-base leading-relaxed text-[#172F4F] mb-6 md:mb-8 text-left break-words">
                   {currentContent.paragraphs[0]}
                 </p>
               </ScrollReveal>
 
               {/* DUAL IMAGES 1 */}
               <div className="mb-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                   <ScrollReveal delay={0.1}>
                     <img 
                       src="/images/ensemble_1a.webp" 
@@ -227,16 +231,21 @@ export default function VersusVoxPage() {
                 </ScrollReveal>
               </div>
 
-              {/* PARAGRAPH 2 */}
+              {/* PARAGRAPHS 2 & 3 */}
               <ScrollReveal delay={0.1}>
-                <p className="font-body text-base md:text-lg leading-relaxed text-[#172F4F] mb-8 text-justify md:text-left">
-                  {currentContent.paragraphs[1]}
-                </p>
+                <div className="space-y-4 md:space-y-5 mb-8">
+                  <p className="font-body text-sm md:text-base leading-relaxed text-[#172F4F] text-left break-words">
+                    {currentContent.paragraphs[1]}
+                  </p>
+                  <p className="font-body text-sm md:text-base leading-relaxed text-[#172F4F] text-left break-words">
+                    {currentContent.paragraphs[2]}
+                  </p>
+                </div>
               </ScrollReveal>
 
               {/* DUAL IMAGES 2 */}
-              <div className="mb-12">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="mb-8 md:mb-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                   <ScrollReveal delay={0.1}>
                     <img 
                       src="/images/ensemble_2a.webp" 
@@ -259,12 +268,12 @@ export default function VersusVoxPage() {
             <section id="projects" className="scroll-mt-32">
               
               <ScrollReveal delay={0.1}>
-                <h3 className="text-2xl font-serif font-bold text-[#172F4F] mb-6 border-b border-[#172F4F]/20 pb-2">
+                <h3 className="text-xl md:text-2xl font-serif font-bold text-[#172F4F] mb-6 border-b border-[#172F4F]/20 pb-2">
                   {currentContent.projectsTitle}
                 </h3>
               </ScrollReveal>
               
-              <ul className="space-y-4 font-body text-base md:text-lg mb-12">
+              <ul className="space-y-3 md:space-y-4 font-body text-sm md:text-base mb-10 md:mb-12 break-words">
                 {currentContent.projects.map((project, index) => (
                   <ScrollReveal delay={0.1 + (index * 0.05)} key={index}>
                     <li className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-[#172F4F]/10 pb-4 last:border-0 last:pb-0">
