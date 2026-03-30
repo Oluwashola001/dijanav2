@@ -24,14 +24,13 @@ const CONTENT = {
         The ensemble has appeared in international intercultural festivals and has also contributed to numerous music projects in Munich.
       </>
     ],
-    projectsTitle: "Selected Projects with the Versus Vox Ensemble",
+    projectsTitle: "SELECTED PROJECTS with the VERSUS VOX ENSEMBLE",
     projects: [
-      { title: "ENCOUNTERS – Germany & Serbia", href: "/begegnung", isYoutube: false },
-      { title: "Between East and West", href: "/ouw", isYoutube: false },
-      { title: "Emigré’s Waltz", href: "https://www.youtube.com/watch?v=qK4EA-K2VO4", isYoutube: true, isExternal: true },
-      { title: "Mouse and Monsters", href: "https://www.youtube.com/watch?v=jwJk7OrQymQ", isYoutube: true, isExternal: true },
-      { title: "Abteilung 13: Darstellende Kunst", href: "https://www.youtube.com/watch?v=hcPTU9stKtc", isYoutube: true, isExternal: true },
-      { title: "Play of Light", href: "https://www.youtube.com/watch?v=7_ST90Cz-CI", isYoutube: true, isExternal: true }
+      { title: "Light Plays", href: "/ensembles/light-plays", isExternal: false, youtubeUrl: "https://www.youtube.com/watch?v=7_ST90Cz-CI" },
+      { title: "Emigré’s Waltz", href: "/ensembles/emigres-waltz", isExternal: false, youtubeUrl: "https://www.youtube.com/watch?v=qK4EA-K2VO4" },
+      { title: "Abteilung 13: Darstellende Kunst", href: "https://www.youtube.com/watch?v=hcPTU9stKtc", isExternal: true, youtubeUrl: "https://www.youtube.com/watch?v=hcPTU9stKtc" },
+      { title: "Between East and West", href: "/ensembles/between-east-and-west", isExternal: false, youtubeUrl: null },
+      { title: "ENCOUNTERS – Germany & Serbia", href: "/ensembles/encounters", isExternal: false, youtubeUrl: null }
     ],
     imageCredits: {
       img1: "©Siggi Mueller",
@@ -55,14 +54,13 @@ const CONTENT = {
         Mit seinen Projekten war das Ensemble bei internationalen interkulturellen Festivals vertreten und prägte darüber hinaus zahlreiche Musikprojekte in München.
       </>
     ],
-    projectsTitle: "Einige Projekte mit dem Versus Vox Ensemble:",
+    projectsTitle: "EINIGE PROJEKTE mit dem VERSUS VOX ENSEMBLE:",
     projects: [
-      { title: "Begegnungen Deutschland-Serbien", href: "/begegnung", isYoutube: false },
-      { title: "Zwischen Ost und West", href: "/ouw", isYoutube: false },
-      { title: "Emigre`s Waltz", href: "/ew", isYoutube: false },
-      { title: "Maus und Monster", href: "/mm", isYoutube: false },
-      { title: "Abteilung 13 Darstellende Kunst", href: "https://www.youtube.com/watch?v=hcPTU9stKtc", isYoutube: true, isExternal: true },
-      { title: "Play of Light", href: "/pol", isYoutube: false }
+      { title: "Light Plays", href: "/ensembles/light-plays", isExternal: false, youtubeUrl: "https://www.youtube.com/watch?v=7_ST90Cz-CI" },
+      { title: "Emigré's Waltz", href: "/ensembles/emigres-waltz", isExternal: false, youtubeUrl: "https://www.youtube.com/watch?v=qK4EA-K2VO4" },
+      { title: "Abteilung 13 Darstellende Kunst", href: "https://www.youtube.com/watch?v=hcPTU9stKtc", isExternal: true, youtubeUrl: "https://www.youtube.com/watch?v=hcPTU9stKtc" },
+      { title: "Zwischen Ost und West", href: "/ensembles/between-east-and-west", isExternal: false, youtubeUrl: null },
+      { title: "Begegnungen Deutschland-Serbien", href: "/ensembles/encounters", isExternal: false, youtubeUrl: null }
     ],
     imageCredits: {
       img1: "©Siggi Mueller",
@@ -125,7 +123,7 @@ export default function VersusVoxPage() {
       <div 
         className="absolute inset-0 z-0"
         style={{ 
-            backgroundImage: "url('/images/vv_bg_test2.jpg')",
+            backgroundImage: "url('/images/vv_bg_test2.webp')",
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center center',
@@ -192,7 +190,7 @@ export default function VersusVoxPage() {
               {/* PAGE TITLE */}
               <ScrollReveal delay={0}>
                 <div className="mb-10 text-center">
-                  <h1 className="text-4xl md:text-5xl font-serif font-bold text-[#172F4F] tracking-wide">
+                  <h1 className="text-4xl md:text-5xl font-heading font-bold text-[#172F4F] tracking-widest uppercase">
                     {currentContent.pageTitle}
                   </h1>
                   <div className="h-px w-24 bg-[#172F4F] mx-auto opacity-30 mt-4"></div>
@@ -201,7 +199,7 @@ export default function VersusVoxPage() {
 
               {/* PARAGRAPH 1 */}
               <ScrollReveal delay={0.1}>
-                <p className="font-body text-sm md:text-base leading-relaxed text-[#172F4F] mb-6 md:mb-8 text-left break-words">
+                <p className="font-body text-sm md:text-base leading-relaxed text-[#172F4F] mb-6 md:mb-8 text-left">
                   {currentContent.paragraphs[0]}
                 </p>
               </ScrollReveal>
@@ -234,10 +232,10 @@ export default function VersusVoxPage() {
               {/* PARAGRAPHS 2 & 3 */}
               <ScrollReveal delay={0.1}>
                 <div className="space-y-4 md:space-y-5 mb-8">
-                  <p className="font-body text-sm md:text-base leading-relaxed text-[#172F4F] text-left break-words">
+                  <p className="font-body text-sm md:text-base leading-relaxed text-[#172F4F] text-left">
                     {currentContent.paragraphs[1]}
                   </p>
-                  <p className="font-body text-sm md:text-base leading-relaxed text-[#172F4F] text-left break-words">
+                  <p className="font-body text-sm md:text-base leading-relaxed text-[#172F4F] text-left">
                     {currentContent.paragraphs[2]}
                   </p>
                 </div>
@@ -268,7 +266,8 @@ export default function VersusVoxPage() {
             <section id="projects" className="scroll-mt-32">
               
               <ScrollReveal delay={0.1}>
-                <h3 className="text-xl md:text-2xl font-serif font-bold text-[#172F4F] mb-6 border-b border-[#172F4F]/20 pb-2">
+                {/* UPDATED TITLE STYLING TO MATCH THE MUSICAL WORKS PAGE */}
+                <h3 className="font-heading text-xl md:text-2xl font-bold tracking-widest text-[#172F4F] mb-6 border-b border-[#172F4F]/20 pb-2">
                   {currentContent.projectsTitle}
                 </h3>
               </ScrollReveal>
@@ -281,24 +280,22 @@ export default function VersusVoxPage() {
                       {/* Project Title / Link */}
                       <div className="flex items-start md:items-center gap-3 flex-1">
                         <span className="text-[#47719E] mt-0.5 md:mt-0">•</span>
-                        {project.isYoutube ? (
-                          <span className="text-[#172F4F] font-semibold">{project.title}</span>
-                        ) : (
-                          <a 
-                            href={project.href}
-                            className="text-[#172F4F] hover:text-[#47719E] font-semibold underline decoration-[#172F4F]/30 underline-offset-4 transition-colors"
-                          >
-                            {project.title}
-                          </a>
-                        )}
+                        <a 
+                          href={project.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#172F4F] hover:text-[#47719E] font-semibold underline decoration-[#172F4F]/30 underline-offset-4 transition-colors"
+                        >
+                          {project.title}
+                        </a>
                       </div>
 
                       {/* YouTube Button Overlay */}
-                      {project.isYoutube && (
+                      {project.youtubeUrl && (
                         <a 
-                          href={project.href} 
-                          target={project.isExternal ? "_blank" : "_self"} 
-                          rel={project.isExternal ? "noopener noreferrer" : undefined}
+                          href={project.youtubeUrl} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
                           className="flex items-center gap-2 bg-red-600/90 hover:bg-red-600 text-white px-3 lg:px-4 py-2 text-[10px] lg:text-xs font-body font-bold uppercase tracking-wider rounded transition-colors self-start md:self-auto whitespace-nowrap shadow-sm"
                         >
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

@@ -63,7 +63,7 @@ export default function Navbar() {
   }
 
   // Determine if we're on the news page for glassmorphism styling
-  const isNewsPage = pathname === '/news' || pathname === '/discography' || pathname === '/ensembles';
+  const isNewsPage = pathname === '/news' || pathname === '/discography' || pathname === '/ensembles' || pathname === '/ensembles/light-plays' || pathname === '/ensembles/emigres-waltz';
   const headerBg = isNewsPage 
     ? 'md:bg-[#506070]/60 md:backdrop-blur-md md:border-b md:border-white/20' 
     : 'md:bg-[#172F4F]';
