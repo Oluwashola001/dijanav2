@@ -1,13 +1,28 @@
 'use client';
 
 import { motion, useInView } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, ReactNode } from 'react';
 
 type Language = 'en' | 'de';
 
+// Strict TypeScript interface for Vercel
+interface ContentType {
+  backButton: string;
+  pageTitle: string;
+  subtitle: string;
+  concertType: string;
+  musicBy: string;
+  performersTitle: string;
+  performers: string;
+  reviewTitle: string;
+  reviewSource: string;
+  reviewEvent: string;
+  paragraphs: string[];
+}
+
 // --- TRANSLATION CONTENT ---
 // 100% UNICODE-ESCAPED for special characters to guarantee zero hidden-character compilation crashes.
-const CONTENT = {
+const CONTENT: Record<Language, ContentType> = {
   en: {
     backButton: "Back to Versus Vox",
     pageTitle: "EMIGR\u00c9'S WALTZ",
@@ -45,8 +60,9 @@ const CONTENT = {
 };
 
 // --- SCROLL REVEAL COMPONENT ---
-function ScrollReveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const ref = useRef(null);
+function ScrollReveal({ children, delay = 0 }: { children: ReactNode; delay?: number }) {
+  // Strictly typed for Vercel
+  const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: false, margin: "-50px" });
 
   return (
@@ -65,11 +81,13 @@ function ScrollReveal({ children, delay = 0 }: { children: React.ReactNode; dela
 export default function EmigresWaltzPage() {
   const [language, setLanguage] = useState<Language>('en');
 
-  // Read Language Setting
+  // Read Language Setting safely
   useEffect(() => {
-    const savedLang = localStorage.getItem('siteLanguage') as Language;
-    if (savedLang === 'en' || savedLang === 'de') {
-      setLanguage(savedLang);
+    if (typeof window !== 'undefined') {
+      const savedLang = localStorage.getItem('siteLanguage') as Language;
+      if (savedLang === 'en' || savedLang === 'de') {
+        setLanguage(savedLang);
+      }
     }
 
     document.documentElement.style.scrollBehavior = 'smooth';
@@ -85,19 +103,18 @@ export default function EmigresWaltzPage() {
       className="w-full min-h-screen text-white selection:bg-white selection:text-black relative"
       style={{ backgroundColor: '#000' }}
     >
-      {/* BACKGROUND IMAGE - Exact implementation from the Discography page */}
+      {/* BACKGROUND IMAGE - Fixed to fill entire height and extend through the top */}
       <div 
-        className="absolute inset-0 z-0 pointer-events-none"
+        className="fixed inset-0 z-0 pointer-events-none w-full h-full"
         style={{ 
             backgroundImage: "url('/images/emigres-waltz-bg.webp')", 
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center center',
-            backgroundAttachment: 'fixed',
         }}
       />
 
-      {/* --- MOBILE TOP NAV SPACER --- */}
+      {/* --- MOBILE TOP NAV SPACER (Optional background) --- */}
       <div className="lg:hidden w-full flex flex-col pt-6 relative z-10">
         <div className="px-4 pb-2 w-full"></div>
       </div>
@@ -121,10 +138,10 @@ export default function EmigresWaltzPage() {
         </a>
       </motion.div>
 
-      {/* --- MAIN CONTENT CONTAINER - CENTERED --- */}
-      <div className="relative z-10 max-w-[850px] mx-auto px-4 md:px-8 pb-20 pt-12 md:pt-0">
+      {/* --- MAIN CONTENT CONTAINER --- */}
+      <div className="relative z-10 max-w-[850px] mx-auto px-4 md:px-8 pb-20 pt-24 md:pt-0">
         
-        {/* UPDATED CONTAINER: Removed border-t (top border) */}
+        {/* BLACK BACKGROUND CONTAINER WITH NO TOP BORDER */}
         <div className="bg-black/85 backdrop-blur-md px-4 md:px-12 py-8 md:py-12 shadow-2xl border-x border-b border-white">
           
           {/* Mobile Back Button (Inside Container) */}

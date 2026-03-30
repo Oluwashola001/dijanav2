@@ -1,13 +1,27 @@
 'use client';
 
 import { motion, useInView } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, ReactNode } from 'react';
 
 type Language = 'en' | 'de';
 
+// Strict TypeScript interface for Vercel
+interface ContentType {
+  backButton: string;
+  pageTitle: string;
+  subtitle: string;
+  premiere: string;
+  venue: string;
+  projectBy: string;
+  paragraphs: ReactNode[];
+  performersTitle: string;
+  ensemble: string;
+  performers: string[];
+  support: string;
+}
+
 // --- TRANSLATION CONTENT ---
-// 100% freshly typed to eliminate all invisible zero-width characters from copy-pasting
-const CONTENT = {
+const CONTENT: Record<Language, ContentType> = {
   en: {
     backButton: "Back to Versus Vox",
     pageTitle: "LIGHT PLAYS",
@@ -49,8 +63,9 @@ const CONTENT = {
 };
 
 // --- SCROLL REVEAL COMPONENT ---
-function ScrollReveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const ref = useRef(null);
+function ScrollReveal({ children, delay = 0 }: { children: ReactNode; delay?: number }) {
+  // Strictly typed for Vercel build
+  const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: false, margin: "-50px" });
 
   return (
@@ -69,11 +84,13 @@ function ScrollReveal({ children, delay = 0 }: { children: React.ReactNode; dela
 export default function LightPlaysPage() {
   const [language, setLanguage] = useState<Language>('en');
 
-  // Read Language Setting
+  // Read Language Setting safely
   useEffect(() => {
-    const savedLang = localStorage.getItem('siteLanguage') as Language;
-    if (savedLang === 'en' || savedLang === 'de') {
-      setLanguage(savedLang);
+    if (typeof window !== 'undefined') {
+      const savedLang = localStorage.getItem('siteLanguage') as Language;
+      if (savedLang === 'en' || savedLang === 'de') {
+        setLanguage(savedLang);
+      }
     }
 
     document.documentElement.style.scrollBehavior = 'smooth';
@@ -128,7 +145,7 @@ export default function LightPlaysPage() {
       </motion.div>
 
       {/* --- MAIN CONTENT CONTAINER - CENTERED --- */}
-      <div className="relative z-10 max-w-[850px] mx-auto px-4 md:px-8 pb-20 pt-8 md:pt-0">
+      <div className="relative z-10 max-w-[850px] mx-auto px-4 md:px-8 pb-20 pt-12 md:pt-0">
         
         {/* EXPANDED LIGHT BROWN BACKGROUND CONTAINER - Updated to #E7CDA8 */}
         <div className="bg-[#E7CDA8]/95 backdrop-blur-sm px-4 md:px-12 py-8 md:py-12 shadow-2xl border-t-4 border-[#172F4F]">
@@ -210,7 +227,7 @@ export default function LightPlaysPage() {
               </div>
             </ScrollReveal>
 
-            {/* DUAL IMAGES 2 & 3 (Foto Klavier & Foto Trio) - Moved up here */}
+            {/* DUAL IMAGES 2 & 3 (Foto Klavier & Foto Trio) */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
               <ScrollReveal delay={0.1}>
                 <img 
@@ -228,7 +245,7 @@ export default function LightPlaysPage() {
               </ScrollReveal>
             </div>
 
-            {/* CREDITS & PERFORMERS SECTION - Moved down here */}
+            {/* CREDITS & PERFORMERS SECTION */}
             <section>
               <ScrollReveal delay={0.1}>
                 <div className="bg-[#172F4F]/5 border border-[#172F4F]/10 p-6 md:p-10 text-center">
