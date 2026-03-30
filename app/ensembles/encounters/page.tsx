@@ -133,19 +133,9 @@ export default function EncountersPage() {
 
   return (
     <main
-      className="w-full min-h-screen text-[#3D593C] selection:bg-[#3D593C] selection:text-[#FDF8EC] relative"
+      className="w-full min-h-screen text-[#3D593C] selection:bg-[#3D593C] selection:text-[#FDF8EC]"
       style={{ backgroundColor: '#FDF8EC' }}
     >
-      <div
-        className="fixed inset-0 z-0 pointer-events-none w-full h-full"
-        style={{
-          backgroundImage: "url('/images/encounters-bg.webp')",
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center center',
-        }}
-      />
-
       {/* DESKTOP SIDEBAR NAV */}
       <motion.div
         className="hidden lg:block fixed top-24 right-8 z-40 w-auto"
@@ -165,104 +155,120 @@ export default function EncountersPage() {
         </a>
       </motion.div>
 
-      <div className="relative z-10 max-w-[850px] mx-auto px-4 md:px-8 pb-20 pt-24 md:pt-12">
-        <div className="bg-[#FDF8EC]/95 backdrop-blur-sm px-4 md:px-12 py-8 md:py-12 shadow-2xl border-x border-b border-[#3D593C]/20">
+      {/* TWO-COLUMN LAYOUT: image left, content right */}
+      <div className="flex min-h-screen items-stretch pt-12 md:pt-0 pb-20">
 
-          {/* Mobile Back Button */}
-          <div className="lg:hidden mb-8 text-center">
-            <a
-              href="/ensembles"
-              className="inline-flex items-center gap-2 text-[#3D593C] font-body text-xs font-bold uppercase tracking-widest transition-colors"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-              </svg>
-              {t.backButton}
-            </a>
-          </div>
+        {/* LEFT: Image column — hidden on mobile */}
+        <div className="hidden lg:block w-[320px] xl:w-[380px] shrink-0 self-start sticky top-0 h-screen">
+          <img
+            src="/images/encounters-bg.webp"
+            alt="Encounters – Germany Serbia"
+            className="w-full h-full object-cover"
+          />
+        </div>
 
-          <div className="space-y-12">
+        {/* RIGHT: Content column */}
+        <div className="flex-1 min-w-0 self-start px-4 md:px-8 lg:pl-0 lg:pr-12 xl:pr-20">
+          <div className="max-w-[850px] mx-auto lg:mx-0">
+            <div className="bg-[#FDF8EC]/95 backdrop-blur-sm px-4 md:px-12 py-8 md:py-12 shadow-2xl border border-[#3D593C]/20">
 
-            {/* HEADER */}
-            <section className="text-center">
-              <ScrollReveal delay={0}>
-                <h1 className="text-4xl md:text-5xl font-heading font-bold text-[#3D593C] tracking-widest uppercase mb-1">
-                  {t.pageTitle}
-                </h1>
-                <h2 className="text-xl md:text-2xl font-serif text-[#3D593C] font-bold tracking-[0.2em] mb-4">
-                  {t.subtitle}
-                </h2>
-                <p className="text-sm md:text-base font-body uppercase tracking-[0.15em] text-[#3D593C]/70 mb-8">
-                  {t.discipline}
-                </p>
-                <div className="space-y-2 font-body text-sm md:text-base text-[#3D593C]">
-                  <p className="font-semibold">{t.patron}</p>
-                  <p className="italic text-[#3D593C]/80 max-w-lg mx-auto leading-relaxed">{t.support}</p>
-                </div>
-                <div className="h-px w-24 bg-[#3D593C] mx-auto opacity-30 mt-10"></div>
-              </ScrollReveal>
-            </section>
-
-            {/* INTRO */}
-            <section className="space-y-6">
-              {t.introText.map((paragraph, index) => (
-                <ScrollReveal key={index} delay={0.1}>
-                  <p className="font-body text-sm md:text-base leading-relaxed text-left md:text-justify">
-                    {paragraph}
-                  </p>
-                </ScrollReveal>
-              ))}
-            </section>
-
-            {/* CREDITS */}
-            <ScrollReveal delay={0.1}>
-              <div className="bg-[#3D593C]/5 border border-[#3D593C]/10 p-6 md:p-10 space-y-8">
-                <div className="text-center md:text-left">
-                  <h3 className="font-heading text-xs uppercase tracking-widest text-[#3D593C]/60 mb-2">{t.credits.composersTitle}</h3>
-                  <p className="font-serif text-lg md:text-xl font-bold text-[#3D593C] leading-snug">
-                    {t.credits.composers}
-                  </p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div>
-                    <h3 className="font-heading text-xs uppercase tracking-widest text-[#3D593C]/60 mb-1">{t.credits.soundTitle}</h3>
-                    <p className="font-body font-bold">{t.credits.soundName}</p>
-                  </div>
-                  <div>
-                    <h3 className="font-heading text-xs uppercase tracking-widest text-[#3D593C]/60 mb-1">{t.credits.speakerTitle}</h3>
-                    <p className="font-body font-bold">{t.credits.speakerName}</p>
-                  </div>
-                </div>
+              {/* Mobile Back Button */}
+              <div className="lg:hidden mb-8 text-center">
+                <a
+                  href="/ensembles"
+                  className="inline-flex items-center gap-2 text-[#3D593C] font-body text-xs font-bold uppercase tracking-widest transition-colors"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                  </svg>
+                  {t.backButton}
+                </a>
               </div>
-            </ScrollReveal>
 
-            {/* REVIEW */}
-            <section className="pt-12 border-t border-[#3D593C]/10">
-              <ScrollReveal delay={0.1}>
-                <div className="text-center md:text-left space-y-6">
-                  <div className="border-l-4 border-[#3D593C] pl-6">
-                    <h3 className="text-2xl md:text-3xl font-serif font-bold italic text-[#3D593C]">
-                      {t.review.title}
-                    </h3>
-                    <p className="font-body text-xs md:text-sm text-[#3D593C]/60 uppercase tracking-widest mt-1">
-                      {t.review.meta}
+              <div className="space-y-12">
+
+                {/* HEADER */}
+                <section className="text-center">
+                  <ScrollReveal delay={0}>
+                    <h1 className="text-4xl md:text-5xl font-heading font-bold text-[#3D593C] tracking-widest uppercase mb-1">
+                      {t.pageTitle}
+                    </h1>
+                    <h2 className="text-xl md:text-2xl font-serif text-[#3D593C] font-bold tracking-[0.2em] mb-4">
+                      {t.subtitle}
+                    </h2>
+                    <p className="text-sm md:text-base font-body uppercase tracking-[0.15em] text-[#3D593C]/70 mb-8">
+                      {t.discipline}
                     </p>
-                  </div>
-                  <div className="space-y-6">
-                    {t.review.paragraphs.map((paragraph, index) => (
-                      <p
-                        key={index}
-                        className="font-body text-sm md:text-base leading-relaxed text-[#3D593C]/90 text-left md:text-justify italic"
-                      >
+                    <div className="space-y-2 font-body text-sm md:text-base text-[#3D593C]">
+                      <p className="font-semibold">{t.patron}</p>
+                      <p className="italic text-[#3D593C]/80 max-w-lg mx-auto leading-relaxed">{t.support}</p>
+                    </div>
+                    <div className="h-px w-24 bg-[#3D593C] mx-auto opacity-30 mt-10"></div>
+                  </ScrollReveal>
+                </section>
+
+                {/* INTRO */}
+                <section className="space-y-6">
+                  {t.introText.map((paragraph, index) => (
+                    <ScrollReveal key={index} delay={0.1}>
+                      <p className="font-body text-sm md:text-base leading-relaxed text-left md:text-justify">
                         {paragraph}
                       </p>
-                    ))}
-                  </div>
-                </div>
-              </ScrollReveal>
-            </section>
+                    </ScrollReveal>
+                  ))}
+                </section>
 
+                {/* CREDITS */}
+                <ScrollReveal delay={0.1}>
+                  <div className="bg-[#3D593C]/5 border border-[#3D593C]/10 p-6 md:p-10 space-y-8">
+                    <div className="text-center md:text-left">
+                      <h3 className="font-heading text-xs uppercase tracking-widest text-[#3D593C]/60 mb-2">{t.credits.composersTitle}</h3>
+                      <p className="font-serif text-lg md:text-xl font-bold text-[#3D593C] leading-snug">
+                        {t.credits.composers}
+                      </p>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <div>
+                        <h3 className="font-heading text-xs uppercase tracking-widest text-[#3D593C]/60 mb-1">{t.credits.soundTitle}</h3>
+                        <p className="font-body font-bold">{t.credits.soundName}</p>
+                      </div>
+                      <div>
+                        <h3 className="font-heading text-xs uppercase tracking-widest text-[#3D593C]/60 mb-1">{t.credits.speakerTitle}</h3>
+                        <p className="font-body font-bold">{t.credits.speakerName}</p>
+                      </div>
+                    </div>
+                  </div>
+                </ScrollReveal>
+
+                {/* REVIEW */}
+                <section className="pt-12 border-t border-[#3D593C]/10">
+                  <ScrollReveal delay={0.1}>
+                    <div className="text-center md:text-left space-y-6">
+                      <div className="border-l-4 border-[#3D593C] pl-6">
+                        <h3 className="text-2xl md:text-3xl font-serif font-bold italic text-[#3D593C]">
+                          {t.review.title}
+                        </h3>
+                        <p className="font-body text-xs md:text-sm text-[#3D593C]/60 uppercase tracking-widest mt-1">
+                          {t.review.meta}
+                        </p>
+                      </div>
+                      <div className="space-y-6">
+                        {t.review.paragraphs.map((paragraph, index) => (
+                          <p
+                            key={index}
+                            className="font-body text-sm md:text-base leading-relaxed text-[#3D593C]/90 text-left md:text-justify italic"
+                          >
+                            {paragraph}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  </ScrollReveal>
+                </section>
+
+              </div>
+            </div>
           </div>
         </div>
       </div>

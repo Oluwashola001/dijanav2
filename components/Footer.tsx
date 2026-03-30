@@ -63,7 +63,7 @@ export default function Footer() {
   }
 
   // Determine if we're on the news page for glassmorphism styling
-  const isNewsPage = pathname === '/news' || pathname === '/discography' || pathname === '/ensembles' || pathname === '/ensembles/light-plays' || pathname === '/ensembles/emigres-waltz';
+  const isNewsPage = pathname === '/news' || pathname === '/discography' || pathname === '/ensembles' || pathname === '/ensembles/light-plays' || pathname === '/ensembles/emigres-waltz' || pathname === '/ensembles/encounters';
   const footerBg = isNewsPage 
     ? 'bg-[rgba(80,96,112,0.6)] backdrop-blur-md border-t border-white/20' 
     : 'bg-[#172F4F] border-t border-white/20';
