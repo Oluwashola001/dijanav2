@@ -64,7 +64,6 @@ const CONTENT: Record<Language, ContentType> = {
 
 // --- SCROLL REVEAL COMPONENT ---
 function ScrollReveal({ children, delay = 0 }: { children: ReactNode; delay?: number }) {
-  // Strictly typed for Vercel build
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: false, margin: "-50px" });
 
@@ -84,7 +83,6 @@ function ScrollReveal({ children, delay = 0 }: { children: ReactNode; delay?: nu
 export default function LightPlaysPage() {
   const [language, setLanguage] = useState<Language>('en');
 
-  // Read Language Setting safely
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const savedLang = localStorage.getItem('siteLanguage') as Language;
@@ -104,9 +102,8 @@ export default function LightPlaysPage() {
   return (
     <main 
       className="w-full min-h-screen text-[#172F4F] selection:bg-[#172F4F] selection:text-white relative"
-      
     >
-      {/* BACKGROUND IMAGE - Exact implementation from the Discography page */}
+      {/* BACKGROUND IMAGE */}
       <div 
         className="absolute inset-0 z-0"
         style={{ 
@@ -144,13 +141,12 @@ export default function LightPlaysPage() {
         </a>
       </motion.div>
 
-      {/* --- MAIN CONTENT CONTAINER - CENTERED --- */}
+      {/* --- MAIN CONTENT CONTAINER --- */}
       <div className="relative z-10 max-w-[850px] mx-auto px-4 md:px-8 pb-20 pt-12 md:pt-0">
         
-        {/* EXPANDED LIGHT BROWN BACKGROUND CONTAINER - Updated to #E7CDA8 */}
         <div className="bg-[#E7CDA8]/95 backdrop-blur-sm px-4 md:px-12 py-8 md:py-12 shadow-2xl border-t-4 border-[#172F4F]">
           
-          {/* Mobile Back Button (Inside Container) */}
+          {/* Mobile Back Button */}
           <div className="lg:hidden mb-8 text-center">
             <a 
               href="/ensembles" 
@@ -166,27 +162,29 @@ export default function LightPlaysPage() {
 
           <div className="space-y-10 md:space-y-12">
 
-            {/* HEADER SECTION */}
+            {/* 1. MAIN TITLE */}
             <section className="text-center">
               <ScrollReveal delay={0}>
-                <h1 className="text-4xl md:text-5xl font-heading font-bold text-[#172F4F] tracking-widest uppercase mb-2">
+                <h1 className="text-4xl md:text-5xl font-heading font-bold text-[#172F4F] tracking-widest uppercase mb-4">
                   {currentContent.pageTitle}
                 </h1>
-                <h2 className="text-xl md:text-2xl font-serif text-[#172F4F] font-bold tracking-widest mb-8">
-                  {currentContent.subtitle}
-                </h2>
-                
-                <div className="space-y-1.5 font-body text-sm md:text-base text-[#172F4F]">
-                  <p className="font-semibold">{currentContent.premiere}</p>
-                  <p className="font-semibold">{currentContent.venue}</p>
-                  <p className="italic mt-2 text-[#172F4F]/80">{currentContent.projectBy}</p>
-                </div>
-                
-                <div className="h-px w-24 bg-[#172F4F] mx-auto opacity-30 mt-8"></div>
+                <div className="h-px w-24 bg-[#172F4F] mx-auto opacity-30"></div>
               </ScrollReveal>
             </section>
 
-            {/* VIDEO EMBED */}
+            {/* 2. SUBTITLE + FIRST PARAGRAPH */}
+            <section>
+              <ScrollReveal delay={0.1}>
+                <h2 className="font-heading text-xl md:text-2xl font-bold text-[#172F4F] tracking-widest uppercase mb-5 text-center">
+                  {currentContent.subtitle}
+                </h2>
+                <p className="font-body text-sm md:text-base leading-relaxed text-[#172F4F] text-left md:text-justify">
+                  {currentContent.paragraphs[0]}
+                </p>
+              </ScrollReveal>
+            </section>
+
+            {/* 3. VIDEO EMBED */}
             <ScrollReveal delay={0.1}>
               <div className="w-full aspect-video shadow-xl border border-[#172F4F]/20 bg-black">
                 <iframe 
@@ -200,23 +198,16 @@ export default function LightPlaysPage() {
               </div>
             </ScrollReveal>
 
-            {/* DESCRIPTION PARAGRAPHS */}
+            {/* 4. SECOND PARAGRAPH */}
             <section>
               <ScrollReveal delay={0.1}>
-                <div className="space-y-5">
-                  {currentContent.paragraphs.map((paragraph, index) => (
-                    <p 
-                      key={index} 
-                      className="font-body text-sm md:text-base leading-relaxed text-[#172F4F] text-left md:text-justify"
-                    >
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
+                <p className="font-body text-sm md:text-base leading-relaxed text-[#172F4F] text-left md:text-justify">
+                  {currentContent.paragraphs[1]}
+                </p>
               </ScrollReveal>
             </section>
 
-            {/* SINGLE IMAGE 1 (Foto Skulptur) */}
+            {/* 5. SINGLE IMAGE */}
             <ScrollReveal delay={0.15}>
               <div className="w-full">
                 <img 
@@ -227,7 +218,7 @@ export default function LightPlaysPage() {
               </div>
             </ScrollReveal>
 
-            {/* DUAL IMAGES 2 & 3 (Foto Klavier & Foto Trio) */}
+            {/* 6. DUAL IMAGES */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
               <ScrollReveal delay={0.1}>
                 <img 
@@ -245,17 +236,19 @@ export default function LightPlaysPage() {
               </ScrollReveal>
             </div>
 
-            {/* CREDITS & PERFORMERS SECTION */}
+            {/* 7. PERFORMERS / CREDITS SECTION */}
             <section>
               <ScrollReveal delay={0.1}>
                 <div className="bg-[#172F4F]/5 border border-[#172F4F]/10 p-6 md:p-10 text-center">
+                  
                   <h3 className="font-heading text-lg md:text-xl font-bold text-[#172F4F] uppercase tracking-widest mb-6">
                     {currentContent.performersTitle}
                   </h3>
-                  
-                  <p className="font-serif font-bold text-[#172F4F] text-base md:text-lg mb-4">
+
+                  {/* Ensemble name — now font-heading to match */}
+                  <h4 className="font-heading text-base md:text-lg font-bold text-[#172F4F] uppercase tracking-widest mb-4">
                     {currentContent.ensemble}
-                  </p>
+                  </h4>
 
                   <ul className="space-y-2 font-body text-sm md:text-base text-[#172F4F] mb-8">
                     {currentContent.performers.map((performer, index) => (
@@ -264,7 +257,16 @@ export default function LightPlaysPage() {
                   </ul>
 
                   <div className="h-px w-16 bg-[#172F4F] mx-auto opacity-20 mb-6"></div>
-                  
+
+                  {/* Premiere / Venue / Project info moved here */}
+                  <div className="space-y-1.5 font-body text-sm md:text-base text-[#172F4F] mb-6">
+                    <p className="font-semibold">{currentContent.premiere}</p>
+                    <p className="font-semibold">{currentContent.venue}</p>
+                    <p className="italic mt-2 text-[#172F4F]/80">{currentContent.projectBy}</p>
+                  </div>
+
+                  <div className="h-px w-16 bg-[#172F4F] mx-auto opacity-20 mb-6"></div>
+
                   <p className="font-body text-xs md:text-sm text-[#172F4F] italic max-w-lg mx-auto">
                     {currentContent.support}
                   </p>
