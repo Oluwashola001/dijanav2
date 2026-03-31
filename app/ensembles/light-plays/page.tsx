@@ -142,7 +142,7 @@ export default function LightPlaysPage() {
       </motion.div>
 
       {/* --- MAIN CONTENT CONTAINER --- */}
-      <div className="relative z-10 max-w-[850px] mx-auto px-4 md:px-8 pb-20 pt-12 md:pt-0">
+      <div className="relative z-10 max-w-[850px] mx-auto px-4 md:px-8 pb-20 pt-8 md:pt-0">
         
         <div className="bg-[#E7CDA8]/95 backdrop-blur-sm px-4 md:px-12 py-8 md:py-12 shadow-2xl border-t-4 border-[#172F4F]">
           
