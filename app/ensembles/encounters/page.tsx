@@ -194,7 +194,7 @@ export default function EncountersPage() {
                     <h1 className="text-4xl md:text-5xl font-heading font-bold text-[#3D593C] tracking-widest uppercase mb-1">
                       {t.pageTitle}
                     </h1>
-                    <h2 className="text-xl md:text-2xl font-serif text-[#3D593C] font-bold tracking-[0.2em] mb-4">
+                    <h2 className="text-xl md:text-2xl font-heading text-[#3D593C] font-bold tracking-[0.2em] mb-4">
                       {t.subtitle}
                     </h2>
                     <p className="text-sm md:text-base font-body uppercase tracking-[0.15em] text-[#3D593C]/70 mb-8">
@@ -224,7 +224,7 @@ export default function EncountersPage() {
                   <div className="bg-[#3D593C]/5 border border-[#3D593C]/10 p-6 md:p-10 space-y-8">
                     <div className="text-center md:text-left">
                       <h3 className="font-heading text-xs uppercase tracking-widest text-[#3D593C]/60 mb-2">{t.credits.composersTitle}</h3>
-                      <p className="font-serif text-lg md:text-xl font-bold text-[#3D593C] leading-snug">
+                      <p className="font-heading text-lg md:text-xl font-bold text-[#3D593C] leading-snug">
                         {t.credits.composers}
                       </p>
                     </div>

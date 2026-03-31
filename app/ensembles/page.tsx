@@ -198,7 +198,7 @@ export default function VersusVoxPage() {
                 </p>
               </ScrollReveal>
 
-              {/* DUAL IMAGES 1 */}
+              {/* DUAL IMAGES 1 — single on mobile, two-col on desktop */}
               <div className="mb-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                   <ScrollReveal delay={0.1}>
@@ -208,11 +208,12 @@ export default function VersusVoxPage() {
                       className="w-full aspect-[4/3] object-cover shadow-md border border-[#172F4F]/20"
                     />
                   </ScrollReveal>
+                  {/* Hidden on mobile, visible on md+ */}
                   <ScrollReveal delay={0.2}>
                     <img 
                       src="/images/ensemble_1b.webp" 
                       alt="Versus Vox Ensemble Detail" 
-                      className="w-full aspect-[4/3] object-cover shadow-md border border-[#172F4F]/20"
+                      className="hidden md:block w-full aspect-[4/3] object-cover shadow-md border border-[#172F4F]/20"
                     />
                   </ScrollReveal>
                 </div>
@@ -235,7 +236,7 @@ export default function VersusVoxPage() {
                 </div>
               </ScrollReveal>
 
-              {/* DUAL IMAGES 2 */}
+              {/* DUAL IMAGES 2 — unchanged, two-col on all breakpoints */}
               <div className="mb-8 md:mb-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                   <ScrollReveal delay={0.1}>
@@ -303,7 +304,7 @@ export default function VersusVoxPage() {
                 ))}
               </ul>
 
-              {/* DUAL IMAGES 3 */}
+              {/* DUAL IMAGES 3 — single on mobile, two-col on desktop */}
               <div className="mb-8 md:mb-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                   <ScrollReveal delay={0.1}>
@@ -313,11 +314,12 @@ export default function VersusVoxPage() {
                       className="w-full aspect-[4/3] object-cover shadow-md border border-[#172F4F]/20"
                     />
                   </ScrollReveal>
+                  {/* Hidden on mobile, visible on md+ */}
                   <ScrollReveal delay={0.2}>
                     <img 
                       src="/images/ensemble_3b.webp" 
                       alt="Versus Vox Ensemble Members Alt" 
-                      className="w-full aspect-[4/3] object-cover shadow-md border border-[#172F4F]/20"
+                      className="hidden md:block w-full aspect-[4/3] object-cover shadow-md border border-[#172F4F]/20"
                     />
                   </ScrollReveal>
                 </div>

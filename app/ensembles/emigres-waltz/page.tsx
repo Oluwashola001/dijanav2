@@ -166,7 +166,7 @@ export default function EmigresWaltzPage() {
                 <h1 className="text-4xl md:text-5xl font-heading font-bold text-white tracking-widest uppercase mb-2">
                   {currentContent.pageTitle}
                 </h1>
-                <h2 className="text-xl md:text-2xl font-serif text-white/90 font-bold tracking-widest mb-8">
+                <h2 className="text-xl md:text-2xl font-heading text-white/90 font-bold tracking-widest mb-8">
                   {currentContent.subtitle}
                 </h2>
                 
@@ -211,7 +211,7 @@ export default function EmigresWaltzPage() {
             <section>
               <ScrollReveal delay={0.1}>
                 <div className="text-center md:text-left">
-                  <h3 className="text-2xl md:text-3xl font-serif font-bold text-white mb-2">
+                  <h3 className="text-2xl md:text-3xl font-heading font-bold text-white mb-2">
                     {currentContent.reviewTitle}
                   </h3>
                   <p className="font-body text-sm md:text-base text-gray-400 italic mb-6">
