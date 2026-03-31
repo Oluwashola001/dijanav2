@@ -10,12 +10,14 @@ const CONTENT = {
   en: {
     pageTitle: "Versus Vox",
     nav: [
-      { id: "about", label: "About the Ensemble" },
-      { id: "projects", label: "Selected Projects" },
+      { id: "light-plays", label: "Light Plays", href: "/ensembles/light-plays" },
+      { id: "emigres-waltz", label: "Emigré's Waltz", href: "/ensembles/emigres-waltz" },
+      { id: "between-east-and-west", label: "Between East & West", href: "/ensembles/between-east-and-west" },
+      { id: "encounters", label: "Encounters", href: "/ensembles/encounters" },
     ],
     paragraphs: [
       <>
-        The <strong>Versus Vox Ensemble</strong>, founded in 2000 by <strong>Dijana Bošković</strong>, performs in flexible formations ranging from duo to nonet. At the core of its artistic work lies an ongoing engagement with modern music and a close dialogue with contemporary composers. Within the ensemble’s programs, original compositions meet works of the present and selected repertoire from music history, creating multifaceted musical experiences that often open toward interdisciplinary perspectives.
+        The <strong>Versus Vox Ensemble</strong>, founded in 2000 by <strong>Dijana Bošković</strong>, performs in flexible formations ranging from duo to nonet. At the core of its artistic work lies an ongoing engagement with modern music and a close dialogue with contemporary composers. Within the ensemble's programs, original compositions meet works of the present and selected repertoire from music history, creating multifaceted musical experiences that often open toward interdisciplinary perspectives.
       </>,
       <>
         A particular focus of the ensemble lies in thematically conceived concert projects, in which music enters into dialogue with diverse forms of artistic expression. From this interaction emerges a shared language that reaches beyond the purely musical and gives shape to the conceptual ideas behind the programs.
@@ -27,7 +29,7 @@ const CONTENT = {
     projectsTitle: "SELECTED PROJECTS with the VERSUS VOX ENSEMBLE",
     projects: [
       { title: "Light Plays", href: "/ensembles/light-plays", isExternal: false, youtubeUrl: "https://www.youtube.com/watch?v=7_ST90Cz-CI" },
-      { title: "Emigré’s Waltz", href: "/ensembles/emigres-waltz", isExternal: false, youtubeUrl: "https://www.youtube.com/watch?v=qK4EA-K2VO4" },
+      { title: "Emigré's Waltz", href: "/ensembles/emigres-waltz", isExternal: false, youtubeUrl: "https://www.youtube.com/watch?v=qK4EA-K2VO4" },
       { title: "Abteilung 13: Darstellende Kunst", href: "https://www.youtube.com/watch?v=hcPTU9stKtc", isExternal: true, youtubeUrl: "https://www.youtube.com/watch?v=hcPTU9stKtc" },
       { title: "Between East and West", href: "/ensembles/between-east-and-west", isExternal: false, youtubeUrl: null },
       { title: "ENCOUNTERS – Germany & Serbia", href: "/ensembles/encounters", isExternal: false, youtubeUrl: null }
@@ -40,8 +42,10 @@ const CONTENT = {
   de: {
     pageTitle: "Versus Vox",
     nav: [
-      { id: "about", label: "Über das Ensemble" },
-      { id: "projects", label: "Ausgewählte Projekte" },
+      { id: "light-plays", label: "Light Plays", href: "/ensembles/light-plays" },
+      { id: "emigres-waltz", label: "Emigré's Waltz", href: "/ensembles/emigres-waltz" },
+      { id: "between-east-and-west", label: "Zwischen Ost und West", href: "/ensembles/between-east-and-west" },
+      { id: "encounters", label: "Begegnungen", href: "/ensembles/encounters" },
     ],
     paragraphs: [
       <>
@@ -103,14 +107,6 @@ export default function VersusVoxPage() {
     };
   }, []);
 
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   const currentContent = CONTENT[language];
 
   return (
@@ -139,8 +135,7 @@ export default function VersusVoxPage() {
             {currentContent.nav.map((item) => (
               <a 
                 key={item.id}
-                href={`#${item.id}`}
-                onClick={(e) => scrollToSection(e, item.id)}
+                href={item.href}
                 className="text-[10px] font-bold uppercase tracking-widest text-white hover:text-white bg-[#575757]/90 border border-gray-700 hover:border-white px-3 py-1.5 rounded transition-all"
               >
                 {item.label}
@@ -161,8 +156,7 @@ export default function VersusVoxPage() {
           {currentContent.nav.map((item, index) => (
             <motion.a 
               key={item.id} 
-              href={`#${item.id}`}
-              onClick={(e) => scrollToSection(e, item.id)}
+              href={item.href}
               className="text-[13px] font-medium uppercase tracking-widest text-white hover:text-white 
                            bg-[#506070]/60 backdrop-blur-md border border-white/20 hover:bg-[#506070]/80 hover:border-white/40
                            px-4 py-3 rounded-md transition-all duration-300 text-center shadow-lg hover:shadow-xl hover:scale-[1.02]"
@@ -266,7 +260,6 @@ export default function VersusVoxPage() {
             <section id="projects" className="scroll-mt-32">
               
               <ScrollReveal delay={0.1}>
-                {/* UPDATED TITLE STYLING TO MATCH THE MUSICAL WORKS PAGE */}
                 <h3 className="font-heading text-xl md:text-2xl font-bold tracking-widest text-[#172F4F] mb-6 border-b border-[#172F4F]/20 pb-2">
                   {currentContent.projectsTitle}
                 </h3>
@@ -275,11 +268,11 @@ export default function VersusVoxPage() {
               <ul className="space-y-3 md:space-y-4 font-body text-sm md:text-base mb-10 md:mb-12 break-words">
                 {currentContent.projects.map((project, index) => (
                   <ScrollReveal delay={0.1 + (index * 0.05)} key={index}>
-                    <li className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-[#172F4F]/10 pb-4 last:border-0 last:pb-0">
-                      
+                    <li className="flex flex-row items-center justify-between gap-3 border-b border-[#172F4F]/10 pb-4 last:border-0 last:pb-0">
+
                       {/* Project Title / Link */}
-                      <div className="flex items-start md:items-center gap-3 flex-1">
-                        <span className="text-[#47719E] mt-0.5 md:mt-0">•</span>
+                      <div className="flex items-center gap-3 flex-1 min-w-0">
+                        <span className="text-[#47719E] shrink-0">•</span>
                         <a 
                           href={project.href}
                           target="_blank"
@@ -290,13 +283,13 @@ export default function VersusVoxPage() {
                         </a>
                       </div>
 
-                      {/* YouTube Button Overlay */}
+                      {/* YouTube Button */}
                       {project.youtubeUrl && (
                         <a 
                           href={project.youtubeUrl} 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2 bg-red-600/90 hover:bg-red-600 text-white px-3 lg:px-4 py-2 text-[10px] lg:text-xs font-body font-bold uppercase tracking-wider rounded transition-colors self-start md:self-auto whitespace-nowrap shadow-sm"
+                          className="flex items-center gap-2 bg-red-600/90 hover:bg-red-600 text-white px-3 lg:px-4 py-2 text-[10px] lg:text-xs font-body font-bold uppercase tracking-wider rounded transition-colors shrink-0 whitespace-nowrap shadow-sm"
                         >
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
@@ -310,19 +303,25 @@ export default function VersusVoxPage() {
                 ))}
               </ul>
 
-              {/* SINGLE IMAGE 3 */}
-              <ScrollReveal delay={0.2}>
-                <div className="mt-8">
-                  <img 
-                    src="/images/ensemble_3a.webp" 
-                    alt="Versus Vox Ensemble Abstract" 
-                    className="w-full h-auto shadow-md border border-[#172F4F]/20"
-                  />
-                  <p className="text-[10px] text-[#172F4F]/70 mt-2 text-right font-body">
-                    {currentContent.imageCredits.img3}
-                  </p>
+              {/* DUAL IMAGES 3 */}
+              <div className="mb-8 md:mb-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                  <ScrollReveal delay={0.1}>
+                    <img 
+                      src="/images/ensemble_3a.webp" 
+                      alt="Versus Vox Ensemble Members" 
+                      className="w-full aspect-[4/3] object-cover shadow-md border border-[#172F4F]/20"
+                    />
+                  </ScrollReveal>
+                  <ScrollReveal delay={0.2}>
+                    <img 
+                      src="/images/ensemble_3b.webp" 
+                      alt="Versus Vox Ensemble Members Alt" 
+                      className="w-full aspect-[4/3] object-cover shadow-md border border-[#172F4F]/20"
+                    />
+                  </ScrollReveal>
                 </div>
-              </ScrollReveal>
+              </div>
 
             </section>
 

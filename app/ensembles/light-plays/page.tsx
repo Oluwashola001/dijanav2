@@ -104,7 +104,7 @@ export default function LightPlaysPage() {
   return (
     <main 
       className="w-full min-h-screen text-[#172F4F] selection:bg-[#172F4F] selection:text-white relative"
-      style={{ backgroundColor: '#222' }}
+      
     >
       {/* BACKGROUND IMAGE - Exact implementation from the Discography page */}
       <div 
