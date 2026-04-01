@@ -139,7 +139,7 @@ export default function EmigresWaltzPage() {
       </motion.div>
 
       {/* --- MAIN CONTENT CONTAINER --- */}
-      <div className="relative z-10 max-w-[850px] mx-auto px-4 md:px-8 pb-20 pt-12 md:pt-0">
+      <div className="relative z-10 max-w-[850px] mx-auto px-4 md:px-8 pb-20 pt-8 md:pt-0">
         
         {/* BLACK BACKGROUND CONTAINER WITH NO TOP BORDER */}
         <div className="bg-black/85 backdrop-blur-md px-4 md:px-12 py-8 md:py-12 shadow-2xl border-x border-b border-white">

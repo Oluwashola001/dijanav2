@@ -35,7 +35,7 @@ const CONTENT = {
       { title: "ENCOUNTERS – Germany & Serbia", href: "/ensembles/encounters", isExternal: false, youtubeUrl: null }
     ],
     imageCredits: {
-      img1: "©Siggi Mueller",
+      img1: "",
       img3: "©Andreas Henn"
     }
   },

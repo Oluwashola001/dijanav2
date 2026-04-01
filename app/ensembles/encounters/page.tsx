@@ -155,11 +155,11 @@ export default function EncountersPage() {
         </a>
       </motion.div>
 
-      {/* TWO-COLUMN LAYOUT: image left, content right */}
+      {/* THREE-COLUMN LAYOUT on desktop: image | content | image */}
       <div className="flex min-h-screen items-stretch pt-12 md:pt-0 pb-20">
 
-        {/* LEFT: Image column — hidden on mobile */}
-        <div className="hidden lg:block w-[320px] xl:w-[380px] shrink-0 self-start sticky top-0 h-screen">
+        {/* LEFT IMAGE — desktop only */}
+        <div className="hidden lg:block w-[280px] xl:w-[320px] shrink-0 self-start sticky top-0 h-screen">
           <img
             src="/images/encounters-bg.webp"
             alt="Encounters – Germany Serbia"
@@ -167,9 +167,9 @@ export default function EncountersPage() {
           />
         </div>
 
-        {/* RIGHT: Content column */}
-        <div className="flex-1 min-w-0 self-start px-4 md:px-8 lg:pl-0 lg:pr-12 xl:pr-20">
-          <div className="max-w-[850px] mx-auto lg:mx-0">
+        {/* CENTRE: Content column */}
+        <div className="flex-1 min-w-0 self-start px-4 md:px-8 lg:px-0">
+          <div className="max-w-[850px] mx-auto lg:mx-0 lg:max-w-none">
             <div className="bg-[#FDF8EC]/95 backdrop-blur-sm px-4 md:px-12 py-8 md:py-12 shadow-2xl border border-[#3D593C]/20">
 
               {/* Mobile Back Button */}
@@ -207,6 +207,17 @@ export default function EncountersPage() {
                     <div className="h-px w-24 bg-[#3D593C] mx-auto opacity-30 mt-10"></div>
                   </ScrollReveal>
                 </section>
+
+                {/* MOBILE ONLY IMAGE — after header */}
+                <div className="lg:hidden">
+                  <ScrollReveal delay={0.1}>
+                    <img
+                      src="/images/encounters.webp"
+                      alt="Encounters – Germany Serbia"
+                      className="w-full h-auto object-cover shadow-md border border-[#3D593C]/20"
+                    />
+                  </ScrollReveal>
+                </div>
 
                 {/* INTRO */}
                 <section className="space-y-6">
@@ -246,7 +257,7 @@ export default function EncountersPage() {
                   <ScrollReveal delay={0.1}>
                     <div className="text-center md:text-left space-y-6">
                       <div className="border-l-4 border-[#3D593C] pl-6">
-                        <h3 className="text-2xl md:text-3xl font-serif font-bold italic text-[#3D593C]">
+                        <h3 className="text-2xl md:text-3xl font-serif font-bold italic text-[#3D593C] tracking-wide">
                           {t.review.title}
                         </h3>
                         <p className="font-body text-xs md:text-sm text-[#3D593C]/60 uppercase tracking-widest mt-1">
@@ -271,6 +282,17 @@ export default function EncountersPage() {
             </div>
           </div>
         </div>
+
+        {/* RIGHT IMAGE — desktop only, mirrors the left */}
+        <div className="hidden lg:block w-[280px] xl:w-[320px] shrink-0 self-start sticky top-0 h-screen">
+          <img
+            src="/images/encounters-bg.webp"
+            alt="Encounters – Germany Serbia"
+            className="w-full h-full object-cover"
+            style={{ transform: 'scaleX(-1)' }}
+          />
+        </div>
+
       </div>
 
       <style jsx global>{`

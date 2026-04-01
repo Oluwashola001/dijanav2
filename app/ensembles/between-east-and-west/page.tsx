@@ -135,10 +135,6 @@ export default function BetweenEastAndWestPage() {
       className="w-full min-h-screen text-[#172F4F] selection:bg-[#172F4F] selection:text-white"
       style={{ backgroundColor: '#303A43' }}
     >
-      {/* --- MOBILE TOP NAV SPACER --- */}
-      <div className="lg:hidden w-full flex flex-col pt-6 relative z-10">
-        <div className="px-4 pb-2 w-full"></div>
-      </div>
 
       {/* --- DESKTOP SIDEBAR NAV (Back Button) --- */}
       <motion.div
@@ -166,11 +162,11 @@ export default function BetweenEastAndWestPage() {
           The inner wrapper constrains text to ~55% of that width, centred,
           matching the white column baked into the image (approx 50% of 2400px wide image).
       -->*/}
-      <div className="relative z-10 max-w-[850px] mx-auto px-4 md:px-8 pb-20 pt-8 md:pt-0">
+      <div className="relative z-10 max-w-[850px] mx-auto px-0 md:px-8 pb-0 md:pb-20 pt-0 md:pt-0">
 
         {/* Full-width image box — 100% width so cityscape sides show */}
         <div
-          className="relative shadow-2xl border-t-4 border-[#172F4F]"
+          className="relative shadow-2xl md:border-t-4 border-[#172F4F] min-h-screen md:min-h-0"
           style={{
             backgroundImage: "url('/images/ouw_bg.webp')",
             backgroundSize: '100% auto',
@@ -179,7 +175,7 @@ export default function BetweenEastAndWestPage() {
           }}
         >
           {/* Narrow inner column — matches white strip (~55% centred) */}
-          <div className="mx-auto py-8 md:py-12" style={{ width: '55%', minWidth: '280px' }}>
+          <div className="mx-auto pt-8 pb-20 md:py-12" style={{ width: '55%', minWidth: '280px' }}>
 
             {/* Mobile Back Button */}
             <div className="lg:hidden mb-8 text-center">
