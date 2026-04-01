@@ -175,7 +175,7 @@ export default function BetweenEastAndWestPage() {
           }}
         >
           {/* Narrow inner column — matches white strip (~55% centred) */}
-          <div className="mx-auto pt-8 pb-20 md:py-12" style={{ width: '55%', minWidth: '280px' }}>
+          <div className="mx-auto pt-8 pb-20 md:py-12" style={{ width: '55%', minWidth: '240px' }}>
 
             {/* Mobile Back Button */}
             <div className="lg:hidden mb-8 text-center">
