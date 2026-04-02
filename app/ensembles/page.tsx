@@ -200,7 +200,7 @@ export default function VersusVoxPage() {
 
               {/* DUAL IMAGES 1 — single on mobile, two-col on desktop */}
               <div className="mb-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-8">
                   <ScrollReveal delay={0.1}>
                     <img 
                       src="/images/ensemble_1a.webp" 
@@ -306,7 +306,7 @@ export default function VersusVoxPage() {
 
               {/* DUAL IMAGES 3 — single on mobile, two-col on desktop */}
               <div className="mb-8 md:mb-12">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-8">
                   <ScrollReveal delay={0.1}>
                     <img 
                       src="/images/ensemble_3a.webp" 

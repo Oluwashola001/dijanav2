@@ -149,7 +149,7 @@ export default function Footer() {
               {/* Right Column - Last 4 items */}
               <div className="flex flex-col space-y-2">
                 <Link href="/press" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.press}</Link>
-                <span className="text-amber-300 cursor-not-allowed uppercase opacity-60">{language === 'en' ? 'Versus Vox Ensemble' : 'Versus Vox Ensemble'}</span>
+                <Link href="/ensembles" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{language === 'en' ? 'Versus Vox Ensemble' : 'Versus Vox Ensemble'}</Link>
                 <span className="text-amber-300 cursor-not-allowed uppercase opacity-60">{language === 'en' ? 'Teaching' : 'Unterricht'}</span>
                 <Link href="/contact" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{language === 'en' ? 'Contact' : 'Kontakt'}</Link>
               </div>
@@ -172,7 +172,7 @@ export default function Footer() {
               <Link href="/media" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.media}</Link>
               <Link href="/discography" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{language === 'en' ? 'Discography' : 'Diskografie'}</Link>
               <Link href="/press" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{t.links.press}</Link>
-              <span className="text-amber-300 cursor-not-allowed uppercase opacity-60">{language === 'en' ? 'Versus Vox Ensemble' : 'Versus Vox Ensemble'}</span>
+              <Link href="/ensembles" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{language === 'en' ? 'Versus Vox Ensemble' : 'Versus Vox Ensemble'}</Link>
               <span className="text-amber-300 cursor-not-allowed uppercase opacity-60">{language === 'en' ? 'Teaching' : 'Unterricht'}</span>
               <Link href="/contact" className="text-amber-300 hover:text-amber-200 transition-colors uppercase">{language === 'en' ? 'Contact' : 'Kontakt'}</Link>
             </nav>

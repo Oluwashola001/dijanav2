@@ -300,7 +300,7 @@ const CONTENT = {
             ],
             firstDetailLarger: true,
             audio: "/Music/concerto_f_strings.mp3",
-            youtube: null
+            youtube: "https://m.youtube.com/watch?v=atZjR7nn5gA"
           }
         ]
       },
@@ -360,7 +360,7 @@ const CONTENT = {
             ],
             firstDetailLarger: true,
             audio: "/Music/Es ist so schon.mp3",
-            youtube: "https://www.youtube.com/watch?v=tE3DgpMd5B8"
+            youtube: "https://www.youtube.com/watch?v=GS2njJ_VuhA"
           },
           {
             title: "Multimedia Work",
@@ -735,7 +735,7 @@ const CONTENT = {
             ],
             firstDetailLarger: true,
             audio: "/Music/concerto_f_strings.mp3",
-            youtube: null
+            youtube: "https://m.youtube.com/watch?v=atZjR7nn5gA"
           }
         ]
       },
@@ -795,7 +795,7 @@ const CONTENT = {
             ],
             firstDetailLarger: true,
             audio: "/Music/Es ist so schon.mp3",
-            youtube: "https://www.youtube.com/watch?v=tE3DgpMd5B8"
+            youtube: "https://www.youtube.com/watch?v=GS2njJ_VuhA"
           },
           {
             title: "Multimedia-Werk",

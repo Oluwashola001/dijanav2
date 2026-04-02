@@ -39,7 +39,7 @@ const CONTENT: Record<Language, ContentType> = {
       "Dijana Bošković \u2013 composition, artistic direction",
       "Stefan Troschka \u2013 visual concept"
     ],
-    support: "With the kind support of the Gerhard Trede Foundation and the University of Music and Theatre.",
+    support: "With the kind support of the Gerhard Trede Foundation and the University of Music and Theatre, HAMBURG.",
   },
   de: {
     backButton: "Zurück zu Versus Vox",
@@ -58,7 +58,7 @@ const CONTENT: Record<Language, ContentType> = {
       "Dijana Bošković \u2013 Komposition, künstlerische Leitung",
       "Stefan Troschka \u2013 visuelles Konzept"
     ],
-    support: "Mit freundlicher Unterstützung der Gerhard Trede Stiftung sowie der Hochschule für Musik und Theater.",
+    support: "Mit freundlicher Unterstützung der Gerhard Trede Stiftung sowie der Hochschule für Musik und Theater, HAMBURG.",
   }
 };
 
