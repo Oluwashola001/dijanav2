@@ -58,7 +58,7 @@ export default function Footer() {
   }, [pathname]);
 
   // Smart Hiding Logic
-  if (pathname === '/' || pathname === '/compositions') {
+  if (pathname === '/' || pathname === '/compositions' || pathname.startsWith('/studio')) {
     return null;
   }
 

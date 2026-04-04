@@ -58,7 +58,7 @@ export default function Navbar() {
   }, [pathname]);
 
   // Hide Navbar on Home ('/') and Composition Intro ('/compositions')
-  if (pathname === '/' || pathname === '/compositions') {
+  if (pathname === '/' || pathname === '/compositions' || pathname.startsWith('/studio')) {
     return null;
   }
 
