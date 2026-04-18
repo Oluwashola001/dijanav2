@@ -120,7 +120,7 @@ export default function ContactPage() {
       <div className="fixed top-6 left-0 w-full px-2 md:px-10 z-50 pointer-events-none h-20"></div>
 
       {/* --- MAIN CONTENT --- */}
-      <div className="max-w-[700px] mx-auto pt-24 md:pt-32 px-4 md:px-8 relative z-10">
+      <div className="max-w-[700px] mx-auto pt-18 md:pt-18 px-4 md:px-8 relative z-10">
         
         {/* PAGE TITLE */}
         <ScrollReveal>
